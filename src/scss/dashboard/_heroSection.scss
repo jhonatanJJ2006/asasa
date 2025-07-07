@@ -1,0 +1,83 @@
+@use '../base/variables' as v;
+
+.hero-section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+
+    #background-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+
+        img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            animation: carrusel 9s infinite ease-in-out;
+            animation-fill-mode: both;
+            filter: blur(0.5px);
+            transition: opacity 0.6s ease-in-out;
+        }
+
+        img:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        img:nth-child(2) {
+            animation-delay: 3s;
+        }
+
+        img:nth-child(3) {
+            animation-delay: 6s;
+        }
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+        text-align: center;
+        color: v.$blanco;
+        top: 50%;
+        transform: translateY(-50%);
+
+        p {
+            font-size: 1.2rem;
+        }
+
+        h1 {
+            font-size: 4rem;
+
+            span {
+                color: gold;
+            }
+        }
+
+        .btn-hire-us {
+            margin-top: 1rem;
+            padding: 0.75rem 2rem;
+            background: gold;
+            color: #000;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+    }
+}
+
+@keyframes carrusel {
+    0%   { opacity: 1; z-index: 1; }
+    30%  { opacity: 1; z-index: 1; }
+    40%  { opacity: 0; z-index: 0; }
+    100% { opacity: 0; z-index: 0; }
+}
+
+.tagline {
+    color: v.$blanco;
+}

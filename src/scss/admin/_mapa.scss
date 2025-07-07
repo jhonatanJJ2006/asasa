@@ -1,0 +1,28 @@
+.admin-mapa {
+    padding: 4rem 2rem;
+    background-color: #fff;
+    min-height: 100vh;
+
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+    }
+
+    &__item {
+        background: linear-gradient(135deg, #0d1b2a, #1d2227);
+        color: #f1c40f;
+        text-align: center;
+        padding: 3rem 1rem;
+        font-size: 1.8rem;
+        border-radius: 1.5rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        text-decoration: none;
+        transition: transform 0.3s ease, background 0.3s ease;
+
+        &:hover {
+            transform: translateY(-5px);
+            background: linear-gradient(135deg, #1d2227, #0d1b2a);
+        }
+    }
+}

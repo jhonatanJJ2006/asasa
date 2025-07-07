@@ -1,0 +1,121 @@
+.logros {
+  padding: 4rem 0;
+  background-color: #f9f9f9;
+
+  &__contenedor {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  &__titulo {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #2d4d2f; // Verde Loja
+  }
+
+  // Timeline
+  .timeline {
+    margin-bottom: 3rem;
+
+    &__titulo {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    &__lista {
+      border-left: 3px solid #2d4d2f;
+      padding-left: 2rem;
+    }
+
+    &__item {
+      margin-bottom: 1.5rem;
+      position: relative;
+
+      &::before {
+        content: "";
+        position: absolute;
+        left: -1.1rem;
+        top: 0.3rem;
+        width: 12px;
+        height: 12px;
+        background-color: #2d4d2f;
+        border-radius: 50%;
+      }
+    }
+
+    &__fecha {
+      font-weight: bold;
+      color: #2d4d2f;
+    }
+
+    &__evento {
+      margin: 0.3rem 0 0 0;
+      color: #444;
+    }
+  }
+
+  // Internacional
+  .internacional {
+    margin-bottom: 3rem;
+
+    &__titulo {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    &__lista {
+      list-style: none;
+      padding-left: 1rem;
+    }
+
+    &__item {
+      position: relative;
+      margin-bottom: 1rem;
+      padding-left: 1rem;
+
+      &::before {
+        content: "✔";
+        color: #2d4d2f;
+        position: absolute;
+        left: 0;
+      }
+    }
+  }
+
+  // Mapa
+  .mapa {
+    &__titulo {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+
+    &__interactivo {
+      position: relative;
+      max-width: 100%;
+    }
+
+    &__imagen {
+      width: 100%;
+      display: block;
+    }
+
+    &__tooltip {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid #ccc;
+      padding: 1rem;
+      border-radius: 0.5rem;
+      color: #333;
+      font-size: 0.9rem;
+      display: none;
+
+      &--visible {
+        display: block; // Puedes controlar visibilidad con JS
+        top: 20%;
+        left: 40%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+}

@@ -1,0 +1,76 @@
+@use '../base/variables' as v;
+
+.historia {
+    padding: 3rem 2rem;
+    display: flex;
+    justify-content: center;
+
+    &__contenedor {
+        max-width: 85%;
+        width: 100%;
+        border: 1px solid v.$primary-color;
+        border-left: 0.6rem solid #{v.$primary-color};
+        padding: 3rem;
+        border-radius: 1rem;
+
+        /* Sombra más marcada para fondo blanco */
+        box-shadow:
+            0 4px 8px rgba(0, 0, 0, 0.1),
+            /* sombra suave cerca */
+            0 10px 20px rgba(0, 0, 0, 0.15);
+
+        position: relative;
+    }
+
+    &__fecha {
+        font-size: 1rem;
+        color: #{v.$gris};
+        margin-bottom: 1rem;
+        font-weight: 500;
+    }
+
+    &__titulo {
+        font-size: 2.5rem;
+        color: v.$negro;
+        margin-bottom: 1.5rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        border-bottom: 2px solid v.$primary-color;
+        display: inline-block;
+        padding-bottom: 0.5rem;
+    }
+
+    &__subtitulo {
+        font-size: 1.8rem;
+        color: v.$grisOscuro;
+        margin-bottom: 1.2rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        border-left: 4px solid v.$primary-color;
+        padding-left: 1rem;
+    }
+
+    &__texto {
+        font-size: 1.4rem;
+        line-height: 1.6;
+        color: #{v.$gris-oscuro};
+        text-align: justify;
+        font-weight: 400;
+        font-family: #{v.$fuente_textos};
+    }
+
+    // Responsive
+    @media (max-width: 600px) {
+        &__contenedor {
+            padding: 2rem;
+        }
+
+        &__titulo {
+            font-size: 2rem;
+        }
+
+        &__texto {
+            font-size: 1rem;
+        }
+    }
+}

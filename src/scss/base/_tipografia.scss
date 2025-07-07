@@ -1,0 +1,34 @@
+@use 'variables' as v;
+@use 'mixins' as m;
+
+h1, h2, h3 {
+    font-family: v.$fuente_headings;
+}
+
+p, div {
+    font-family: v.$fuente_textos;
+}
+
+.titulo {
+    text-transform: uppercase;
+    font-size: 3.5rem;
+    font-weight: v.$bold;
+    color: v.$primary-color;
+    display: flex;
+    justify-content: center;
+    padding: 3rem 1rem;
+    margin: 0;
+}
+
+h1 {
+    font-size: 4rem;
+}
+h2 {
+    font-size: 3.6rem;
+}
+h3 {
+    font-size: 3rem;
+}
+.text-center {
+    text-align: center;
+}

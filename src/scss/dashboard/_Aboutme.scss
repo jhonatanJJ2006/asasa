@@ -1,0 +1,97 @@
+@use '../base/variables' as v;
+
+.aboutme {
+    padding: 2rem;
+
+    &__titulo {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #0a501f; // Verde Loja
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    &__section {
+        margin-top: 2rem;
+    }
+}
+
+.acerca {
+    display: flex;
+    justify-content: center;
+
+    &__contenido {
+        max-width: 85%;
+        width: 100%;
+        padding: 3rem;
+        border-radius: 1rem;
+
+        box-shadow:
+            0 2px 4px rgba(0, 0, 0, 0.08),
+            2px 8px 16px rgba(0, 0, 0, 0.12);
+
+        position: relative;
+        background-color: #fff; // Puedes cambiar esto si usas modo oscuro
+    }
+
+    &__titulo {
+        width: 100%;
+        font-size: 2.5rem;
+        color: v.$negro;
+        margin-bottom: 1.5rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        border-bottom: 2px solid v.$primary-color;
+        display: inline-block;
+        padding-bottom: 0.5rem;
+    }
+
+    &__grupo {
+        display: grid;
+        gap: 2rem;
+    }
+}
+
+.trayectoria {
+
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    &__item {
+        width: 100%;
+        border: 1px solid v.$primary-color;
+        border-left: 0.6rem solid #{v.$primary-color};
+        padding: 3rem;
+        border-radius: 1rem;
+    }
+
+    &__subtitulo {
+        font-size: 1.4rem;
+        color: #0a501f;
+        margin-bottom: 1rem;
+    }
+
+    &__lista {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    &__pdf {
+        margin-bottom: 0.75rem;
+    }
+
+    &__enlace {
+        display: inline-block;
+        text-decoration: none;
+        color: #0a501f;
+        font-weight: 500;
+        transition: color 0.3s;
+
+        &:hover {
+            color: #055015;
+            text-decoration: underline;
+        }
+    }
+}

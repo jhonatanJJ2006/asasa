@@ -1,0 +1,130 @@
+.canton-info {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+
+  &__gallery {
+    flex: 1 1 45%;
+    display: flex;
+    justify-content: center;
+  }
+
+  &__gallery-box {
+    border: 2px dashed #ccc;
+    padding: 1rem;
+    width: 100%;
+    max-width: 500px;
+    min-height: 300px;
+    position: relative;
+    background-color: #f9f9f9;
+    text-align: center;
+    transition: background 0.3s ease;
+
+    &:hover {
+      background-color: #f0f0f0;
+    }
+  }
+
+  &__gallery-message {
+    color: #888;
+    font-style: italic;
+    margin-bottom: 1rem;
+  }
+
+  &__gallery-btn {
+    display: inline-block;
+    background-color: #0066cc;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease;
+
+    &:hover {
+      background-color: #004999;
+    }
+  }
+
+  &__input {
+    display: none;
+  }
+
+  &__carousel {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+
+    img {
+      max-height: 120px;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+  }
+
+  &__details {
+    flex: 1 1 45%;
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  &__title {
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+    color: #222;
+  }
+
+  &__form-group {
+    margin-bottom: 1rem;
+  }
+
+  &__label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+
+  &__textarea {
+    width: 100%;
+    resize: vertical;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: inherit;
+  }
+
+  &__submit {
+    padding: 0.6rem 1.2rem;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #218838;
+    }
+  }
+
+  // Carrusel externo (opcional)
+  &__external-carousel {
+    margin-top: 2rem;
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    padding: 1rem;
+    background-color: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+
+    img {
+      max-height: 100px;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+  }
+}

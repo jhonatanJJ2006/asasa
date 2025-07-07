@@ -1,0 +1,85 @@
+@use '../base/variables' as v;
+
+.footer {
+    background: linear-gradient(to right, v.$gris-oscuro, darken(v.$primary-color, 10%));
+    color: #fff;
+    padding: 2rem 0;
+    text-align: center;
+
+    &__container {
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    &__logo h2 {
+        font-size: 1.8rem;
+        font-weight: bold;
+    }
+
+    &__nav {
+        display: flex;
+        gap: 1.5rem;
+        border-top: 1px solid v.$blanco;
+        border-bottom: 1px solid v.$blanco;
+        width: 100%;
+        padding: 1rem;
+        display: flex;
+        gap: 2rem;
+        justify-content: center;
+        margin-bottom: 2rem;
+
+        a {
+            color: v.$blanco-2;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: color 0.3s ease-in-out;
+            list-style: none;
+            position: relative;
+
+            &::after {
+                content: "";
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                width: 0%;
+                height: 2px;
+                background-color: v.$blanco;
+                transition: width 0.3s ease-in-out;
+            }
+
+            &:hover::after {
+                width: 100%;
+            }
+
+            &:hover {
+                color: v.$blanco;
+                cursor: pointer;
+            }
+        }
+    }
+
+    &__social {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+
+        a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            &:hover {
+                border: 1px solid v.$blanco;
+                scale: 1.1;
+            }
+        }
+    }
+
+    &__copy {
+        color: v.$blanco;
+        font-size: 1.4rem;
+    }
+}
