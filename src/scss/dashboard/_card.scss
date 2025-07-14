@@ -1,0 +1,66 @@
+@use '../base/variables' as v;
+@use '../base/mixins' as m;
+
+.cards {
+
+    @include m.contenedor;
+    margin-top: 5rem;
+    display: flex;
+    gap: 3rem;
+
+    &__card {
+        width: 30rem;
+        height: 35rem;
+        perspective: 1000px;
+        flex-shrink: 0;
+
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 0.8s ease-in-out;
+
+        &--front,
+        &--back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        &--front {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            object-position: bottom;
+            z-index: 1;
+            background-color: #1e293b;
+            height: 100%;
+        }
+
+
+        &--back {
+            background-color: #1e293b;
+            transform: rotateY(180deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        &:hover {
+            transform: rotateY(180deg);
+        }
+
+        &--img {
+            width: 100%;
+            height: 85%;
+            object-fit: cover;
+        }
+    }
+}

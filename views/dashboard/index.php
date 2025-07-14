@@ -1,3 +1,5 @@
+<!-- Colectivo -->
+ <?php include "miembrosColectivo.php";?>
 
 <!-- LOGROS -->
 <div class="logro-container" id="logros">

@@ -1,0 +1,85 @@
+.crowdfunding {
+  background: #1d2227;
+  color: #f0f0f0;
+  padding: 3rem 2rem;
+  border-radius: 12px;
+  max-width: 600px;
+  margin: 2rem auto;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  &__content {
+    max-width: 480px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  &__title {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+  }
+
+  &__description {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    color: #cfcfcf;
+    line-height: 1.5;
+  }
+
+  &__progress-bar {
+    background: #444c56;
+    border-radius: 20px;
+    height: 18px;
+    width: 100%;
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+  }
+
+  &__progress-fill {
+    background: linear-gradient(90deg, #f39c12, #f1c40f);
+    height: 100%;
+    border-radius: 20px 0 0 20px;
+    transition: width 0.5s ease;
+  }
+
+  &__progress-text {
+    font-size: 0.9rem;
+    color: #bbb;
+    margin-bottom: 2rem;
+  }
+
+  &__btn {
+    border: none;
+    font-weight: 700;
+    padding: 0.75rem 2rem;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  &__btn--support {
+    background: #f39c12;
+    color: #1d2227;
+
+    &:hover {
+      background: #d48806;
+    }
+  }
+
+  &__donors-info {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    font-size: 0.95rem;
+    color: #bbb;
+  }
+
+  &__donors-item {
+    strong {
+      color: #f39c12;
+    }
+  }
+}

@@ -5,9 +5,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: v.$negro;
     width: 100%;
     height: auto;
+    background: rgba(0, 0, 0, 0.85); /* semitransparente */
+    backdrop-filter: blur(8px);
     transition: all 0.2s ease-in-out;
 
     @media (max-width: 768px) {
@@ -42,7 +43,7 @@
         padding: 1.5rem 0;
         text-align: center;
         gap: 2rem;
-        margin: 0;
+        margin: 1rem 0;
 
         &--item {
             list-style: none;
@@ -95,8 +96,7 @@
 
     &__redes {
         
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        display: flex;
         gap: 2rem;
 
         &--red {

@@ -1,0 +1,69 @@
+.story-form {
+  padding: 2rem;
+  background-color: #f5f5f5;
+
+  &__container {
+    max-width: 700px;
+    margin: auto;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  &__title {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #003366;
+  }
+
+  &__group {
+    margin-bottom: 1.5rem;
+  }
+
+  &__label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #333;
+  }
+
+  &__select,
+  &__input {
+    width: 100%;
+    padding: 0.6rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  &__editor {
+    height: 200px;
+    border: 1px solid #ccc;
+    background: #fff;
+    border-radius: 4px;
+    padding: 0.5rem;
+  }
+
+  &__submit {
+    background-color: #0077cc;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+}
+
+.swal2-confirm.btn-purple {
+    background-color: #6a4fc4 !important;
+    color: white !important;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: bold;
+}

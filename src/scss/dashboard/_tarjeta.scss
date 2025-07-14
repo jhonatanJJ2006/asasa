@@ -1,0 +1,154 @@
+@use 'base/mixins' as m;
+@use 'base/variables' as v;
+
+/* Swiper Items Section */
+.items-swiper {
+  width: 100%;
+  height: 10rem;
+  margin: 1rem 0;
+
+  .swiper-wrapper {
+    display: flex;
+    align-items: center;
+  }
+
+  .swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+    width: 100% !important; // ¡importante! para que no se acumulen a la derecha
+    font-size: 1.1rem;
+    color: v.$blanco;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+}
+
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 2rem 0;
+}
+
+.tarjeta {
+  position: relative;
+  width: 100%;
+  height: 40rem;
+  perspective: 1000px;
+
+  &:hover .tarjeta__front {
+    transform: rotateY(180deg);
+  }
+
+  &:hover .tarjeta__back {
+    transform: rotateY(360deg);
+  }
+
+  &__face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    backface-visibility: hidden;
+    transition: transform 1s ease-in-out;
+    overflow: hidden;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  &__front {
+    background-color: v.$negro;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    transform: rotateY(0deg);
+
+    .tarjeta__imagen {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      top: 0;
+      left: 0;
+    }
+
+    .tarjeta__nombre {
+      z-index: 2;
+      background-color: rgba(0, 0, 0, 0.6);
+      color: white;
+      padding: 1rem;
+      width: 100%;
+      text-align: center;
+      font-size: 1.4rem;
+      font-weight: bold;
+      position: relative;
+    }
+  }
+
+  &__back {
+    background-color: v.$negro;
+    color: v.$blanco;
+    transform: rotateY(180deg);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &__redes {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+
+    .tarjeta__icono {
+      width: 25px;
+      height: 25px;
+      background-color: white;
+      color: v.$negro;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      font-size: 1.2rem;
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        background-color: v.$azul;
+        color: white;
+      }
+    }
+  }
+
+  &__descripcion {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    overflow-y: auto;
+    max-height: 22rem;
+    padding-right: 0.5rem;
+
+    /* Scroll personalizado */
+    scrollbar-width: thin;
+    scrollbar-color: v.$azul transparent;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: v.$azul;
+      border-radius: 10px;
+    }
+  }
+}

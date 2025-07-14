@@ -1,163 +1,34 @@
-<h1 class="titulo"><?php echo $titulo ?></h1>
+<h1 class="titulo">Historias</h1>
 
-<section class="historia">
-    <div class="historia__contenedor">
-        <div class="historia__fecha">Inicio 16 de Julio 2016</div>
-        <h2 class="historia__titulo">Una historia para contar</h2>
-        <p class="historia__texto">
-            Raúl Vicente, atrapando entre las suyas mis manos, narra su historia, a veces lo hace acariciando el silencio, con los ojos serenos o complacidos; busca y recorre en su memoria los años difíciles de la infancia, hace espontáneos comentarios alegres o tristes de su juventud y deja al desnudo una indudable satisfacción del camino recorrido. A veces tensa su rostro por las injusticias de que fue testigo, sus ojos detrás de sus cristales se ven dulces, profundos y sin doblez, su palabra prudente simplifica mis esfuerzos por saber, sonríe y, guiñándome un ojo, bromea y me dice Te quiero mucho…
-        </p>
-    </div>
-</section>
+<?php foreach ($historias as $historia): ?>
+    <section class="historia">
+        <div class="historia__contenedor">
 
-<section class="historia">
-    <div class="historia__contenedor">
-        <h2 class="historia__titulo">Raulito</h2>
-        <p class="historia__texto">
-            Vino al mundo el 8 de septiembre de 1952, en la Provincia del Azuay. El Sigsig le dijeron que era su lugar natal, aquí La vida le llegó de prisa, Sus primeros llantos, pañales, balbuceos, se quedaron ahí sin tiempo, Se olvidaron vivencias, costumbres, leyendas, tradiciones y recuerdos.
-        </p>
-    </div>
-</section>
+            <div class="historia__fecha--contenedor">
 
-<section class="historia">
-    <div class="historia__contenedor">
-        <h2 class="historia__titulo">Su Madre</h2>
+                <div class="historia__fecha">
+                    Inicio: <?php echo date('d \d\e F Y', strtotime($historia->created_at)); ?>
+                </div>
+    
+                <?php if (!empty($historia->updated_at) && $historia->updated_at !== $historia->created_at): ?>
+                    <div class="historia__fecha">
+                        Última actualización: <?php echo date('d \d\e F Y', strtotime($historia->updated_at)); ?>
+                    </div>
+                <?php endif; ?>
 
-        <p class="historia__texto"><strong>Cenicienta:</strong> Emergió de un puñado de chozas y casas en el Sigsig provincia del Azuay, brotó como quien dice de la nada, huérfana de padre y madre, la criaron los pesantes - una flor bella escondida como la humilde violeta, bañada en la dorada luz del día parecía la Cenicienta en busca del Ada Madrina – en un abrir y cerrar los ojos apareció su príncipe azul para vivir su idilio y vencer la jornada de alegrías y tristezas que le depara el destino… Como por encanto, tras profundos suspiros, sin comprender la dimensión del dolor fue dando a luz a su familia, hermanas y hermanos que alimentar, diez en total, las lágrimas hablaron por ella, pudo llorar y reír al mismo tiempo - la dulzura luminosa de sus alas abrazó y besó a los suyos.</p>
+            </div>
 
-        <p class="historia__texto"><strong>Entregada:</strong> Ella es la que con las primeras brisas del alba, se levanta, arregla y su recoge su cabello con la peineta color oro viejo… Sus labios pronuncian y elevan oraciones que junto al humo de la cocina de leña que ya prendió sus brasas, se confunden y vuelan atraves del firmamento – llama con apuro a sus hijos a servirse un puro sango recién hecho para que luego vayan a la escuela – bien peinados con agua de limón en sus cabellos sus tesoros empiezan a caminar el largo y dificultoso trecho que lleva al plantel… a su regreso ya habrá que poner a la olla aunque sea un poco de agua con color guisado con un algo de máchica… Completaba su salario cocinando en alguna casa en la siempre obtenía la vianda de comida para los suyos… lo importante era que ellos se educaran para un futuro mejor donde haya la justicia y por siempre el amor.</p>
+            <h2 class="historia__titulo">
+                <?php echo htmlspecialchars($historia->titulo); ?>
+            </h2>
 
-        <p class="historia__texto"><strong>Lidereza:</strong> Asistía a las contiendas políticas entregando la riqueza de su alma, marcando ideales y llevando de la mano a Raulito, niño pequeño y travieso que para que se esté quieto lo colocaba debajo de la mesa sostenido entre sus faldas porque de pronto estaba perdido ante sus ojos jugueteando, o en el mejor de los casos estaba en un rincón escuchando atento, ahora entiendo de donde viene su vena… Solidaria en semana santa conseguía entre todos: Choclos, zapallo, quesillo, pescado para la fanesca a la que todo el barrio tenía acceso - criaba con desperdicios durante el año el animalito que gordo y de buen porte servía para unir a la barriada y compartir con la familia en la Navidad… también hacía la colecta para la construcción de la capilla a la que necesitaban más que al alimento corporal.</p>
+            <div class="historia__texto">
+                <?php echo $historia->sinopsis;?>
+            </div>
 
-        <p class="historia__texto"><strong>“La paga es poca y el esfuerzo inmenso”:</strong> La orilla del río la espera donde sus grandes quipes de ropaje serán blanqueados al sol y aromatizados con la espuma cristalina que le regalará el bendecido manantial del Zamora, encorvada sobre la piedra muda día tras día deja ahí sus mejores años y sus sueños - sus manos asombrosamente azuladas por el agua que dejaba blanca la ropa ajena y propia, no tenían tregua, tenían que ser ágiles y de tanto romperse entre ir y venir sobre la batea se volvieron ásperas y duras, sangraron… sus compañeros de trabajo eran las margaritas, los chillalos, los sukakas, los ruiseñores que de vez en cuando vuelan ondeados por el viento … Su corazón se hizo fuerte, en sus planes veía a su pelo plateado, su rostro satisfecho, por lo que no había tiempo para el reposo y decidida fue añadiendo día a día un futuro sin tanta necesidad y ayuno…</p>
-    </div>
-</section>
-
-<section class="historia">
-    <div class="historia__contenedor">
-        <h2 class="historia__titulo">Su Padre</h2>
-
-        <p class="historia__texto"><strong>El Maestro Manuel:</strong> Su padre era un hombre sencillo, bueno y al mismo tiempo recio como salido de un lienzo de la pintura de Guayasamín. Inexplicablemente trazaba y construía casas, puentes, iglesias como el mejor arquitecto o ingeniero, fue el “Maestro Manuel”, como con gratitud y respeto se referían a él, ¿Cómo pudo hacerlo si aprendió las primeras letras cuando sus hijos fueron a la escuela? - era solidario para apoyar en la comunidad en las más apremiantes necesidades, Crio a sus hijos con el ejemplo de su trabajo, honestidad, respeto, disciplina, amor y con la fe en Dios.</p>
-
-        <p class="historia__texto">Podía predecir el tiempo solo mirando al sol – colocaba su mano derecha sobre los ojos a manera de visera y decía aún no son las doce, o también miraba la sombra que proyectaba unirse a su cuerpo y decía es el medio día - sus gruesas y encallecidas manos, daban cuenta del arduo trabajo que de sol a sol era su deber cumplir – Su rostro curtido por el poderoso sol se veía dulce, porque se podía ver atreves de sus hondas arrugas , la lealtad del amigo, la discreción del ser inteligente, la generosidad de su alma, el respeto que traduce al buen Maestro.</p>
-
-        <p class="historia__texto">Empapado de sudor fue construyendo un manojo de viviendas - kilómetros tras kilómetros de puentes - tarareando los bellos pasillos ecuatorianos colocaba mezcla, ladrillos, hierros, madera, clavos, un sinfín de materiales que al parecer tenían la magia de ir formando las obras, especialmente cuando reverente ponía sus curtidas manos que se santificaban cuando metro a metro las iglesias tomaban forma y altura que parecían saludar al cielo – construyó muchas de ellas y su satisfacción del deber cumplido lo asimilaba cuando podía ver el constante desfilar de hombres, mujeres y niños que entraban o salían del magnífico recinto, recibiendo el alimento espiritual …</p>
-
-        <p class="historia__texto">Las personas sencillas se hacen grandes por el legado de sus obras, es así que el nombre de este hombre de ejemplo se encuentra gravado para el futuro prometedor que brinda la escuelita que lleva su nombre y que se alza sobre la firme tierra de Charquicuña…Posiblemente el lector no escuchó nunca este nombre…Es un pedacito de pueblo encallado en la montaña, sembrado como milagrosamente en el mapa del Cantón Catamayo, viajar hasta allá es arraigadamente espectacular, si bien es de difícil acceso pero se puede ir admirando el singular capricho de la naturaleza – árboles haciendo arco de bienvenida o entregando la frescura de la sombra al caminante – el olor perfumado de las guayabas – la ricura de los mangos repletos en sus gajos- El río a veces manso hace ondas sonoras deleitando al viento…a veces agresivo como celoso no permite las visitas a tan su propio lugar..</p>
-
-        <p class="historia__texto">No nos perdemos cada conmemoración, el programa es sencillamente tierno porque se lo ha unido con la navidad, lo realizan: Con diligencia los padres de familia, con agradecimiento los ex alumnos, ceremoniosas las autoridades, con prestancia la maestra – la admiración y respeto al Patrono de la Escuela se lo singulariza majestuoso en el discurso de orden – luego la hora social de los pequeños, la entrega de presentes por la familia del “El Maestro Manuel “, la comilona por los padres de familia, son en realidad momentos de gran esplendidez que se vive en este rincón sin prisa del mundo..</p>
-
-        <p class="historia__texto">Valiente: “El maestro” era de pocas palabras, éstas solo las pronunció para ayudar, saludar, dar la bienvenida, enseñar su oficio, educar y corregir a sus hijos, alabar a Dios – nunca pensó que había sido desheredado de fortuna. Valeroso como el que más, enfrentó a la muerte de pie cuando agonizaba su cuerpo, pude verlo noble y decidido, increíblemente divinizado para realizar su último viaje. ¡Cómo respeto su memoria!...</p>
-    </div>
-</section>
-
-<section class="historia">
-    <div class="historia__contenedor">
-
-        <h2 class="historia__titulo">Su niñez</h2>
-        <p class="historia__texto">En mis apuntes alcanzo a ver con claridad un niño como muchos que su cuna no es de oro, que no tuvieron cuna, posiblemente una estera sobre algo de tabla que parecía cama donde a veces con la cabeza al norte otras al sur o atravesado compartía la vieja frazada por lo menos con dos de sus hermanos, en un cuarto pequeño de arriendo sin modernidad que se llamaba casa, de donde colgaban cuencos, platos, jarras y algún balde de agua; cacharros que se llamaban menaje de casa. Vivienda en la calle Olmedo entre Mercadillo y Lourdes junto a la Radio “Centinela del Sur”.</p>
-        <p class="historia__texto">Un niño al que su madre le encargaba traer un vasito de tintura de café que alcanzaría para el desayuno familiar y que travieso y saltarín tropezaba en la calzada y colorín colorado el desayuno se acabado. Jugaba después de la escuela a la pelota que era de trapo y que la barriada disfrutaba mejor que el Messi o goleador de temporada. Se escurría por los agujeros de las casas viejas jugando las escondidas, temblaba asustando cuando muy tarde de la noche detrás de un portal se imaginaba un fantasma, el cura sin cabeza o la llorona, entonces corría desesperado con los pelos de punta a guarecerse bajo su casita…</p>
-
-        <h2 class="historia__subtitulo">Su cobachita</h2>
-        <p class="historia__texto">Un buen día su madre alquiló la mudanza y con todos sus trapitos viajaron a su nueva casa, era una guachi manía, que en la primera noche de estancia, pudieron sentir el frío que se cernía por las tablas abiertas y el agua que goteaba por los agujeros de algo que parecía un techo, se acomodaron como pudieron, en la noche se podía oír el silbar el viento y cerca de sus oídos el ruido del agua al tintinear con la vasija que estaba junto a su cabeza, Antes de que llegara el Alba su padre sereno traspasó el umbral de la entrada, ¡vio el lugar empapado en agua!, el Maestro Albañil, batió a mezcla y curó de las paredes sus heridas, arreglo las viejas tejas como pudo, sonrío tranquilizándolos; y la nueva luz del día trajo el vuelo de las aves, el colorido de las flores silvestres y el trinar de los jilgueros, la tarde se llenó de sol, la noche se engalanó de luceros y estrellas al son del sonido de grillos y cigarras.</p>
-
-        <h2 class="historia__subtitulo">Sus juegos</h2>
-        <p class="historia__texto">En las tardes, caminaba muy lejos por los empinados y abruptos senderos, evadiendo las espinas recogía zarzamoras para ayudar en el alimento del día, la piel de sus pies era más gruesa que la del resto del cuerpo porque no tenía zapatos, si llovía o hacía sol, el recorrido era el mismo porque así era la vida. La vivienda era muy pequeña para once personas y más cuando llegaban los primos o las visitas, pero afuera tenía gran amplitud, solo cubiertos por el cielo azul y era completamente gratis, allí había espacio, aunque el terreno era pedregoso se podía jugar: A las canicas, el sin que se roce, las tapillas chancadas, a la víbora víbora del amor por aquí podrá pasar… con las niñas: A las casitas, las ollitas, arroz con leche, ellas hacían sus muñecas con un trapito envuelto en una mazorca de maíz y él hacía un carrito con palitos de madera… tantas cosas salidas de la pobreza pero que tenían la sencillez y la grandeza de un amanecer maquillado de sol, un atardecer cuajado de mariposas, un anochecer con el rostro cristalino del descanso…</p>
-        <p class="historia__texto">La costumbre ancestral de reunidos en la noche hacía que se contaran cuentos de remotos bosques que pintaban horizontes severos, fantasmagóricas y huidizas figuras, sobrenaturales pantanos, agrestes laberintos… A veces por poco le falta la respiración cuando rebasaba los límites del susto, con el corazón en la boca en accidentada carrera llegaba a refugiarse en la cobachita, cuando ya por repetidas veces se había persignado balbuceando un Padre Nuestro…Al otro día podía aspirar el rico olor del humo que salía indefenso luego que la Mamita Rosa Guisaba unos porotitos de su cosecha acompañando con el aroma de un café recién tostado en la paila vieja… la guagua lo deleitaba en su teta de botella de la Pepsi , no había biberón, no había para leche…</p>
-
-        <h2 class="historia__subtitulo">Uso de razón</h2>
-        <p class="historia__texto">Antes de cumplir siete años ya tenía uso de razón y entraba en la responsabilidad de ayudar a papá y mamá en los quehaceres de la casa, cuidar de sus hermanitos más tiernos, mecía a la guagua (marianita) en la hamaca formada de un pañolón grande, lo hacía con su mano o con su pie izquierdo dependiendo si sus manos estaban o no ocupadas, con la escoba de verbena recién recogida del monte, barría el piso de tierra , lavaba la vajilla en una sola agua, guisaba una sopa simple de guineo</p>
-        <p class="historia__texto">para servirla en el almuerzo…Los fines de semana de baño en el río temblaba de frío secado apenas por una sábana…</p>
-
-        <h2 class="historia__subtitulo">Ilusionado</h2>
-        <p class="historia__texto">Un poco ya crecido disimulando su inquietud, sin apenas comprender – miraba y miraba a la niña que llevaba un delantal que parecía que alguna vez fue azul, la de la ropita raída por el uso, la de los pies descalzos que tenían varios colores adquiridos de tanto pisar la tiza de la rayuela, la que en un brazo sostenía el canastito con los chifles que vendía y con la otra recibía el pequeño costo que le entregaban…la de las trenzas largas que caían a medio peinar por su espalda, la de la carita solo un poquito sucia pero que era la más bella que algún poeta podía imaginar, la que en sus ojos guardaba el silencio del rubor de la inocencia….En un descuido el gentil embelesado pudo colocar en el bolsillo maltratado de su musa, una flor blanca como símbolo de su más secreta admiración… Ese bello recuerdo lo lleva encarnado en su ser como su primera ilusión…</p>
-
-        <h2 class="historia__subtitulo">Niño grande</h2>
-        <p class="historia__texto">Un poco más crecido llegaba jadeante para Estibar los bultos que abastecían el mercado, el peso encorvaba su espalda de niño, en pleno trabajo el sudor bañaba su rostro y su cuerpo pequeño, siempre dispuesto descargaba y descargaba hasta quedar exhausto con su mirada perdida frente al caudaloso manantial del río Zamora cuando la sed ya empezaba a golpearlo…Luego de un prudencial descanso se podía pagar una chanfaainita caliente como un frugal desayuno… Sus metas le costaban más del doble esfuerzo…</p>
-        <p class="historia__texto">Los fines de semana su madre le arreglaba un bolsillo escondido detrás de la correa y cerrado un imperdible para que allí trajera el dinero que su padre ganaba en la construcción de la iglesia de Malacatos, sorteando todos los peligros, viajaba entonces encima de los bultos de carga que llevaban los Carros llamados Mixtos… Su regreso era para él agotador, pero para sus números hermanos era la gran fiesta porque comerían más que bien ese día, que gritaban y brincaban alborozados en plena calle ¡huevo entero! ¡huevo entero!... La mamita Rosa agradecida preparaba el gran potaje.</p>
-        <p class="historia__texto">Algo insólito además ocurrió en esos viajes…El lugar en que se alojaban con su padre era un pequeño cuarto que rentaban, justo colindaba con la casa en la que vivía la que él llama la niña de radiantes ojos verdes de sus recuerdos, a la que él miraba en silencio cuando ella natural corría jugueteando en la vereda…La vida sin rodeos va obedeciendo al destino sus anuncios…porque más tarde a ella él entrega su corazón y baila el vals de una boda…</p>
-        <p class="historia__texto">Contribuía para su familia con el pan diario: Entró como sirviente en el quehacer de una casa de familia, ya en la cocina, ya en la limpieza, volaba con los mandados, su responsabilidad en el cumplimiento del deber se hizo su prioridad, el juego era ya solo una idea para cuando saque tiempo al tiempo…También cernía arena, batía mezcla ayudando en las fundiciones a su padre junto a su madre que era la que preparaba las “ollones” de comida… Recuerda como dolía su cabeza que tenía que cargar la ropa mojada que su madre lavaba en el río para ir a entregar a algunos señores de la ciudad, narra que parecía que masticaba sangre en su boca y su vista se nublaba por el tremendo peso que cargaba… ¡Tiempos duros de la infancia…!</p>
-        <p class="historia__texto">¡Cómo no sensibilizarse ante el duro caminar de años y años de privaciones!. El corazón se hace rebelde ante tanta desafortunada situación -</p>
-    </div>
-</section>
-
-<section class="historia">
-    <div class="historia__contenedor">
-        <h2 class="historia__titulo">La Escuela</h2>
-
-        <p class="historia__texto">La escuela le sirvió para que pueda emprender el camino nunca cerrando los ojos, aprendió que el conocimiento va al cerebro y los sentimientos al corazón, aprendió la historia para no olvidar de donde provienen sus raíces, conoció la Geografía para amar con profundidad a su Patria, las matemáticas fueron su pasión, la Moral y la Ética moldearon su pensamiento, la Literatura y la Oratoria lo llevaron a compartir más allá de sí mismo, su pensamiento….En este pasaje, soñador recuerda que quedó gratamente sorprendido con la delicadeza que le miró la niña de radiantes ojos verdes que le entregó un cesto lleno de frutas recién bajadas de los árboles, como gratitud al poema entregado en la oratoria para la escuela de niñas María Montessori del Valle entrañable de Malacatos…Más tarde cuando adulto entregó su amor para siempre a la misma niña ya mujer que nació en este lugar paradisiaco y se educó en esta escuelita linda de campo…Coincidencia o no, el destino habla complacido formando las más bellas historias de amor..</p>
-        <p class="historia__texto">¡Ah!, fue la Escuela que le enseñó a enseñar a su Padre, las primeras letras...</p>
-
-    </div>
-</section>
-
-<section class="historia">
-    <div class="historia__contenedor">
-        <h2 class="historia__titulo">SEMINARIO Y COLEGIO</h2>
-
-        <p class="historia__texto">Se adentró en el estudio del bachillerato, al mismo tiempo que conocía más a Dios en las enseñanzas que recibía en el Seminario Menor de Loja donde su madre consiguió una beca… Inquieto como el que más realizaba las travesuras… como cuando con el grupo de amigos valiéndose de un carrizo pudieron capturar el pollo hornado que era solo para los Clérigos; y es que allí también pasaba hambre porque la comida se servía iniciando por los primeros puestos y cuando llegaba al último donde él estaba ya casi no había nada o solamente quedaba lo que no les gustaba a los primeros.</p>
-        <p class="historia__texto">Pudo sobrevivir, cuando por comer un pedazo de “ango” luego que se había quedado solo se atragantó y perdía poco a poco la respiración, así que pensando algo rápido acomodó su estómago al filo de la mesa, con las manos se sujetó fuerte, de un solo empellón golpeó su estómago y el trozo de carne angurrienta salió disparada dando el alivio a su existencia, aunque su estómago dolió por bastante tiempo…</p>
-        <p class="historia__texto">Había muchos días de intenso estudio y de encierro, así que un 18 de Noviembre con el grupo de amigos, amarraron todas las sábanas y se lanzaron por la ventana y fueron a disfrutar la música y el baile en las calles de Loja que por esa época se acostumbraba a que la gente salga con sus galladas a llenar de algarabía la noche de fiesta que duraba hasta la madrugada…Pero cuando de regreso uno a uno entró por la ventana agarrándose de la sábana, uno a uno eran recibidos por los clérigos quienes imponía e impusieron el más severo castigo…</p>
-        <p class="historia__texto">Para iniciar quinto curso se despidió del Seminario e ingresó al Colegio la Salle a donde también le habían conseguido una beca. Tenía las más altas calificaciones para ser abanderado, pero no le fue otorgada esta distinción porque no curso todo su bachillerato en esta misma Institución...</p>
-        <p class="historia__texto">Asiste al desfile de estudiantes en la fecha de conmemoración, se lo puede ver en la foto con los pantalones altos por más arriba del tobillo ya que usaba por lo regular la ropa del hermano mayor, si está con zapatos…Los zapatos eran mantenidos cuidadosamente, solo eran usados en momentos especiales y para asistir al Colegio, entonces, como el camino de su cobachita ubicada a dos Kilómetros del colegio al colegio era de difícil acceso, polvoriento, pedregoso en verano y lleno de barro en invierno, hacía el recorrido descalzo, se lavaba los pies en el río, se ponía los únicos zapatos que tenía e ingresaba al establecimiento y de regreso a casa lo hacía con los pies descalzos. ! Tenía que cuidar los Zapatos, no había para otros!</p>
-
-    </div>
-</section>
-
-<section class="historia">
-    <div class="historia__contenedor">
-        <h2 class="historia__titulo">LA UNIVERSIDAD</h2>
-
-        <p class="historia__texto">Se fue a estudiar para Cuenca, no le renovaron la matrícula en la Universidad Técnica porque fue el protagonista de la primera y última huelga realizada allá por los años ….fue a estudiar  ingeniería Civil  su madre había dicho que no tiene que quedarse solo de albañil…emprendía una nueva y conocida jornada de privaciones, se alojó con su  hermano mayor en una guachimanía  de el aserrío de la comadre de su madre, cocinaba sus propios alimentos pero si almorzaba no merendaba no había para tanto…fue el mejor egresado no pudo así mismo recibir esta distinción por no haber cursado en la misma universidad la totalidad de la carrera.</p>
-        <p class="historia__texto">Las vacaciones las vacacionaba batiendo mezcla, alzando ladrillos, fundiendo las losas, cuenta que con las fundas vacías de cemento se hacían gorras para evitar el implacable sol, el polvo y sobretodo para que las chicas no los reconocieran porque luego ni bola les paraban…</p>
-        <p class="historia__texto">“Cuando el pobre lava la camisa, llueve”_ era una tarde de lluvia y estaba ansioso por asistir a la Kermes  en el centro de la ciudad_ se pone su mejor gala y se arregla como gran mozuelo para ir de conquistador – espera que pase el transporte pesado que venía desde Zamora y se sube a las escalerillas en la parte de atrás para ir de bajada porque no tenía para el pasaje- pero cuando del brinco se  baja para ir a la Kermes se da cuenta  que todo él estaba salpicado de barro y agua sucia desde los pies a la cabeza, regresó abatido, cabizbajo, encogido de ánimo, caminando los más pesados  dos kilómetros hasta su cobachita.</p>
-        
-        <h2 class="historia__subtitulo">ENAMORADO, ESPOSO Y PADRE…</h2>
-        <p class="historia__texto">Desde el tercer año de Universidad tubo a su novia a la que le escribía cartas con cálido perfume, con fondo de flores _ una carta diaria le parecía muy poco _ le decía tantas cosas , le hablaba de tantos sueños, le regalaba flores, le hacía mil promesas, sus ojos brillaban de felicidad porque su corazón era correspondido…Cumplía 28 cuando bailó el vals de novio y cruzó las copas de vino… tres niñas de ojos claros, de tez blanca llegaron como la suave brisa - era  el regalo del Creador…</p>
-        
-        <h2 class="historia__subtitulo">PROFESIONAL</h2>
-        <p class="historia__texto">Su primer trabajo de Director de Plan Regulador del Municipio (E)  le dio la oportunidad de servir a la gente, apoyar a las comunidades, hacer urbanizaciones, asfaltar las calles,  dar bienestar a las familias…Gratuitamente hacía trabajos para las iglesias, para alguna Asociación, para algún proyecto de beneficio social, a los que menos tenían les construía las mejores formas de hacer su vivienda poco a poco…Su primer discurso fue  en la inauguración de la Piscina del Municipio, sus amigos con cariño le decían “saca el discurso de la piscina”, cuando tenía que realizar un discurso por cualquier otro motivo…</p>
-        
-        <h2 class="historia__subtitulo">PREFECTO DEL PUEBLO</h2>
-        <p class="historia__texto">Participó en la contienda política - por dos ocasiones fue diputado alterno.</p>
-        <p class="historia__texto">Dos periodos consecutivos recibió la confianza de la  gente de la Provincia de Loja y desempeño como su Prefecto, nunca olvidó sus raíces y trabajó incansablemente  mejorando la calidad de vida de las familias lojanas, realizó obras grandes:  Construyó (Enumerar la obras) … puentes, salas comunales,Escuelas,  apoyó a la agricultura realizó gestiones internacionales y entregó agua subterránea como en Catacocha que por 50 años no tenían el líquido vital,  realizó su proyecto estrella  el proyecto Eólico.</p>
-        <p class="historia__texto">Construyó obras pequeñas, algunos  le criticaron las obras pequeñas, seguramente no llegaron a entender que estas obras que parecían muy pequeñas solucionaban problemas grandes de la comunidad, como el arreglo del techo de la escuelita que estaba por caerse sobre los niños, como una cancha donde la juventud hacía deporte olvidándose  de los vicios, un proyecto de agua potable a una comunidad muy alejada, donde podíamos ver a los niños y adultos abriendo el grifo con asombrosa alegría y votándose el agua entre ellos, especialmente estos proyectos del agua eran lo más hermosos de presenciar en su inauguración cuando los más pequeños, madres y padres de familia y la comunidad entera irradiaba la felicidad más inconcebible…</p>
-        <p class="historia__texto">La obra social fue su prioridad, Creo Casa Hogar “EL Angel” para niños y jóvenes con la mas alta discapacidad con atención ininterrumpida, se atendieron sobretodo a huérfanitos que lo único que podían era expresar su sentimientos con una tierna sonrisa…creo el Comedor de Ancianitos Indigentes, se atendieron y fueron felices con su “barriguita llena y el corazón contento” _ Creo el Dispensario Médico Matilde Hidalgo de Procel, donde se atendieron como la mejor clínica a la gente menos favorecida, dándoles la salud y el bienestar – Creó el Programa Lesión Cerebral  donde se atendieron personas con discapacidad  en sus propias casas con excelentes profesionales de la Psicorrehabilitación – Creó Corazón Solidario para atender a los hijos de emigrantes – Creo la orquesta de niños especiales, que parecían ángeles bajados del cielo cuando cantaban – Creo la danza y baile para las personas de la Tercera Edad, dándoles una nueva oportunidad de vida y alegría. Creó el coro de niños, que sus melodías inundaban de belleza los corazones…</p>
-
-    </div>
-</section>
-
-<section class="historia">
-    <div class="historia__contenedor">
-        <h2 class="historia__titulo">Diputado</h2>
-    </div>
-</section>
-
-<section class="historia">
-    <div class="historia__contenedor">
-        <h2 class="historia__titulo">ASAMBLEISTA</h2>
-
-        <p class="historia__texto">Asambleísta de oposición en la dura tarea de protestar contra la intolerancia, prepotencia que trata</p>
-        
-    </div>
-</section>
-
-<section class="historia">
-    <div class="historia__contenedor">
-        <h2 class="historia__titulo">SER HUMANO</h2>
-
-        <p class="historia__texto">Emana desde sus raíces a un hombre trabajador, generoso, honrado, justo, leal, que enfrenta los problemas con mesura, realiza su trabajo con pulcritud y esmero, creyente - lleva su mensaje de trabajo y solidaridad;  su horizonte en el gran universo es proclamar la libertad, la justicia, la humanidad. Su inagotable imaginación le permite ver más allá e interpretar sin prisa las cosas verdaderas-hizo grandes y buenos amigos, tiene muchos compadres y ahijados, su casa se honra con la visita de ellos – Se le hace fácil granjearse una nueva amistad – estrecha una mano con sinceridad – Su palabra siempre es optimista – Entrega el más profundo sentimiento del amor – debe tener defectos como todo ser humano pero curiosamente no puedo ver alguno para escribirlo en estas páginas  -  su recorrido no fue sencillo ni rutinario, tuvo que vencer los trances, los peligros – asumió los riegos – a veces el cansancio y el sueño doblegaron su cuerpo pero el nuevo día lo despertaba para empezar de nuevo – la generosidad divina hizo que ya  nunca más faltara en su mesa un sabroso repe de guineo, una chanfaina bien guisada, el mote como condimento, la sencillez del alimento que necesario alimenta el cuerpo y la sobremesa  de recuerdos entre chistes y bromas alimenta su alma – Aún quedan tantas y tantas memorias que enriquecieron la personalidad recia y profundamente humana que ofreció a  su comunidad – Siempre hubo una comunicación abierta entre él y la gente,  no importaba si era rico pobre o menesteroso  en su mente y corazón no existía la desigualdad - </p>
-        <p class="historia__texto">Hogareño, disfruta su familia al máximo - sus hijas, sus nietos son su cielo aquí en la tierra, nada hay más perfecto que la mano de Dios en su vida…</p>
-
-    </div>
-</section>
-
-<section class="historia">
-    <div class="historia__contenedor">
-        <h2 class="historia__titulo">El DIOS GUIANDO EL CAMINO</h2>
-
-        <p class="historia__texto">Siempre pide al cielo y guía protección en cada acción de vida o proyecto que va a emprender, realiza el trabajo con todas sus fuerzas y conocimiento, pero deja a la voluntad divina la última decisión- Sabe escuchar y tiene gran habilidad para resolver o mitigar problemas en bien de los que necesitan – entre tarea y tarea, a pesar del cansancio siempre enciende la chispa para hacer reír – incondicional cuando alguien le pide o necesita apoyo – No cree en los enemigos, no tiene recuerdos a cerca de ellos – Sus raíces le dieron algún tropiezo pero salto la baranda sintiéndose orgulloso de ser quién es – Asistió de pie a los golpes del destino – cuando nació su hija Yesenia ciega y autista, abrazó su pequeñito cuerpo,  sus ojos se llenaron de llanto, su voz grito al viento ¡¿porqueeee?!, su mundo se perdió en un instante, el dolor hizo presa de su corazón, su esencia amenazó desvanecerse  … pasaron dolorosos los días, los meses, los años….y comprendió que este ángel bajado del más celeste azul del cielo tenía una misión aquí en la tierra que la cumplió  a través  de su padre cuando  con sus obras pudo ayudar a lo más olvidados, los más desvalidos, los que no pueden oír porque se les negó el mundo  de los sonidos, los que no pueden hablar porque  se les negó el don de la palabra, los que no pueden caminar,  los que no tienen manos, no tienen pies, pero  que pueden agradecer con el silencio de una sonrisa, me refiero a las personas que les llaman especiales, las personas con discapacidad. Fue Yesenia la inspiración para crear la casa hogar para niños y jóvenes de la más alta discapacidad, para que mediante ley puedan acceder al trabajo digno en las empresas privadas y públicas – El programa lesión cerebral en convenio con España los  apoyó en sus propias casas - La orquesta de niños especiales fue la obra más grande de sensibilización para respetar y visibilizar a estos ángeles… sobre el tema se podrían escribir páginas y páginas que será en otra ocasión… </p>
-        <p class="historia__texto">¡Cuánta lucha para entender que Dios es en realidad un amoroso Padre que no suelta nuestra mano!</p>
-
-    </div>
-</section>
+            <p class="historia__autor">
+                <strong>Autor:</strong> <?php echo htmlspecialchars($historia->autor); ?>
+            </p>
+        </div>
+    </section>
+<?php endforeach; ?>

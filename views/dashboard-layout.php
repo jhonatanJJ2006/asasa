@@ -19,6 +19,8 @@
     <!-- Estilos personalizados -->
     <link rel="stylesheet" href="/build/css/app.css">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+
     <script type="importmap">
         {
             "imports": {
@@ -36,7 +38,9 @@
     include_once __DIR__ . '/templates/footer.php';
     ?>
 
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <script src="/build/js/map.js" type="module"></script>
+    <script src="/build/js/logros.js" type="module"></script>
     <script src="/build/js/bundle.min.js" defer></script>
 </body>
 

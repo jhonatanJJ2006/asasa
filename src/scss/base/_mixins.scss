@@ -28,15 +28,17 @@
     color: $colorTexto;
     font-size: 1.8rem;
     font-weight: 700;
-    border: none;
-    transition-property: background-color;
-    transition-duration: .3s;
     text-align: center;
     width: 100%;
     display: inline-block;
+    border: 1px solid $bgColor;
+    border-radius: 1rem;
+    transition: all .3s ease-in-out;
 
     &:hover {
-        background-color: darken( $bgColor, 10% );
+        background-color: v.$blanco;
+        color: v.$negro;
+        border-radius: 1px solid v.$negro;
         cursor: pointer;
     }
 }

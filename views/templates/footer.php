@@ -4,11 +4,11 @@
             <h2>Logo</h2>
         </div>
         <nav class="footer__nav">
-            <a data-id="#home">Acerca De</a>
-            <a data-id="#servicios">Logros</a>
-            <a data-id="#about">Propuestas</a>
-            <a data-id="#contacto">History Teling</a>
-            <a data-id="#preguntas">Agenda</a>
+            <a href="aboutme" data-id="#home">Acerca De</a>
+            <a href="logros" data-id="#servicios">Logros</a>
+            <a href="propuestas" data-id="#about">Propuestas</a>
+            <a href="historyteling" data-id="#contacto">History Teling</a>
+            <a href="agenda" data-id="#preguntas">Agenda</a>
         </nav>
         <div class="footer__social">
         <a href="" class="header__redes--red header__redes--whatsapp"><i class="fa-brands fa-whatsapp"></i></a>

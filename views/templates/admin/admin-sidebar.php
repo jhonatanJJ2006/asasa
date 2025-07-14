@@ -5,11 +5,16 @@
             <span class="admin__menu-texto">Acerca De</span>
         </a>
 
+        <a class="admin__enlace <?php echo pagina_actual('/admin/miembrosColectivo') ? 'admin__enlace--actual' : '' ?>" href="/admin/miembrosColectivo">
+            <i class="admin__icono fa-solid fa-users"></i>
+            <span class="admin__menu-texto">Miembros Colectivo</span>
+        </a>
+
         <a class="admin__enlace <?php echo pagina_actual('/admin/logros') ? 'admin__enlace--actual' : '' ?>" href="/admin/logros">
             <i class="admin__icono fa-solid fa-trophy"></i>
             <span class="admin__menu-texto">Logros</span>
         </a>
-        
+
         <a class="admin__enlace <?php echo pagina_actual('/admin/propuestas') ? 'admin__enlace--actual' : '' ?>" href="/admin/propuestas">
             <i class="admin__icono fa-solid fa-lightbulb"></i>
             <span class="admin__menu-texto">Propuestas</span>
@@ -19,7 +24,7 @@
             <i class="admin__icono fa-solid fa-book-open"></i>
             <span class="admin__menu-texto">Historyteling</span>
         </a>
-        
+
         <a class="admin__enlace <?php echo pagina_actual('/admin/mapa') ? 'admin__enlace--actual' : '' ?>" href="/admin/mapa">
             <i class="admin__icono fa-solid fa-map-location-dot"></i>
             <span class="admin__menu-texto">Mapa</span>

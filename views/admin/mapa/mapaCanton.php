@@ -7,7 +7,7 @@
     </a>
 </div>
 
-<section class="canton-info">
+<main class="canton-info">
   <div class="canton-info__gallery">
     <div class="canton-info__gallery-box" id="drop-area">
 
@@ -36,7 +36,7 @@
       <button type="submit" class="canton-info__submit">Guardar Información</button>
     </form>
   </div>
-</section>
+</main>
 
 <!-- Carrusel de imágenes fuera de la sección principal -->
 <div class="canton-info__external-carousel" id="external-carousel" style="display: none;">

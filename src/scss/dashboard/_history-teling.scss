@@ -27,6 +27,13 @@
         color: #{v.$gris};
         margin-bottom: 1rem;
         font-weight: 500;
+
+        &--contenedor {
+
+            display: flex;
+            justify-content: space-between;
+
+        }
     }
 
     &__titulo {
@@ -40,16 +47,6 @@
         padding-bottom: 0.5rem;
     }
 
-    &__subtitulo {
-        font-size: 1.8rem;
-        color: v.$grisOscuro;
-        margin-bottom: 1.2rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        border-left: 4px solid v.$primary-color;
-        padding-left: 1rem;
-    }
-
     &__texto {
         font-size: 1.4rem;
         line-height: 1.6;
@@ -57,6 +54,21 @@
         text-align: justify;
         font-weight: 400;
         font-family: #{v.$fuente_textos};
+
+        h2 {
+            font-size: 1.8rem;
+            color: v.$grisOscuro;
+            margin-bottom: 1.2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            border-left: 4px solid v.$primary-color;
+            padding-left: 1rem;
+        }
+    }
+
+    &__autor {
+        font-size: 1.2rem;
+        color: v.$gris;
     }
 
     // Responsive
