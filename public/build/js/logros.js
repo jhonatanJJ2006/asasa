@@ -471,6 +471,66 @@
     timeline.scrollLeft = touchScrollLeft - walk;
   });
 
+  // --------- Click en ítems para navegar ---------
+  timeline.addEventListener('click', (e) => {
+    const target = e.target.closest('.logros__item');
+    if (!target) return;
+
+    if (level === 'year') {
+      let from = parseInt(target.getAttribute('data-group-from'));
+      let to = parseInt(target.getAttribute('data-group-to'));
+      let interval = parseInt(target.getAttribute('data-group-interval'));
+      if (interval > 1) {
+        level = 'year-detail';
+        current = { from, to };
+      } else {
+        level = 'month';
+        current = { year: from };
+      }
+    } else if (level === 'year-detail') {
+      let from = parseInt(target.getAttribute('data-group-from'));
+      let to = parseInt(target.getAttribute('data-group-to'));
+      let interval = parseInt(target.getAttribute('data-group-interval'));
+      if (interval > 1) {
+        current = { from, to };
+      } else {
+        level = 'month';
+        current = { year: from };
+      }
+    } else if (level === 'month') {
+      let from = parseInt(target.getAttribute('data-month-from'));
+      let to = parseInt(target.getAttribute('data-month-to'));
+      let interval = parseInt(target.getAttribute('data-month-interval'));
+      if (interval > 1) {
+        level = 'month-detail';
+        current = { year: current.year, from, to };
+      } else {
+        level = 'day';
+        current = { year: current.year, month: from };
+      }
+    } else if (level === 'month-detail') {
+      let from = parseInt(target.getAttribute('data-month-from'));
+      let to = parseInt(target.getAttribute('data-month-to'));
+      let interval = parseInt(target.getAttribute('data-month-interval'));
+      if (interval > 1) {
+        current = { year: current.year, from, to };
+      } else {
+        level = 'day';
+        current = { year: current.year, month: from };
+      }
+    } else if (level === 'day') {
+      let from = parseInt(target.getAttribute('data-day-from'));
+      let to = parseInt(target.getAttribute('data-day-to'));
+      let interval = parseInt(target.getAttribute('data-day-interval'));
+      if (interval > 1) {
+        level = 'day-detail';
+        current = { year: current.year, month: current.month, from, to };
+      }
+    }
+
+    renderTimeline();
+  });
+
   // --------- Click fuera para volver atrás ---------
   document.addEventListener("click", function (e) {
     if (logrosModal.classList.contains('active')) return;

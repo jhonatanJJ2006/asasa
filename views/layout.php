@@ -28,6 +28,7 @@
 
     <script src="/build/js/bundle.min.js" defer></script>
     <script src="/build/js/logros.js" type="module"></script>
+    
 </body>
 
 </html>

@@ -1,6 +1,10 @@
 @use 'base/mixins' as m;
 @use 'base/variables' as v;
 
+.agenda {
+  margin-top: 5rem;
+}
+
 .calendario-mensual {
   margin: 0 auto;
   background: white;

@@ -22,6 +22,10 @@
         position: relative;
     }
 
+    &__contenedor2 {
+        margin-top: 5rem;
+    }
+
     &__fecha {
         font-size: 1rem;
         color: #{v.$gris};
