@@ -36,17 +36,21 @@
                     <a href="<?php echo $tiktok ?>" class="tarjeta__icono"><i class="fab fa-tiktok"></i></a>
                 </div>
 
-                <div class="swiper items-swiper">
-                    <div class="swiper-wrapper">
+                <?php if($miembro->items) { ?>
 
-                        <?php foreach ($items as $item) { ?>
-
-                            <div class="swiper-slide" style="display: flex; justify-content: center; align-items: center; height: 100%;"><?php echo $item ?></div>
-
-                        <?php } ?>
-
+                    <div class="swiper items-swiper">
+                        <div class="swiper-wrapper">
+    
+                            <?php foreach ($items as $item) { ?>
+    
+                                <div class="swiper-slide" style="display: flex; justify-content: center; align-items: center; height: 100%;"><?php echo $item ?></div>
+    
+                            <?php } ?>
+    
+                        </div>
                     </div>
-                </div>
+
+                <?php } ?>
 
                 <p class="tarjeta__descripcion">
                     <?php echo strlen($miembro->descripcion) < 1000

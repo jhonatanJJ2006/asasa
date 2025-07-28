@@ -14,11 +14,28 @@
     let redesDB = [];
     const redes = document.querySelectorAll('.formulario-administrador__input--sociales');
 
-    // Boton
+    // Botones
     const btnForm = document.querySelector('.formulario-administrador__boton--miembroColectivo');
 
     // Errores
     let errores = [];
+
+    // Función SweetAlert2 para mostrar errores
+    const mostrarErrores = (errores) => {
+        Swal.fire({
+            icon: 'error',
+            title: 'Errores en el formulario',
+            html: `
+                <ul class="alerta__contenedor" style="text-align: left; margin: 0 auto;">
+                    ${errores.map(error => `<li class="alerta alerta__error" style="margin-bottom: 5px;">${error}</li>`).join('')}
+                </ul>
+            `,
+            confirmButtonText: 'Corregir',
+            customClass: {
+                confirmButton: 'swal2-confirm btn-purple'
+            }
+        });
+    };
 
     if (dropzone) {
 
@@ -42,41 +59,34 @@
         });
 
         function handleFile(file) {
-
             const permitidas = ['image/jpeg', 'image/png'];
-
             if (permitidas.includes(file.type)) {
-
                 const reader = new FileReader();
                 reader.onload = e => {
                     imagenPreview.style.height = '40rem';
                     imagenPreview.src = e.target.result;
                 };
-
                 reader.readAsDataURL(file);
-
             } else {
-                alert('Solo se permiten imagenes jpeg o png');
+                mostrarErrores(['Solo se permiten imágenes JPEG o PNG']);
             }
-
         }
 
     }
 
     if (btnForm) {
 
-        btnForm.addEventListener('click', () => {
+        btnForm.addEventListener('click', (e) => {
 
             errores = [];
 
             comprobarDatos();
 
             if (errores.length === 0) {
-
                 subirDatos();
-
             } else {
-                console.log(errores);
+                e.preventDefault();
+                mostrarErrores(errores);
             }
 
         });
@@ -90,7 +100,7 @@
                 errores.push('La descripción del miembro del colectivo es obligatoria');
             }
             if (descripcionMiembro.value.trim().length < 30) {
-                errores.push('La descripción del miembro del colectivo debe contener almenos 30 caracteres');
+                errores.push('La descripción del miembro del colectivo debe contener al menos 30 caracteres');
             }
             if (!inputImage.files || !inputImage.files[0]) {
                 errores.push('La imagen del miembro del colectivo es obligatoria');
@@ -99,17 +109,14 @@
             redesDB = [];
 
             redes.forEach(red => {
-
-                if(red.value !== '') {
+                if (red.value !== '') {
                     let datoRed = red.value;
                     let idRed = red.getAttribute('data-red');
-    
                     redesDB.push({
-                        id : idRed,
-                        valor : datoRed
+                        id: idRed,
+                        valor: datoRed
                     });
                 }
-
             });
 
         }
@@ -121,11 +128,11 @@
             formData.append('descripcion', descripcionMiembro.value.trim());
             formData.append('imagen', inputImage.files[0]);
 
-            if(adicional.value !== '') {
+            if (adicional && adicional.value !== '') {
                 formData.append('tags', adicional.value.trim());
             }
 
-            if(redesDB.length !== 0) {
+            if (redesDB.length !== 0) {
                 formData.append('redes', JSON.stringify(redesDB));
             }
 
@@ -135,15 +142,10 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    if(data) {
-                        location.href = '/admin/miembrosColectivo';
-                    } else {
-                        console.log('todo mal');
-                    }
-
+                    location.href = '/admin/miembrosColectivo';
                 })
                 .catch(error => {
-                    console.log('error');
+                    mostrarErrores(['Error de red, intenta nuevamente.']);
                 });
 
         }

@@ -9,6 +9,7 @@
 
     const btn = document.querySelector('.formulario-administrador__boton--evento');
     const btnEditar = document.querySelector('.formulario-administrador__boton--evento-editar');
+    const btnsEliminar = document.querySelectorAll('.table__formulario--eliminar-evento');
 
     if (btn) {
 
@@ -172,14 +173,13 @@
 
     }
 
-    const btnsEliminar = document.querySelectorAll('.table__formulario--eliminar-evento');
-
     if (btnsEliminar.length > 0) {
         btnsEliminar.forEach(btn => {
-            const id = btn.dataset.id;
 
             btn.addEventListener('click', function (e) {
                 e.preventDefault(); // evitar envío del form en caso de estar dentro
+
+                let id = btn.dataset.id;
 
                 Swal.fire({
                     title: '¿Estás seguro?',
@@ -190,8 +190,13 @@
                     cancelButtonText: 'Cancelar'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        fetch(`/admin/agenda/eliminar?id=${id}`, {
-                            method: 'POST'
+                        
+                        const data = new FormData();
+                        data.append('id', id);
+
+                        fetch(`/admin/agenda/eliminar`, {
+                            method: 'POST',
+                            body: data
                         })
                             .then(res => res.json())
                             .then(data => {

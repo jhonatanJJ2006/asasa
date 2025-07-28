@@ -24,6 +24,14 @@
 
     &__campo {
         margin-bottom: 15px;
+
+        &--imgNo {
+            background-color: lighten(v.$rojo, 35%);
+            text-align: center;
+            color: v.$blanco;
+            padding: 2rem;
+            border-radius: 1rem;
+        }
     }
 
     &__label {
@@ -204,4 +212,44 @@
 
     transition: all .3s ease;
 
+}
+
+.formulario-administrador__pdfviewer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.formulario-administrador__pdfitem {
+    background: #f8f8f8;
+    border: 1px solid #e2e2e2;
+    border-radius: 8px;
+    padding: 1rem;
+    width: 100%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.formulario-administrador__pdfitem embed {
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    width: 100%;
+    height: 50rem;
+    margin-bottom: 1rem;
+}
+
+.formulario-administrador__pdflink {
+    color: #0077cc;
+    text-decoration: underline;
+    font-weight: 500;
+    transition: color 0.2s;
+    margin-top: 0.5rem;
+
+    &:hover {
+        color: #005fa3;
+    }
 }

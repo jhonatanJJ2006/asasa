@@ -32,48 +32,77 @@
 </div>
 
 <div class="admin__contenedor">
-    <?php if (!empty($historias)) { ?>
+    <?php if (!empty($logros)) { ?>
         <table class="table">
             <thead class="table__thead">
                 <tr>
-                    <th class="table__th-display" scope="col">Historias</th>
+                    <th class="table__th-display" scope="col">Logros</th>
+                    <th class="table__th table__th--ponentes" scope="col">Imagen</th>
                     <th class="table__th table__th--ponentes" scope="col">Titulo</th>
-                    <th class="table__th table__th--ponentes" scope="col">Autor</th>
-                    <th class="table__th table__th--ponentes" scope="col">Fecha Creación</th>
-                    <th class="table__th table__th--ponentes" scope="col">Fecha Actualización</th>
+                    <th class="table__th table__th--ponentes" scope="col">Fecha</th>
+                    <th class="table__th table__th--ponentes" scope="col">Descripción</th>
                     <th class="table__th table__th--acciones" scope="col">Acciones</th>
                 </tr>
             </thead>
 
             <tbody class="table__tbody">
-                <?php foreach ($historias as $historia) { ?>
+                <?php foreach ($logros as $logro) { ?>
                     <tr class="table__tr">
 
-                        <td class="table__td">
-                            <?php echo $historia->titulo ?>
-                        </td>
-                        <td class="table__td">
-                            <?php echo $historia->autor ?>
-                        </td>
-                        <td class="table__td">
-                            <?php echo $historia->created_at ?>
-                        </td>
-                        <td class="table__td">
-                            <?php echo $historia->updated_at ?>
+                        <td class="table__td table__td--imagen">
+                            <div class="table__imagen">
+                                <picture class="table__imagen--picture">
+                                    <?php
+                                    $imagePath = '/build/img/logros/' . $logro->imagen;
+
+                                    // Verifica si existe el archivo AVIF y añade la etiqueta <source> si es así
+                                    if (file_exists($_SERVER['DOCUMENT_ROOT'] . $imagePath . '.avif')) { ?>
+                                        <source srcset="<?php echo $imagePath . '.avif'; ?>" type="image/avif">
+                                    <?php }
+
+                                    // Verifica si existe el archivo WEBP y añade la etiqueta <source> si es así
+                                    if (file_exists($_SERVER['DOCUMENT_ROOT'] . $imagePath . '.webp')) { ?>
+                                        <source srcset="<?php echo $imagePath . '.webp'; ?>" type="image/webp">
+                                    <?php } ?>
+
+                                    <!-- Siempre muestra la imagen PNG como fallback -->
+                                    <source srcset="<?php echo $imagePath . '.png'; ?>" type="image/png">
+
+                                    <!-- Fallback por defecto -->
+                                    <img class="table__imagen--table" src="<?php echo $imagePath . '.png'; ?>" alt="Imagen Logro">
+                                </picture>
+                            </div>
                         </td>
 
-                        <td class="table__td--acciones">
-                            <a class="table__accion--editar" href="/admin/historyteling/editar?id=<?php echo $historia->id ?>">
-                                <i class="fa-solid fa-user-pen"></i>
-                                Editar
-                            </a>
+                        <td class="table__td">
+                            <?php echo $logro->titulo ?>
+                        </td>
+                        <td class="table__td table__td--fecha">
+                            <?php
+                            $fechaFormateada = date('d-m-Y', strtotime($logro->fecha));
+                            echo $fechaFormateada;
+                            ?>
+                        </td>
+                        <td class="table__td table__td--descripcion">
+                            <?php echo $logro->descripcion ?>
+                        </td>
 
-                            <div data-id="<?php echo $historia->id ?>" class="table__formulario table__formulario--eliminar-historia">
-                                <button type="button" class="table__accion--eliminar">
+                        <td class="table__td">
+
+                            <div class="table__td--acciones">
+                                
+                                <a class="table__accion table__accion--editar" href="/admin/logros/editar?id=<?php echo $logro->id ?>">
+                                    <i class="fa-solid fa-user-pen"></i>
+                                    Editar
+                                </a>
+    
+                                <div data-id="<?php echo $logro->id ?>" class="table__formulario--eliminar-logro table__accion table__accion--eliminar">
                                     <i class="fa-solid fa-circle-xmark"></i>
                                     Eliminar
-                                </button>
+                                </div>
+                                
                             </div>
+
 
                         </td>
                     </tr>

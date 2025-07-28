@@ -14,9 +14,11 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <!-- SweetAlert2 CSS (CDN) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
     <!-- Estilos personalizados -->
     <link rel="stylesheet" href="/build/css/app.css">
-    
 </head>
 
 <body>
@@ -29,6 +31,9 @@
     <script src="/build/js/bundle.min.js" defer></script>
     <script src="/build/js/logros.js" type="module"></script>
     
+    <!-- SweetAlert2 JS (CDN) debe ir después de tus scripts si usas type="module" -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body>
 
 </html>

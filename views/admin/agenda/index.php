@@ -55,12 +55,15 @@
                             <?php echo $evento->nombre ?>
                         </td>
 
-                        <td class="table__td table__td--sinopsis">
+                        <td class="table__td table__td--descripcion">
                             <?php echo (strlen($evento->descripcion) > 600) ? substr($evento->descripcion, 0, 600) . '...' : $evento->descripcion; ?>
                         </td>
 
-                        <td class="table__td table__td--nombre">
-                            <?php echo $evento->fecha ?>
+                        <td class="table__td table__td--fecha">
+                            <?php
+                            $fechaFormateada = date('d-m-Y', strtotime($evento->fecha));
+                            echo $fechaFormateada;
+                            ?>
                         </td>
 
                         <td class="table__td table__td--nombre">
@@ -79,16 +82,14 @@
 
                             <div class="table__td--acciones">
 
-                                <a class="table__accion--editar" href="/admin/agenda/editar?id=<?php echo $evento->id ?>">
+                                <a class="table__accion table__accion--editar" href="/admin/agenda/editar?id=<?php echo $evento->id ?>">
                                     <i class="fa-solid fa-user-pen"></i>
                                     Editar
                                 </a>
 
-                                <div>
-                                    <button data-id="<?php echo $evento->id ?>" class="table__accion--eliminar table__formulario table__formulario--eliminar-evento" type="submit">
-                                        <i class="fa-solid fa-circle-xmark"></i>
-                                        Eliminar
-                                    </button>
+                                <div data-id="<?php echo $evento->id ?>" class="table__accion table__formulario--eliminar-evento table__accion--eliminar">
+                                    <i class="fa-solid fa-circle-xmark"></i>
+                                    Eliminar
                                 </div>
 
                             </div>

@@ -77,26 +77,32 @@
                             <?php echo $miembro->nombre ?>
                         </td>
 
-                        <td class="table__td table__td--sinopsis">
+                        <td class="table__td table__td--descripcion">
                             <?php echo (strlen($miembro->descripcion) > 600) ? substr($miembro->descripcion, 0, 600) . '...' : $miembro->descripcion; ?>
                         </td>
 
                         <td class="table__td">
 
-                            <div class="table__td--items">
-
-                                <?php
-                                    
+                            <?php if($miembro->items) { ?>
+                                
+                                <div class="table__td--items">
+    
+                                    <?php
+    
                                     $items = explode(",", $miembro->items);
-
-                                    foreach($items as $item) { ?>
-
+    
+                                    foreach ($items as $item) { ?>
+    
                                         <div class="table__td--items-item"><?php echo $item ?></div>
-
+    
                                     <?php }
+    
+                                    ?>
+                                </div>
 
-                                ?>
-                            </div>
+                            <?php } else {
+                                echo "No hay";
+                            } ?>
 
                         </td>
 
@@ -104,16 +110,14 @@
 
                             <div class="table__td--acciones">
 
-                                <a class="table__accion--editar" href="/admin/miembrosColectivo/editar?id=<?php echo $miembro->id ?>">
+                                <a class="table__accion table__accion--editar" href="/admin/miembrosColectivo/editar?id=<?php echo $miembro->id ?>">
                                     <i class="fa-solid fa-user-pen"></i>
                                     Editar
                                 </a>
 
-                                <div data-id="<?php echo $miembro->id ?>" class="table__formulario table__formulario--eliminar-pelicula">
-                                    <button class="table__accion--eliminar" type="submit">
-                                        <i class="fa-solid fa-circle-xmark"></i>
-                                        Eliminar
-                                    </button>
+                                <div data-id="<?php echo $miembro->id ?>" class="table__formulario--eliminar-logro table__accion table__formulario--eliminar-miembro table__accion--eliminar">
+                                    <i class="fa-solid fa-circle-xmark"></i>
+                                    Eliminar
                                 </div>
 
                             </div>

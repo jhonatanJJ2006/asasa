@@ -74,7 +74,7 @@
                     accept="application/pdf"
                     multiple
                 >
-                <div class="formulario-administrador__instruccion">Formatos permitidos: PDF. Puedes seleccionar varios.</div>
+                <div class="formulario-administrador__instruccion">Formatos permitidos: PDF.</div>
             </div>
 
         </fieldset>

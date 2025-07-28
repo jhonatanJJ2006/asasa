@@ -53,6 +53,16 @@
                 justify-content: center;
             }
         }
+
+        &--titulo,
+        &--fecha,
+        &--descripcion {
+            text-align: center;
+        }
+
+        &--imagenes {
+            text-align: center;
+        }
     }
 
     &__th-display {
@@ -88,14 +98,19 @@
             font-family: 'Audiowide', sans-serif;
         }
 
-        &--sinopsis {
+        &--descripcion {
             font-size: 1.4rem;
             text-align: left;
+            max-width: 40rem;
+            word-break: break-word;
         }
 
         &--fecha {
             color: v.$azul;
-            font-weight: v.$bold
+            font-weight: v.$bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         &--genero {
@@ -189,11 +204,8 @@
         }
 
         &--items {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            @include m.grid(3, .5rem);
             text-align: center;
-            gap: 1rem;
         }
 
         &--items-item {
@@ -201,6 +213,7 @@
             background-color: v.$primary-color;
             color: v.$blanco;
             font-weight: bold;
+            font-size: 1.2rem;
             border-radius: 1rem;
         }
     }
@@ -233,25 +246,36 @@
         text-transform: uppercase;
         font-size: 1.4rem;
         font-weight: v.$bold;
+        background-color: transparent;
+        border: 1px solid v.$blanco;
+        display: flex;
+        gap: 1rem;
+        font-size: 1.4rem;
+        font-weight: bold;
+        padding: 1rem 2rem;
+        border-radius: 1rem;
+
+        &:hover {
+            cursor: pointer;
+            transition: all .3s ease-in;
+        }
 
         &--editar {
             color: v.$azul;
-            text-align: center;
-            display: flex;
-            gap: 1rem;
+
+            &:hover {
+                background-color: v.$azul;
+                color: v.$blanco;
+            }
         }
 
         &--eliminar {
             color: v.$rojo;
-            background-color: transparent;
-            border: none;
-            display: flex;
-            gap: 1rem;
 
             &:hover {
-                cursor: pointer;
+                background-color: v.$rojo;
+                color: v.$blanco;
             }
-
         }
 
         &--logout {

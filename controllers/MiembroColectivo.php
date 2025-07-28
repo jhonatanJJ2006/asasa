@@ -12,7 +12,7 @@ class MiembroColectivo
     public static function index(Router $router)
     {
 
-        $miembros = Miembro::all();
+        $miembros = Miembro::allHistoria();
 
         $router->render('admin/miembrosColectivo/index', [
             'titulo' => "Miembros Colectivo",
@@ -127,5 +127,55 @@ class MiembroColectivo
             'instagram' => $instagram,
             'tiktok' => $tiktok
         ]);
+    }
+
+    public static function eliminar()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            header('Content-Type: application/json');
+
+            $id = $_POST['id'] ?? null;
+            $id = filter_var($id, FILTER_VALIDATE_INT);
+
+            if (!$id) {
+                http_response_code(400);
+                echo json_encode([
+                    'ok' => false,
+                    'message' => 'ID inválido o no proporcionado'
+                ]);
+                exit;
+            }
+
+            $miembro = Miembro::find($id);
+
+            if ($miembro->imagen) {
+
+                $carpeta_imagenes = '../public/build/img/miembrosColectivo';
+
+                $imgPath = "$carpeta_imagenes/$miembro->imagen";
+
+                if (file_exists("$imgPath.png")) {
+                    unlink("$imgPath.png");
+                }
+                if (file_exists("$imgPath.webp")) {
+                    unlink("$imgPath.webp");
+                }
+            }
+
+            $respuesta = $miembro->eliminar();
+
+            if ($respuesta) {
+                echo json_encode([
+                    'ok' => true,
+                    'message' => 'Miembro eliminado correctamente'
+                ]);
+            } else {
+                http_response_code(500);
+                echo json_encode([
+                    'ok' => false,
+                    'message' => 'No se pudo eliminar el miembro'
+                ]);
+            }
+        }
     }
 }

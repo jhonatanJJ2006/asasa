@@ -1,73 +1,164 @@
+@use 'base/mixins' as m;
+@use 'base/variables' as v;
+
 .map {
   width: 100%;
-  padding: 0 3rem 3rem 3rem;
-  margin: 0 auto;
-
+  padding: 0;
+  margin: 0;
   display: flex;
-  flex-wrap: wrap;
-  gap: 2rem; /* separación entre columnas */
+  flex-direction: column;
   box-sizing: border-box;
-  height: 100vh; /* para que ocupe toda la altura de la ventana */
+  height: auto;
+  position: relative;
+
+  @include m.tablet() {
+    height: 50vh;
+  }
+
+  @include m.desktop() {
+    height: 100vh;
+  }
 }
 
 #container {
-  flex: 1 1 60%;
-  min-width: 320px;
+  width: 100%;
   height: 100%;
   background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  border-radius: 10px;
   overflow: hidden;
-  border: 1px solid transparent; /* puedes cambiar o quitar el borde */
-}
-
-.info-section {
-  flex: 1 1 35%;
-  min-width: 280px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  box-sizing: border-box;
-
-  /* Puedes personalizar colores, fondo, etc aquí */
-}
-
-.swiper-container {
-  flex: 1;
-  border-radius: 8px;
-  background: #222;
-  color: white;
-  overflow: hidden;
-  box-sizing: border-box;
-  border: 1px solid #666;
-}
-
-.extra-texts {
-  padding: 1rem;
-  background: #111;
-  border-radius: 8px;
-  color: white;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  overflow-y: auto;
-  max-height: 150px;
 }
 
 #info-popup {
   position: fixed;
   pointer-events: none;
-  background: rgba(30, 30, 30, 0.9);
+  background: rgba(18, 18, 18, 0.95);
   color: white;
-  padding: 10px 15px;
-  border-radius: 8px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 16px;
+  border-radius: 12px;
+  font-family: 'Segoe UI', sans-serif;
   font-size: 14px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
   z-index: 1000;
-  max-width: 320px; /* un poco más ancho para el swiper */
+  max-width: 90vw;
+  width: 300px;
   display: none;
+  backdrop-filter: blur(5px);
+  transition: all 0.2s ease;
+}
+
+#info-popup h3 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  color: #fff;
+}
+
+#info-popup .swiper-container {
+  width: 100%;
+  height: 160px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+#info-popup .swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#info-popup .swiper-pagination-bullet {
+  background: white;
+  opacity: 0.6;
+}
+
+#info-popup .swiper-pagination-bullet-active {
+  opacity: 1;
+}
+
+#info-popup .swiper-button-prev,
+#info-popup .swiper-button-next {
+  color: white;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.swal2-popup-canton {
+  border-radius: 18px !important;
+  background: #181c24 !important;
+  color: #fff !important;
+  box-shadow: 0 16px 44px rgba(34, 44, 68, 0.25);
+  padding: 32px 32px 30px 32px !important;
+  max-width: 90%;
+  min-width: 90%;
+  font-family: 'Segoe UI', 'Arial', sans-serif;
+
+  .swal2-title {
+    font-size: 28px;
+    color: #fff;
+    margin-bottom: 18px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    text-align: center;
+  }
+
+  .swal2-html-container {
+    padding: 0;
+    margin: 0;
+  }
+
+  .swiper-container {
+    width: 100%;
+    height: 220px;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    background: #232a3a;
+
+    // Oculta flechas y paginación
+    .swiper-button-prev,
+    .swiper-button-next,
+    .swiper-pagination {
+      display: none !important;
+    }
+  }
+
+  .swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    background: #222;
+  }
+
+  .extra-texts {
+    margin-top: 22px;
+    font-size: 17px;
+    color: #f3f6fa;
+    max-height: 180px;
+    overflow-y: auto;
+    font-family: 'Merriweather Sans', 'Open Sans', Arial, sans-serif;
+    padding: 20px 20px 18px 20px;
+    text-align: left;
+    line-height: 1.68;
+    border-radius: 16px;
+    background: linear-gradient(120deg, rgba(28, 36, 50, 0.75) 40%, rgba(56, 74, 114, 0.38) 100%);
+    box-shadow: 0 2px 14px 0 rgba(34, 44, 61, 0.18);
+    border: 1.5px solid rgba(81, 112, 177, 0.18);
+    transition: box-shadow 0.2s;
+  }
+
+  .extra-texts::-webkit-scrollbar {
+    width: 6px;
+    background: rgba(50, 58, 79, 0.06);
+    border-radius: 8px;
+  }
+
+  .extra-texts::-webkit-scrollbar-thumb {
+    background: rgba(90, 122, 180, 0.12);
+    border-radius: 8px;
+  }
+
 }

@@ -55,24 +55,35 @@
                         <td class="table__td">
                             <?php echo $historia->autor ?>
                         </td>
-                        <td class="table__td">
-                            <?php echo $historia->created_at ?>
-                        </td>
-                        <td class="table__td">
-                            <?php echo $historia->updated_at ?>
+
+                        <td class="table__td table__td--fecha">
+                            <?php
+                            $fechaFormateada = date('d-m-Y', strtotime($historia->created_at));
+                            echo $fechaFormateada;
+                            ?>
                         </td>
 
-                        <td class="table__td--acciones">
-                            <a class="table__accion--editar" href="/admin/historyteling/editar?id=<?php echo $historia->id ?>">
-                                <i class="fa-solid fa-user-pen"></i>
-                                Editar
-                            </a>
+                        <td class="table__td table__td--fecha">
+                            <?php
+                            $fechaFormateada = date('d-m-Y', strtotime($historia->updated_at));
+                            echo $fechaFormateada;
+                            ?>
+                        </td>
 
-                            <div data-id="<?php echo $historia->id ?>" class="table__formulario table__formulario--eliminar-historia">
-                                <button type="button" class="table__accion--eliminar">
+                        <td class="table__td">
+
+                            <div class="table__td--acciones">
+
+                                <a class="table__accion table__accion--editar" href="/admin/historyteling/editar?id=<?php echo $historia->id ?>">
+                                    <i class="fa-solid fa-user-pen"></i>
+                                    Editar
+                                </a>
+
+                                <div data-id="<?php echo $historia->id ?>" class="table__accion table__formulario--eliminar-historia table__accion--eliminar">
                                     <i class="fa-solid fa-circle-xmark"></i>
                                     Eliminar
-                                </button>
+                                </div>
+
                             </div>
 
                         </td>

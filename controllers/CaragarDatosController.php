@@ -2,6 +2,9 @@
 
 namespace Controllers;
 
+use Model\Canton;
+use Model\EventoMapa;
+
 class CaragarDatosController
 {
 
@@ -10,9 +13,9 @@ class CaragarDatosController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            
+            $eventos = EventoMapa::all();
 
-            echo json_encode(['response' => true]);
+            echo json_encode(['response' => $eventos]);
         } else {
             echo json_encode(['response' => false, 'error' => 'Método no permitido']);
         }

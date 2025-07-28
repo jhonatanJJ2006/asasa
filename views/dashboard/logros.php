@@ -1,6 +1,6 @@
 <section class="logros" id="logros">
   <div class="logros__contenedor">
-    <h2 class="logros__titulo">Logros para Loja</h2>
+    <h2 class="logros__titulo">Logros para Loja y el País</h2>
     <div class="logros__timeline-container">
       <div class="logros__indicacion">
         Desliza horizontalmente o arrastra con el mouse para moverte en la línea de tiempo.<br>
@@ -15,7 +15,7 @@
         <div class="logros__modal-content" id="logrosModalContent">
           <div class="logro-modal__flex">
             <div class="logro-modal__img-wrap">
-              <img src="/build/img/logros/ejemplo.png" alt="Logro" />
+              <img src="" alt="Logro" />
             </div>
             <div class="logro-modal__info">
               <h3>Título del logro</h3>
@@ -34,3 +34,23 @@
     <div class="logros__fecha-actual" id="fechaActual"></div>
   </div>
 </section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const logrosSection = document.querySelector('.logros');
+    if (logrosSection) {
+      Swal.fire({
+        title: 'Logros para Loja y el País',
+        text: '¡Explora la línea de tiempo y descubre los principales hitos!',
+        showConfirmButton: false,
+        timer: 5200,
+        timerProgressBar: true,
+        background: 'linear-gradient(135deg, #14524a 0%, #22405e 75%, #2f7ad8 100%)',
+        color: '#fff',
+        customClass: {
+          popup: 'swal2-popup-logros-custom'
+        }
+      });
+    }
+  });
+</script>

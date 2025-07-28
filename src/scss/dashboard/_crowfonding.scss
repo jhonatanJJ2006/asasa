@@ -1,0 +1,93 @@
+.crowdfunding {
+    margin: 2.5rem auto 1.5rem auto;
+    padding: 0 1rem;
+    border-radius: 1rem;
+    background: linear-gradient(120deg, #f3faf6 70%, #d8e8f6 100%);
+    box-shadow: 0 2px 18px 0 #14334d18;
+    width: 90%;
+    max-width: 900px;
+
+    &__container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 3rem;
+
+        @media (max-width: 800px) {
+            flex-direction: column;
+            gap: 1.6rem;
+        }
+    }
+
+    &__img-wrap {
+        flex: 0 0 260px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        img {
+            width: 260px;
+            max-width: 40vw;
+            border-radius: 1rem 0 0 1rem;
+            box-shadow: 0 2px 18px #1d22352c;
+            object-fit: cover;
+            background: #fff;
+
+            @media (max-width: 600px) {
+                width: 90vw;
+                max-width: 340px;
+            }
+        }
+    }
+
+    &__info {
+        flex: 1 1 320px;
+        text-align: left;
+
+        @media (max-width: 800px) {
+            text-align: center;
+        }
+    }
+
+    &__title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #147044;
+        margin-bottom: 0.8rem;
+    }
+
+    &__desc {
+        font-size: 1.15rem;
+        color: #234;
+        margin-bottom: 1.6rem;
+        line-height: 1.6;
+    }
+
+    &__donate-btn {
+        display: inline-block;
+        padding: 13px 28px;
+        background: #2f7ad8;
+        color: #fff;
+        border-radius: 7px;
+        font-size: 1.16rem;
+        font-weight: 600;
+        box-shadow: 0 4px 18px #2f7ad82a;
+        transition: background 0.17s, box-shadow 0.17s;
+        text-decoration: none;
+        cursor: pointer;
+        border: none;
+
+        i {
+            margin-right: 10px;
+            font-size: 1.35em;
+            vertical-align: middle;
+        }
+
+        &:hover {
+            background: #195bb5;
+            color: #fff;
+            box-shadow: 0 8px 24px #195bb525;
+            text-decoration: none;
+        }
+    }
+}

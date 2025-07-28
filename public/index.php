@@ -73,14 +73,18 @@ $router->get('/admin/about', [AdminController::class, 'about']);
     // Miembros Colectivo
 $router->get('/admin/miembrosColectivo', [MiembroColectivo::class, 'index']);
 $router->get('/admin/miembrosColectivo/crear', [MiembroColectivo::class, 'crear']);
+$router->get('/admin/miembrosColectivo/editar', [MiembroColectivo::class, 'editar']);
 $router->post('/admin/miembrosColectivo/crear/subirMiembro', [MiembroColectivo::class, 'subirMiembroColectivo']);
 
-$router->get('/admin/miembrosColectivo/editar', [MiembroColectivo::class, 'editar']);
+$router->post('/admin/miembrosColectivo/eliminar', [MiembroColectivo::class, 'eliminar']);
 
     // Logros
 $router->get('/admin/logros', [AdminController::class, 'logros']);
 $router->get('/admin/logros/crear', [AdminController::class, 'logrosCrear']);
+$router->get('/admin/logros/editar', [AdminController::class, 'logrosEditar']);
 $router->post('/admin/logros/crear/subirLogro', [AdminController::class, 'logrosSubir']);
+$router->post('/admin/logros/editar/subirLogro', [AdminController::class, 'logrosSubirEditar']);
+$router->post('/admin/logros/eliminar', [AdminController::class, 'logrosEliminar']);
 
     // Propuestas
 $router->get('/admin/propuestas', [AdminController::class, 'propuestas']);
@@ -98,7 +102,11 @@ $router->post('/admin/historyteling/eliminar', [AdminController::class, 'history
 
     // Mapa
 $router->get('/admin/mapa', [AdminController::class, 'mapa']);
-$router->get('/admin/mapa/canton', [AdminController::class, 'mapaCanton']);
+$router->get('/admin/mapa/crear', [AdminController::class, 'mapaCrear']);
+$router->get('/admin/mapa/editar', [AdminController::class, 'mapaEditar']);
+$router->post('/admin/mapa/SubirDatos', [AdminController::class, 'mapaSubirDatos']);
+$router->post('/admin/mapa/subirEditar', [AdminController::class, 'mapaEditSubir']);
+$router->post('/admin/mapa/eliminar', [AdminController::class, 'mapaEliminar']);
 
     // Agenda
 $router->get('/admin/agenda', [AdminController::class, 'agenda']);
