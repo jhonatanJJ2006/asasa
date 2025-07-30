@@ -23,7 +23,7 @@ class AdminController
     {
 
         $router->render('admin/about', [
-            'titulo' => "Acerca De"
+            'titulo' => "Mi Historia"
         ]);
     }
     public static function logros(Router $router)

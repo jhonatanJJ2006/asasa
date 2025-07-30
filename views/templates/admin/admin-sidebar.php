@@ -2,7 +2,7 @@
     <nav class="admin__menu">
         <a class="admin__enlace <?php echo pagina_actual('/admin/about') ? 'admin__enlace--actual' : '' ?>" href="/admin/about">
             <i class="admin__icono fa-solid fa-circle-info"></i>
-            <span class="admin__menu-texto">Acerca De</span>
+            <span class="admin__menu-texto">Mi Historia</span>
         </a>
 
         <a class="admin__enlace <?php echo pagina_actual('/admin/miembrosColectivo') ? 'admin__enlace--actual' : '' ?>" href="/admin/miembrosColectivo">

@@ -11,7 +11,7 @@ p, div {
 
 .titulo {
     text-transform: uppercase;
-    font-size: 3.5rem;
+    font-size: 2rem;
     font-weight: v.$bold;
     color: v.$primary-color;
     display: flex;
@@ -19,6 +19,10 @@ p, div {
     padding: 3rem 1rem;
     margin: 0;
     text-align: center;
+
+    @include m.tablet {
+        font-size: 3.5rem;
+    }
 }
 
 h1 {

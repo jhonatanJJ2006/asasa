@@ -3,10 +3,10 @@
   
   <nav>
     <ul class="header__nav">
-      <li class="header__nav--item"><a href="/aboutme">Acerca De</a></li>
+      <li class="header__nav--item"><a href="/aboutme">Mi Historia</a></li>
       <li class="header__nav--item"><a href="logros">Logros</a></li>
       <li class="header__nav--item"><a href="propuestas">Propuestas</a></li>
-      <li class="header__nav--item"><a href="historyteling">HistoryTeling</a></li>
+      <li class="header__nav--item"><a href="historyteling">Para Contar</a></li>
       <li class="header__nav--item"><a href="agenda">Agenda</a></li>
     </ul>
   </nav>
@@ -36,10 +36,10 @@
 <nav class="header__nav--2">
   <h1 class="header__nav--2__title">Menú</h1>
   <ul>
-    <li><a href="/aboutme">Acerca De</a></li>
+    <li><a href="/aboutme">Mi Historia</a></li>
     <li><a href="logros">Logros</a></li>
     <li><a href="propuestas">Propuestas</a></li>
-    <li><a href="historyteling">HistoryTeling</a></li>
+    <li><a href="historyteling">Para Contar</a></li>
     <li><a href="agenda">Agenda</a></li>
     <li><a href="/admin">Admin</a></li>
   </ul>

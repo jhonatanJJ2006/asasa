@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Model\Evento;
 use Model\Historia;
 use Model\Logro;
 use Model\Miembro;
@@ -25,7 +26,7 @@ class DashboardController
     {
 
         $router->render('dashboard/aboutMe', [
-            'titulo' => "Acerca De"
+            'titulo' => "Mi Historia"
         ]);
     }
 
@@ -78,12 +79,30 @@ class DashboardController
 
         echo json_encode($resultado, JSON_UNESCAPED_UNICODE);
     }
+    public static function getEventos()
+    {
+        // Permite solicitudes CORS (si tu API es pública/front)
+        header('Access-Control-Allow-Origin: *');
+        header('Content-Type: application/json; charset=UTF-8');
+
+        // Solo responder a GET
+        if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+            http_response_code(405);
+            echo json_encode(['error' => 'Método no permitido']);
+            exit;
+        }
+
+        // Obtener todos los eventos
+        $eventos = Evento::all();
+
+        echo json_encode($eventos, JSON_UNESCAPED_UNICODE);
+    }
     public static function historyTeling(Router $router)
     {
         $historias = Historia::all();
 
         $router->render('dashboard/historyTeling', [
-            'titulo' => "History Teling",
+            'titulo' => "Para Contar Antes de Olvidar",
             'historias' => $historias
         ]);
     }

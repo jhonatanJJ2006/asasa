@@ -1,11 +1,13 @@
+@use 'base/mixins' as m;
+@use 'base/variables' as v;
+
 .crowdfunding {
+    @include m.contenedor();
     margin: 2.5rem auto 1.5rem auto;
     padding: 0 1rem;
     border-radius: 1rem;
     background: linear-gradient(120deg, #f3faf6 70%, #d8e8f6 100%);
     box-shadow: 0 2px 18px 0 #14334d18;
-    width: 90%;
-    max-width: 900px;
 
     &__container {
         display: flex;

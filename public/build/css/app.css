@@ -337,7 +337,7 @@ p, div {
 
 .titulo {
   text-transform: uppercase;
-  font-size: 3.5rem;
+  font-size: 2rem;
   font-weight: 700;
   color: #2C6E49;
   display: flex;
@@ -345,6 +345,11 @@ p, div {
   padding: 3rem 1rem;
   margin: 0;
   text-align: center;
+}
+@media (min-width: 768px) {
+  .titulo {
+    font-size: 3.5rem;
+  }
 }
 
 h1 {
@@ -1617,13 +1622,18 @@ h3 {
   justify-content: center;
 }
 .acerca__contenido {
-  max-width: 85%;
+  max-width: 95%;
   width: 100%;
   padding: 3rem;
   border-radius: 1rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08), 2px 8px 16px rgba(0, 0, 0, 0.12);
   background-color: #fff;
   position: relative;
+}
+@media (min-width: 768px) {
+  .acerca__contenido {
+    max-width: 85%;
+  }
 }
 .acerca__titulo {
   width: 100%;
@@ -2160,7 +2170,6 @@ h3 {
   color: #f0f0f0;
   padding: 3rem 2rem;
   border-radius: 12px;
-  max-width: 600px;
   margin: 2rem auto;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -2428,8 +2437,9 @@ h3 {
   padding: 1rem;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   width: 90%;
-  max-width: 900px;
   margin-bottom: 3rem;
+  width: min(95%, 120rem);
+  margin: 0 auto;
 }
 
 .calendario-header {
@@ -2490,12 +2500,17 @@ h3 {
 .dia-celda {
   background-color: #fafafa;
   border-radius: 8px;
-  min-height: 90px;
+  min-height: 6rem;
   padding: 0.5rem;
   position: relative;
   border: 1px solid #eee;
   transition: border 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
+}
+@media (min-width: 768px) {
+  .dia-celda {
+    min-height: 9rem;
+  }
 }
 .dia-celda:hover {
   border-color: #6c5ce7;
@@ -2510,6 +2525,7 @@ h3 {
   position: absolute;
   top: 6px;
   right: 8px;
+  margin-bottom: 1rem;
 }
 @media (max-width: 480px) {
   .dia-celda .numero-dia {
@@ -2519,12 +2535,12 @@ h3 {
   }
 }
 .dia-celda .evento {
-  margin-top: 1.2rem;
+  margin-top: 1.4rem;
   background-color: #6c5ce7;
   color: white;
   border-radius: 6px;
   padding: 4px 8px;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   white-space: normal;
   word-break: break-word;
@@ -2564,13 +2580,13 @@ h3 {
 }
 
 .crowdfunding {
+  width: min(95%, 120rem);
+  margin: 0 auto;
   margin: 2.5rem auto 1.5rem auto;
   padding: 0 1rem;
   border-radius: 1rem;
   background: linear-gradient(120deg, #f3faf6 70%, #d8e8f6 100%);
   box-shadow: 0 2px 18px 0 rgba(20, 51, 77, 0.0941176471);
-  width: 90%;
-  max-width: 900px;
 }
 .crowdfunding__container {
   display: flex;

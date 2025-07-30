@@ -1,6 +1,6 @@
 <div class="historia__contenedor2">
 
-    <h1 class="titulo">Historias</h1>
+    <h1 class="titulo"><?php echo $titulo ?></h1>
     
     <?php foreach ($historias as $historia): ?>
         <section class="historia">

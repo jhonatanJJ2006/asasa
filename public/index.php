@@ -41,6 +41,7 @@ $router->get('/confirmar-cuenta', [AuthController::class, 'confirmar']);
 // Api
 // =====================================================================================
 $router->get('/api/logros', [DashboardController::class, 'getLogros']);
+$router->get('/api/eventos', [DashboardController::class, 'getEventos']);
 
 
 // =====================================================================================
@@ -89,7 +90,7 @@ $router->post('/admin/logros/eliminar', [AdminController::class, 'logrosEliminar
     // Propuestas
 $router->get('/admin/propuestas', [AdminController::class, 'propuestas']);
 
-    // History Teling
+    // Para Contar
 $router->get('/admin/historyteling', [AdminController::class, 'historyTeling']);
 
 $router->get('/admin/historyteling/crear', [AdminController::class, 'historytelingCrear']);
