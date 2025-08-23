@@ -91,6 +91,83 @@ class MiembroColectivo
             }
         }
     }
+    public static function MiembroEditar()
+    {
+        
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $id = $_POST['id'];
+            $id = filter_var($id, FILTER_VALIDATE_INT);
+
+            if (!$id) return;
+
+            $miembro = Miembro::find($id);
+            $imagenAnterior = $miembro->imagen;
+
+            $nombre = $_POST['nombre'] ?? null;
+            $descripcion = $_POST['descripcion'] ?? null;
+
+            $imagen = $_FILES['imagen'] ?? null;
+            $tags = $_POST['tags'] ?? null;
+
+            if (isset($_POST['redes'])) {
+                $json = $_POST['redes'];
+                $redes = json_decode($json, true);
+
+                if (json_last_error() === JSON_ERROR_NONE) {
+                    $redesDb = [];
+
+                    foreach ($redes as $red) {
+                        $redesDb[] = $red['id'] . ',' . $red['valor'] . ':';
+                    }
+
+                    $redFormat = rtrim(join('', $redesDb), ':');
+                    $miembro->redes = $redFormat;
+                } else {
+                    echo "Error al decodificar JSON: " . json_last_error_msg();
+                    return;
+                }
+            }
+
+            // Procesar imagen si se ha subido una nueva
+            if (!empty($imagen['tmp_name'])) {
+                $carpetaImagenes = '../public/build/img/miembrosColectivo';
+
+                // Crear la carpeta si no existe
+                if (!is_dir($carpetaImagenes)) {
+                    mkdir($carpetaImagenes, 0755, true);
+                }
+
+                // Borrar imágenes anteriores (png y webp)
+                if ($imagenAnterior) {
+                    $pngAnterior = "$carpetaImagenes/{$imagenAnterior}.png";
+                    $webpAnterior = "$carpetaImagenes/{$imagenAnterior}.webp";
+
+                    if (file_exists($pngAnterior)) unlink($pngAnterior);
+                    if (file_exists($webpAnterior)) unlink($webpAnterior);
+                }
+
+                $nombreImagen = md5(uniqid(rand(), true));
+
+                // Redimensionar y guardar en PNG y WebP
+                $imagenPng = Image::make($imagen['tmp_name'])->encode('png', 80);
+                $imagenWebp = Image::make($imagen['tmp_name'])->encode('webp', 80);
+
+                $imagenPng->save("$carpetaImagenes/$nombreImagen.png");
+                $imagenWebp->save("$carpetaImagenes/$nombreImagen.webp");
+
+                $miembro->imagen = $nombreImagen;
+            }
+
+            $miembro->nombre = $nombre;
+            $miembro->descripcion = $descripcion;
+            $miembro->items = $tags;
+
+            $respuesta = $miembro->guardar();
+
+            echo json_encode(['success' => $respuesta]);
+        }
+    }
     public static function editar(Router $router)
     {
 

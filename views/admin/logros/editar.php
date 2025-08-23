@@ -136,7 +136,7 @@
         </fieldset>
 
         <button type="submit" class="formulario-administrador__boton formulario-administrador__boton--logro-editar">
-            Registrar Logro
+            Actualizar Logro
         </button>
     </form>
 </div>

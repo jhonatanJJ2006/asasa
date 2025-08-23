@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Model\About;
 use Model\Evento;
 use Model\EventoMapa;
 use Model\Historia;
@@ -22,9 +23,162 @@ class AdminController
     public static function about(Router $router)
     {
 
-        $router->render('admin/about', [
+        $router->render('admin/about/index', [
             'titulo' => "Mi Historia"
         ]);
+    }
+    public static function aboutCrear(Router $router)
+    {
+
+        $router->render('admin/about/crear', [
+            'titulo' => "Crear"
+        ]);
+    }
+    public static function aboutGuardar()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            header('Content-Type: application/json');
+
+            $frase        = $_POST['frase']       ?? null;
+            $descripcion  = $_POST['descripcion'] ?? null;
+            $numero       = $_POST['numero']      ?? null;
+            $email        = $_POST['email']       ?? null;
+
+            $errores = [];
+
+            // Validaciones
+            if (!$frase) {
+                $errores[] = "La frase es obligatoria";
+            }
+            if (!$numero) {
+                $errores[] = "El número es obligatorio";
+            }
+            if (!$email) {
+                $errores[] = "El email es obligatorio";
+            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $errores[] = "El email no es válido";
+            }
+
+            // Validar CV
+            if (!isset($_FILES['cv']) || $_FILES['cv']['error'] === UPLOAD_ERR_NO_FILE) {
+                $errores[] = "El archivo de CV es obligatorio";
+            } else {
+                $cvInfo = $_FILES['cv'];
+                if ($cvInfo['type'] !== 'application/pdf') {
+                    $errores[] = "El CV debe ser un archivo PDF";
+                }
+            }
+
+            // Validar imágenes
+            if (!isset($_FILES['imagenes']) || empty($_FILES['imagenes']['tmp_name'][0])) {
+                $errores[] = "Debes subir al menos una imagen";
+            }
+
+            if (!empty($errores)) {
+                echo json_encode(['success' => false, 'message' => implode('<br>', $errores)]);
+                exit;
+            }
+
+            // Procesar imágenes
+            $imagenesNombres = [];
+            $carpetaImagenes = '../public/build/img/about';
+            if (!is_dir($carpetaImagenes)) {
+                mkdir($carpetaImagenes, 0755, true);
+            }
+            foreach ($_FILES['imagenes']['tmp_name'] as $i => $tmp_name) {
+                if (!empty($tmp_name)) {
+                    $nombreImagen = md5(uniqid(rand(), true));
+                    // Usas Intervention Image para convertir y guardar (como en tu ejemplo)
+                    $imagenPng = Image::make($tmp_name)->encode('png', 80);
+                    $imagenWebp = Image::make($tmp_name)->encode('webp', 80);
+
+                    $imagenPng->save("$carpetaImagenes/$nombreImagen.png");
+                    $imagenWebp->save("$carpetaImagenes/$nombreImagen.webp");
+
+                    $imagenesNombres[] = $nombreImagen;
+                }
+            }
+            $imagenesSerializadas = json_encode($imagenesNombres);
+
+            // Procesar CV
+            $carpetaCV = '../public/build/cv';
+            if (!is_dir($carpetaCV)) {
+                mkdir($carpetaCV, 0755, true);
+            }
+            $nombreCV = md5(uniqid(rand(), true)) . '.pdf';
+            move_uploaded_file($_FILES['cv']['tmp_name'], "$carpetaCV/$nombreCV");
+
+            $about = new About();
+            $about->frase = $frase;
+            $about->descripcion = $descripcion;
+            $about->numero = $numero;
+            $about->email = $email;
+            $about->imagenes = $imagenesSerializadas;
+            $about->cv = $nombreCV;
+
+
+            $resultado = $about->guardar();
+
+            if ($resultado) {
+                echo json_encode(['success' => true, 'message' => 'Información guardada correctamente']);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Error al guardar en la base de datos']);
+            }
+        }
+    }
+    public static function logrosCrearDestacado()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            header('Content-Type: application/json');
+
+            $id = $_POST['id'];
+
+            if (!$id) {
+                echo json_encode(['success' => false, 'message' => 'ID inválido o no proporcionado']);
+                exit;
+            }
+
+            $logro = Logro::find($id);
+
+            $logro->destacado = 1;
+
+            $resultado = $logro->guardar();
+
+            if ($resultado) {
+                echo json_encode(['success' => true, 'message' => 'Logro añadido a destacados correctamente']);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Error al añadir el logro a destacados']);
+            }
+        }
+    }
+
+    public static function logrosEliminarDestacado() {
+
+        if($_SERVER["REQUEST_METHOD"] == "POST") {
+
+            header('Content-Type: application/json');
+
+            $id = $_POST['id'];
+
+            if (!$id) {
+                echo json_encode(['success' => false, 'message' => 'ID inválido o no proporcionado']);
+                exit;
+            }
+
+            $logro = Logro::find($id);
+
+            $logro->destacado = 0;
+
+            $resultado = $logro->guardar();
+
+            if ($resultado) {
+                echo json_encode(['success' => true, 'message' => 'Logro eliminado de destacados correctamente']);
+            } else {
+                echo json_encode(['success' => false, 'message' => 'Error al eliminar el logro de destacados']);
+            }
+
+        }
+
     }
     public static function logros(Router $router)
     {
@@ -331,39 +485,84 @@ class AdminController
             date_default_timezone_set('America/Guayaquil');
             header('Content-Type: application/json');
 
-            $titulo = $_POST['titulo'] ?? null;
-            $sinopsis = $_POST['sinopsis'] ?? null; // Viene como HTML desde Quill
-            $autor = $_POST['autor'] ?? null;
+            try {
+                // Obtener y validar datos del formulario
+                $titulo = trim($_POST['titulo'] ?? '');
+                $sinopsis = trim($_POST['sinopsis'] ?? ''); // Viene como HTML del editor enriquecido
+                $autor = trim($_POST['autor'] ?? '');
 
-            if (!$titulo || !$sinopsis || !$autor) {
-                http_response_code(400);
-                echo json_encode(['ok' => false, 'message' => 'Todos los campos son obligatorios']);
-                return;
-            }
+                // Validaciones básicas
+                if (empty($titulo)) {
+                    throw new \Exception('El título es obligatorio');
+                }
 
-            $historia = new Historia([
-                'titulo' => $titulo,
-                'sinopsis' => $sinopsis,
-                'autor' => $autor
-            ]);
+                if (empty($sinopsis)) {
+                    throw new \Exception('La sinopsis es obligatoria');
+                }
 
-            $resultado = $historia->guardar();
+                if (empty($autor)) {
+                    throw new \Exception('El autor es obligatorio');
+                }
 
-            if ($resultado) {
-                echo json_encode([
-                    'ok' => true,
-                    'message' => 'Historia guardada correctamente',
-                    'id' => $historia->id
+                // Validaciones adicionales
+                if (strlen($titulo) < 3) {
+                    throw new \Exception('El título debe tener al menos 3 caracteres');
+                }
+
+                if (strlen($titulo) > 200) {
+                    throw new \Exception('El título no puede exceder 200 caracteres');
+                }
+
+                if (strlen($autor) < 2) {
+                    throw new \Exception('El nombre del autor debe tener al menos 2 caracteres');
+                }
+
+                if (strlen($autor) > 100) {
+                    throw new \Exception('El nombre del autor no puede exceder 100 caracteres');
+                }
+
+                // Sanitizar HTML de la sinopsis (permitir solo tags seguros)
+                $sinopsis = strip_tags($sinopsis, '<p><br><strong><b><em><i><u><a><ul><ol><li><img><picture><source>');
+
+                // Crear nueva historia
+                $historia = new Historia([
+                    'titulo' => $titulo,
+                    'sinopsis' => $sinopsis,
+                    'autor' => $autor,
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s')
                 ]);
-            } else {
-                http_response_code(500);
+
+                // Intentar guardar en la base de datos
+                $resultado = $historia->guardar();
+
+                if ($resultado) {
+                    echo json_encode([
+                        'ok' => true,
+                        'message' => 'Historia guardada correctamente',
+                        'id' => $historia->id,
+                        'redirect' => '/admin/historyteling'
+                    ]);
+                } else {
+                    throw new \Exception('Error al guardar en la base de datos. Verifica la conexión.');
+                }
+
+            } catch (\Exception $e) {
+                http_response_code(400);
                 echo json_encode([
                     'ok' => false,
-                    'message' => 'Error al guardar la historia'
+                    'message' => $e->getMessage()
                 ]);
             }
+        } else {
+            http_response_code(405);
+            echo json_encode([
+                'ok' => false,
+                'message' => 'Método no permitido'
+            ]);
         }
     }
+
     public static function historytelingEditar(Router $router)
     {
 
@@ -1019,6 +1218,92 @@ class AdminController
                     'message' => 'No se pudo eliminar el evento'
                 ]);
             }
+        }
+    }
+
+    // Endpoint para subir imágenes del editor
+    public static function uploadImage()
+    {
+        header('Content-Type: application/json');
+        
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            http_response_code(405);
+            echo json_encode([
+                'success' => false,
+                'message' => 'Método no permitido'
+            ]);
+            return;
+        }
+
+        try {
+            // Verificar que se envió una imagen
+            if (!isset($_FILES['image']) || $_FILES['image']['error'] !== UPLOAD_ERR_OK) {
+                throw new \Exception('No se recibió ninguna imagen válida');
+            }
+
+            $imagen = $_FILES['image'];
+            
+            // Validar tipo de archivo
+            $tiposPermitidos = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/avif'];
+            if (!in_array($imagen['type'], $tiposPermitidos)) {
+                throw new \Exception('Tipo de archivo no permitido. Solo se aceptan: JPG, PNG, WEBP, AVIF');
+            }
+
+            // Validar tamaño (máximo 5MB)
+            $tamañoMaximo = 5 * 1024 * 1024; // 5MB
+            if ($imagen['size'] > $tamañoMaximo) {
+                throw new \Exception('El archivo es demasiado grande. Máximo 5MB permitido');
+            }
+
+            // Crear carpeta si no existe
+            $carpetaImagenes = '../public/build/img/historias';
+            if (!is_dir($carpetaImagenes)) {
+                mkdir($carpetaImagenes, 0755, true);
+            }
+
+            // Generar nombre único
+            $nombreImagen = md5(uniqid(rand(), true));
+            
+            // Procesar y guardar imagen usando Intervention Image
+            $imagenPng = Image::make($imagen['tmp_name'])->encode('png', 90);
+            $imagenWebp = Image::make($imagen['tmp_name'])->encode('webp', 90);
+
+            // Redimensionar si es muy grande (máximo 1200px de ancho)
+            if ($imagenPng->width() > 1200) {
+                $imagenPng->resize(1200, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $imagenWebp->resize(1200, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+            }
+
+            // Guardar las imágenes
+            $imagenPng->save("$carpetaImagenes/$nombreImagen.png");
+            $imagenWebp->save("$carpetaImagenes/$nombreImagen.webp");
+
+            // Construir URLs públicas
+            $urlPng = "/build/img/historias/$nombreImagen.png";
+            $urlWebp = "/build/img/historias/$nombreImagen.webp";
+
+            echo json_encode([
+                'success' => true,
+                'message' => 'Imagen subida correctamente',
+                'data' => [
+                    'filename' => $nombreImagen,
+                    'url_png' => $urlPng,
+                    'url_webp' => $urlWebp,
+                    'size' => $imagen['size'],
+                    'type' => $imagen['type']
+                ]
+            ]);
+
+        } catch (\Exception $e) {
+            http_response_code(400);
+            echo json_encode([
+                'success' => false,
+                'message' => $e->getMessage()
+            ]);
         }
     }
 }

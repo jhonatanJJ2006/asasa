@@ -1,3 +1,5 @@
+<h2 class="section-title">Miembros Colectivo</h2>
+
 <div class="cards">
     <?php foreach ($miembros as $miembro) { ?>
 

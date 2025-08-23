@@ -139,35 +139,49 @@
             }
 
             // ENVÍO AJAX
+            Swal.fire({
+                title: 'Cargando...',
+                text: 'Por favor espera mientras se guarda el logro.',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
             fetch('/admin/logros/crear/subirLogro', {
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data === 'success') {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Logro registrado correctamente',
-                        confirmButtonText: 'Aceptar'
-                    }).then(() => {
-                        window.location.href = '/admin/logros';
-                    });
-                } else {
+                .then(response => response.json())
+                .then(data => {
+                    Swal.close(); // Cierra el loader
+
+                    if (data === 'success') {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Logro registrado correctamente',
+                            confirmButtonText: 'Aceptar'
+                        }).then(() => {
+                            window.location.href = '/admin/logros';
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Ocurrió un error al guardar el logro.',
+                            text: 'Intenta nuevamente.'
+                        });
+                    }
+                })
+                .catch(error => {
+                    Swal.close(); // Cierra el loader si hay error
                     Swal.fire({
                         icon: 'error',
-                        title: 'Ocurrió un error al guardar el logro.',
-                        text: 'Intenta nuevamente.'
+                        title: 'Ocurrió un error de red.',
+                        text: 'Verifica tu conexión e intenta otra vez.'
                     });
-                }
-            })
-            .catch(error => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Ocurrió un error de red.',
-                    text: 'Verifica tu conexión e intenta otra vez.'
                 });
-            });
+
         });
     }
 

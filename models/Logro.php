@@ -2,7 +2,8 @@
 
 namespace Model;
 
-class Logro extends ActiveRecord {
+class Logro extends ActiveRecord
+{
     protected static $tabla = 'logros';
     protected static $columnasDB = [
         'id',
@@ -11,7 +12,8 @@ class Logro extends ActiveRecord {
         'descripcion',
         'imagen',
         'pdfs',
-        'creado_en'
+        'creado_en',
+        'destacado'
     ];
 
     public $id;
@@ -21,6 +23,7 @@ class Logro extends ActiveRecord {
     public $imagen;
     public $pdfs;
     public $creado_en;
+    public $destacado;
 
     public function __construct($args = [])
     {
@@ -31,5 +34,6 @@ class Logro extends ActiveRecord {
         $this->imagen      = $args['imagen'] ?? null;
         $this->pdfs        = $args['pdfs'] ?? null;
         $this->creado_en   = $args['creado_en'] ?? date('Y-m-d H:i:s');
+        $this->destacado   = $args['destacado'] ?? 0;
     }
 }

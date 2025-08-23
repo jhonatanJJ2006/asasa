@@ -90,6 +90,13 @@ class ActiveRecord
         return $resultado;
     }
 
+    public static function getAtributos($atributos, $tabla)
+    {
+        $query = "SELECT $atributos FROM " . static::$tabla;
+        $resultado = self::consultarSQL($query);
+        return $resultado;
+    }
+
     // Busqueda Where con Columna 
     public static function where($columna, $valor)
     {
@@ -208,7 +215,7 @@ class ActiveRecord
         $query .= join("','", array_values($atributos));
         $query .= "') ";
 
-        //debuguear($query);
+        // debuguear($query);
 
         // Resultado de la consulta
         $resultado = self::$db->query($query);

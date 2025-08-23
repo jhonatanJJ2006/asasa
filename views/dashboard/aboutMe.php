@@ -1,45 +1,296 @@
+<div class="hero-section" style="position: relative;">
+    <div class="swiper-container-portada" id="background-video">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <picture>
+                    <!-- Cambia las rutas a donde guardes tus archivos -->
+                    <source srcset="/build/img/1.avif" type="image/avif">
+                    <source srcset="/build/img/1.webp" type="image/webp">
+                    <img src="/build/img/1.png" alt="Construcción de puente solidario" loading="lazy" />
+                </picture>
+            </div>
+            <div class="swiper-slide">
+                <picture>
+                    <!-- Cambia las rutas a donde guardes tus archivos -->
+                    <source srcset="/build/img/2.avif" type="image/avif">
+                    <source srcset="/build/img/2.webp" type="image/webp">
+                    <img src="/build/img/2.png" alt="Construcción de puente solidario" loading="lazy" />
+                </picture>
+            </div>
+            <div class="swiper-slide">
+                <picture>
+                    <!-- Cambia las rutas a donde guardes tus archivos -->
+                    <source srcset="/build/img/3.avif" type="image/avif">
+                    <source srcset="/build/img/3.webp" type="image/webp">
+                    <img src="/build/img/3.png" alt="Construcción de puente solidario" loading="lazy" />
+                </picture>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay oscuro -->
+    <div style="
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.45);
+        z-index: 1;
+        pointer-events: none;
+    "></div>
+
+    <div class="hero-content" style="position: relative; z-index: 2;">
+        <p>HOLA!</p>
+        <h1>YO SOY <span>RAUL AUQUILLA</span></h1>
+        <a class="tagline" href="/historyteling">
+            <p>Descubre Su Historia</p>
+        </a>
+        <a href="/contactame" class="btn-hire-us">Contáctame</a>
+    </div>
+</div>
+
 <div class="aboutme">
-    <h1 class="aboutme__titulo"><?php echo $titulo ?></h1>
+    <h1 class="titulo"><?php echo $titulo ?></h1>
 
-    <section class="aboutme__section acerca">
-        <div class="acerca__contenido">
-            <h2 class="acerca__titulo">Trayectoria Histórica</h2>
+    <div class="aboutme__frase"><?php echo $about->frase ?></div>
 
-            <div class="acerca__grupo">
-                <div class="trayectoria">
-                    <div class="trayectoria__item">
-                        <h3 class="trayectoria__subtitulo">Datos Personales</h3>
-                        <p>
-                            1952 (8 de septiembre): Nace Raúl Vicente Auquilla Ortega en Sígsig, provincia de Azuay, Ecuador.<br />
-                            Se cría en la ciudad de Loja, donde cursó sus estudios secundarios en el Seminario Menor San José y el Colegio La Salle.
-                        </p>
+    <div class="aboutme__contenedor">
+
+        <div class="aboutme__modulos">
+
+            <?php if($logros) { ?>
+
+                <div class="aboutme__modulos--modulo">
+    
+                    <div class="aboutme__modulos--modulo-titulo">Logros</div>
+    
+                    <div class="aboutme__modulos--modulo-flex">
+
+                        <?php foreach($logros as $logro) { ?>
+
+                            <div class="aboutme__modulos--modulo-item">
+                                <span class="aboutme__modulos--modulo-viñeta">•</span>
+                                <strong class="aboutme__modulos--modulo-nombre"><?php echo $logro->titulo ?></strong>
+                                <span class="aboutme__modulos--modulo-fecha"><?php echo $logro->fecha ?></span>
+                            </div>
+
+                        <?php } ?>
+    
                     </div>
-
-                    <div class="trayectoria__item">
-                        <h3 class="trayectoria__subtitulo">Currículum Vitae</h3>
-                        <ul class="trayectoria__lista">
-                            <li class="trayectoria__pdf">
-                                <a href="pdfs/CVs UNIDER Raúl Auquilla.pdf" target="_blank" class="trayectoria__enlace">
-                                    📄 Descargar CV completo
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+    
                 </div>
+
+            <?php } ?>
+
+            <?php if($propuestas) { ?>
+
+                <div class="aboutme__modulos--modulo">
+    
+                    <div class="aboutme__modulos--modulo-titulo">Propuestas</div>
+    
+                    <div class="aboutme__modulos--modulo-flex">
+
+                        <?php foreach($propuestas as $propuesta) { ?>
+
+                            <div class="aboutme__modulos--modulo-item">
+                                <span class="aboutme__modulos--modulo-viñeta">•</span>
+                                <strong class="aboutme__modulos--modulo-nombre"><?php echo $propuesta->titulo ?></strong>
+                                <span class="aboutme__modulos--modulo-fecha"><?php echo $propuesta->fecha ?></span>
+                            </div>
+
+                        <?php } ?>
+    
+                    </div>
+    
+                </div>
+
+            <?php } ?>
+
+            <?php if($contar) { ?>
+
+                <div class="aboutme__modulos--modulo">
+    
+                    <div class="aboutme__modulos--modulo-titulo">Para Contar</div>
+    
+                    <div class="aboutme__modulos--modulo-flex">
+
+                        <?php foreach($contar as $conta) { ?>
+
+                            <div class="aboutme__modulos--modulo-item">
+                                <span class="aboutme__modulos--modulo-viñeta">•</span>
+                                <strong class="aboutme__modulos--modulo-nombre"><?php echo $conta->titulo ?></strong>
+                                <span class="aboutme__modulos--modulo-fecha"><?php echo $conta->updated_at ?></span>
+                            </div>
+
+                        <?php } ?>
+    
+                    </div>
+    
+                </div>
+
+            <?php } ?>
+
+            <?php if($agenda) { ?>
+
+                <div class="aboutme__modulos--modulo">
+    
+                    <div class="aboutme__modulos--modulo-titulo">Agenda</div>
+    
+                    <div class="aboutme__modulos--modulo-flex">
+
+                        <?php foreach($agenda as $agen) { ?>
+
+                            <div class="aboutme__modulos--modulo-item">
+                                <span class="aboutme__modulos--modulo-viñeta">•</span>
+                                <strong class="aboutme__modulos--modulo-nombre"><?php echo $agen->nombre ?></strong>
+                                <span class="aboutme__modulos--modulo-fecha"><?php echo $agen->fecha ?></span>
+                            </div>
+
+                        <?php } ?>
+    
+                    </div>
+    
+                </div>
+
+            <?php } ?>
+
+        </div>
+
+        <section class="aboutme__section acerca">
+
+            <div class="aboutme__imagen">
+
+                <picture>
+                    <!-- Cambia las rutas a donde guardes tus archivos -->
+                    <source srcset="/build/img/1.avif" type="image/avif">
+                    <source srcset="/build/img/1.webp" type="image/webp">
+                    <img src="/build/img/1.png" alt="Construcción de puente solidario" loading="lazy" />
+                </picture>
+
             </div>
 
-            <!-- Nueva sección para ver el PDF embebido -->
-            <section class="pdf-viewer">
-                <h3 class="pdf-viewer__title">Visualizador de CV</h3>
-                <div class="pdf-viewer__container">
-                    <iframe
-                        src="/build/img/pdf/CVs UNIDER Raúl Auquilla.pdf"
-                        class="pdf-viewer__iframe"
-                        frameborder="0"
-                        scrolling="auto"
-                        aria-label="Visualizador del CV de Raúl Auquilla"></iframe>
+            <div class="acerca__contenido">
+                <h2 class="acerca__titulo">Hola, Yo Soy <span class="acerca__titulo--span">Raúl Auquilla</span></h2>
+
+                <div class="acerca__grupo">
+                    <div class="acerca__descripcion">
+                        <?php echo $about->descripcion ?>
+                    </div>
                 </div>
-            </section>
+
+                <div class="acerca__caracteristicas">
+
+                    <div class="acerca__caracteristicas--caracteristica">Nombre: <span class="acerca__caracteristicas--caracteristica-info">Raúl</span></div>
+                    <div class="acerca__caracteristicas--caracteristica">Número de Teléfono: <span class="acerca__caracteristicas--caracteristica-info"><?php echo $about->numero ?></span></div>
+                    <div class="acerca__caracteristicas--caracteristica">Email: <span class="acerca__caracteristicas--caracteristica-info"><?php echo $about->email ?></span></div>
+
+                </div>
+
+                <a href="/build/cv/<?php echo $about->cv ?>" download class="acerca__boton">
+                    <i class="fa-solid fa-file"></i> Descargar CV
+                </a>
+
+            </div>
+        </section>
+
+        <div class="aboutme__modulos-2">
+
+            <div class="aboutme__modulos--modulo">
+
+                <div class="aboutme__modulos--modulo-titulo">Logros</div>
+
+                <div class="aboutme__modulos--modulo-flex">
+
+                    <?php if($logros) { ?>
+                        <?php foreach($logros as $logro) { ?>
+                            <div class="aboutme__modulos--modulo-item">
+                                <span class="aboutme__modulos--modulo-viñeta">•</span>
+                                <strong class="aboutme__modulos--modulo-nombre"><?php echo $logro->titulo ?></strong>
+                                <span class="aboutme__modulos--modulo-fecha"><?php echo $logro->fecha ?></span>
+                            </div>
+                        <?php } ?>
+                    <?php } else { ?>
+                        <div class="aboutme__modulos--modulo-item">
+                            <span class="aboutme__modulos--modulo-viñeta">•</span>
+                            <strong class="aboutme__modulos--modulo-nombre">No hay logros disponibles</strong>
+                            <span class="aboutme__modulos--modulo-fecha">--</span>
+                        </div>
+                    <?php } ?>
+
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                </div>
+
+            </div>
+
+            <div class="aboutme__modulos--modulo">
+
+                <div class="aboutme__modulos--modulo-titulo">Propuestas</div>
+
+                <div class="aboutme__modulos--modulo-flex">
+
+
+
+                </div>
+
+            </div>
+
+            <div class="aboutme__modulos--modulo">
+
+                <div class="aboutme__modulos--modulo-titulo">Para Contar</div>
+
+                <div class="aboutme__modulos--modulo-flex">
+
+
+
+                </div>
+
+            </div>
+
+            <div class="aboutme__modulos--modulo">
+
+                <div class="aboutme__modulos--modulo-titulo">Agenda</div>
+
+                <div class="aboutme__modulos--modulo-flex">
+
+
+
+                </div>
+
+            </div>
+
         </div>
-    </section>
+
+    </div>
+
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof Swiper !== 'undefined') {
+            new Swiper('.swiper-container-portada', {
+                loop: true,
+                slidesPerView: 1,
+                spaceBetween: 12,
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                autoplay: {
+                    delay: 3500,
+                    disableOnInteraction: false,
+                }
+            });
+        }
+    });
+</script>

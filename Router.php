@@ -19,9 +19,12 @@ class Router
 
     public function comprobarRutas()
     {
-
         $url_actual = strtok($_SERVER['REQUEST_URI'], '?') ?? '/';
         $method = $_SERVER['REQUEST_METHOD'];
+
+        // Debug: mostrar la URL actual
+        // echo "URL actual: " . $url_actual . "<br>";
+        // echo "Método: " . $method . "<br>";
 
         if ($method === 'GET') {
             $fn = $this->getRoutes[$url_actual] ?? null;
@@ -32,9 +35,11 @@ class Router
         if ($fn) {
             call_user_func($fn, $this);
         } else {
+            http_response_code(404);
             echo "Página No Encontrada o Ruta no válida";
         }
     }
+
     public function render($view, $datos = [])
     {
         foreach ($datos as $key => $value) {
@@ -50,18 +55,22 @@ class Router
         // Utilizar el layout de acuerdo a la URL
         $url_actual = strtok($_SERVER['REQUEST_URI'], '?') ?? '/';
 
-        switch (true) {
+        // Debug: mostrar qué layout se está usando
+        // echo "Layout para URL: " . $url_actual . "<br>";
 
-            case str_contains($url_actual, '/admin'):
+        switch (true) {
+            case $url_actual === '/admin' || strpos($url_actual, '/admin/') === 0:
                 include_once __DIR__ . '/views/admin-layout.php';
                 break;
 
-            case str_contains($url_actual, '/aboutme'):
-            case str_contains($url_actual, '/logros'):
-            case str_contains($url_actual, '/propuestas'):
-            case str_contains($url_actual, '/historyteling'):
-            case str_contains($url_actual, '/agenda'):
-            case str_contains($url_actual, '/contactame'):
+            case $url_actual === '/aboutme' || 
+                 $url_actual === '/logros' || 
+                 $url_actual === '/propuestas' || 
+                 $url_actual === '/historyteling' || 
+                 $url_actual === '/agenda' ||
+                 $url_actual === '/contactame' ||
+                 $url_actual === '/crowfunding' ||
+                 $url_actual === '/jessenia-maria':
                 include_once __DIR__ . '/views/layout.php';
                 break;
 

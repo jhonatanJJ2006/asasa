@@ -1,8 +1,9 @@
 @use '../base/variables' as v;
 @use '../base/mixins' as m;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap');
 
 .aboutme {
-  margin-top: 5rem;
+  margin-top: 3rem;
   padding: 2rem;
 
   &__titulo {
@@ -13,46 +14,316 @@
     text-align: center;
   }
 
-  &__section {
-    margin-top: 2rem;
+  &__contenedor {
+
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: space-between;
+
+    @include m.desktop() {
+      flex-direction: row;
+      max-height: 100vh;
+    }
+
   }
+
+  &__modulos,
+  &__modulos-2 {
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 1rem;
+    padding: 1rem;
+    display: none;
+    flex-direction: column;
+    gap: 1rem;
+    overflow-y: auto;
+    max-height: 100vh;
+    min-width: 25rem;
+
+    &--modulo {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    &--modulo-titulo {
+      color: v.$blanco;
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -0.5rem;
+        width: 100%;
+        height: 2px;
+        background-color: v.$blanco;
+      }
+    }
+
+    &--modulo-flex {
+      display: flex;
+      flex-direction: column;
+      gap: .5rem;
+    }
+
+    &--modulo-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      @include m.desktop() {
+        width: 20rem;
+      }
+    }
+
+    &--modulo-viñeta {
+      color: v.$blanco;
+    }
+
+    &--modulo-nombre,
+    &--modulo-fecha {
+      font-size: 1rem;
+    }
+
+    &--modulo-nombre {
+      flex: 4;
+      color: darken(v.$blanco, 10%);
+      margin-left: .5rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    &--modulo-fecha {
+      flex: 1;
+      margin-left: 1rem;
+      color: #999;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      justify-content: flex-end;
+    }
+
+    @include m.desktop() {
+      display: flex;
+      border-radius: 0 1rem 1rem 0;
+    }
+
+    /* Scrollbar webkit */
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(136, 136, 136, 0.4);
+      border-radius: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: rgba(136, 136, 136, 0.7);
+    }
+
+    /* Ocultar flechas */
+    &::-webkit-scrollbar-button {
+      display: none;
+      height: 0;
+      width: 0;
+    }
+
+    /* Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(136, 136, 136, 0.4) transparent;
+
+
+  }
+
+  &__modulos-2 {
+
+    display: flex;
+
+    @include m.desktop() {
+      display: none;
+    }
+
+  }
+
+  &__frase {
+    width: 90%;
+    padding: 0 1rem 2rem 1rem;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 1.2rem;
+    line-height: 1.8;
+    position: relative; // necesario para posicionar el ::after
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40%; // controla el ancho de la línea
+      height: 2px; // grosor de la línea
+      background-color: green;
+    }
+
+    @include m.telefono() {
+      width: 60%;
+      font-size: 1.4rem;
+    }
+  }
+
+  &__imagen {
+    flex-basis: 50%; // toma 50% del espacio del contenedor flex
+    width: 100%; // para que la imagen ocupe todo el ancho del div
+    margin: 0;
+    border-radius: 1rem 1rem 0 0;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+
+    picture,
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    &:hover img {
+      transform: scale(1.05);
+    }
+
+    @include m.desktop() {
+      max-width: 100%;
+      border-radius: 1rem 0 0 1rem;
+    }
+  }
+
+  @include m.desktop() {
+    padding: 2rem 2rem 2rem 0;
+  }
+
 }
 
 .acerca {
   display: flex;
   justify-content: center;
+  align-items: stretch;
+  flex-direction: column;
 
   &__contenido {
-    max-width: 95%;
     width: 100%;
     padding: 3rem;
-    border-radius: 1rem;
+    border-radius: 0 0 1rem 1rem;
     box-shadow:
       0 2px 4px rgba(0, 0, 0, 0.08),
       2px 8px 16px rgba(0, 0, 0, 0.12);
     background-color: #fff; // Cambiar si usas modo oscuro
     position: relative;
+    flex-basis: 70%;
 
-    @include m.tablet {
+    @include m.desktop {
       max-width: 85%;
+      border-radius: 0 1rem 1rem 0;
     }
   }
 
   &__titulo {
-    width: 100%;
-    font-size: 2.5rem;
-    color: v.$negro;
-    margin-bottom: 1.5rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    border-bottom: 2px solid v.$primary-color;
-    display: inline-block;
-    padding-bottom: 0.5rem;
+    font-size: 2.4rem;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+
+    &--span {
+      color: darken(v.$verde, 10%);
+      margin-left: .5rem;
+    }
+  }
+
+  &__descripcion {
+    font-size: 1.4rem;
+    line-height: 1.6;
   }
 
   &__grupo {
     display: grid;
     gap: 2rem;
+  }
+
+  &__caracteristicas {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 3rem;
+    font-weight: bold;
+
+    &--caracteristica {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      font-size: 1.3rem;
+      line-height: 1.6;
+      background-color: #f5f5f5;
+      padding: 1.2rem 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      border-left: .5rem solid v.$primary-color;
+
+      strong {
+        font-weight: normal;
+        color: v.$primary-color;
+        min-width: 120px;
+      }
+    }
+
+    &--caracteristica-info {
+      font-weight: normal;
+      color: #333;
+      flex: 1;
+    }
+
+  }
+
+  &__boton {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 3rem;
+    padding: 1rem 3rem;
+    background-color: v.$primary-color;
+    color: v.$blanco;
+    border-radius: 1rem;
+    width: auto;
+    white-space: nowrap;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      cursor: pointer;
+      background-color: darken(v.$primary-color, 10%);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    @include m.telefono() {
+      display: inline-flex;
+      gap: 1rem;
+    }
+  }
+
+  @include m.desktop() {
+    flex-direction: row;
   }
 }
 

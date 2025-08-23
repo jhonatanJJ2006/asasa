@@ -1,11 +1,16 @@
 @use '../base/variables' as v;
+@use '../base/mixins' as m;
 
 .logro-container {
   display: flex;
   justify-content: center;
-  gap: 40px;
+  gap: 2rem;
   margin-top: 50px;
   font-family: Arial, sans-serif;
+
+  @include m.telefono() {
+    gap: 4rem;
+  }
 }
 
 .logro {
@@ -44,7 +49,6 @@
   padding-bottom: 14px;
   padding-top: 8px;
   background: none;
-  position: relative;
   border-radius: 12px;
 
   /* Custom scrollbar */

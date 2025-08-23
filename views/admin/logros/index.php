@@ -90,17 +90,33 @@
                         <td class="table__td">
 
                             <div class="table__td--acciones">
-                                
+
                                 <a class="table__accion table__accion--editar" href="/admin/logros/editar?id=<?php echo $logro->id ?>">
                                     <i class="fa-solid fa-user-pen"></i>
                                     Editar
                                 </a>
-    
+
+                                <?php if ($logro->destacado == 0) { ?>
+
+                                    <div data-id="<?php echo $logro->id ?>" class="table__formulario--añadir-destacados table__accion table__accion--destacados">
+                                        <i class="fa-solid fa-circle-plus"></i>
+                                        Añadir a destacados
+
+                                    </div>
+                                <?php } else { ?>
+
+                                    <div data-id="<?php echo $logro->id ?>" class="table__formulario--quitar-destacados table__accion table__accion--destacados-quitar">
+                                        <i class="fa-solid fa-circle-xmark"></i>
+                                        Quitar de destacados
+                                    </div>
+
+                                <?php } ?>
+
                                 <div data-id="<?php echo $logro->id ?>" class="table__formulario--eliminar-logro table__accion table__accion--eliminar">
                                     <i class="fa-solid fa-circle-xmark"></i>
                                     Eliminar
                                 </div>
-                                
+
                             </div>
 
 

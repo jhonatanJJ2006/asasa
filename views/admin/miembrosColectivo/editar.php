@@ -97,6 +97,6 @@
             </div>
         </fieldset>
 
-        <div class="formulario-administrador__boton formulario-administrador__boton--miembroColectivo">Actualizar Miembro</div>
+        <div class="formulario-administrador__boton formulario-administrador__boton--miembroColectivo-editar">Actualizar Miembro</div>
     </form>
 </div>

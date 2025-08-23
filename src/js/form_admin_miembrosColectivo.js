@@ -16,6 +16,7 @@
 
     // Botones
     const btnForm = document.querySelector('.formulario-administrador__boton--miembroColectivo');
+    const btnFormEditar = document.querySelector('.formulario-administrador__boton--miembroColectivo-editar');
 
     // Errores
     let errores = [];
@@ -136,17 +137,126 @@
                 formData.append('redes', JSON.stringify(redesDB));
             }
 
+            Swal.fire({
+                title: 'Cargando...',
+                text: 'Por favor espera mientras se guarda el miembro.',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
             fetch('/admin/miembrosColectivo/crear/subirMiembro', {
                 method: 'POST',
                 body: formData
             })
                 .then(response => response.json())
                 .then(data => {
+                    Swal.close(); // Cierra el loader al completar
                     location.href = '/admin/miembrosColectivo';
                 })
                 .catch(error => {
+                    Swal.close(); // Asegúrate de cerrarlo si hay error
                     mostrarErrores(['Error de red, intenta nuevamente.']);
                 });
+
+
+        }
+
+    }
+
+    if (btnFormEditar) {
+
+        btnFormEditar.addEventListener('click', (e) => {
+
+            errores = [];
+
+            comprobarDatos();
+
+            if (errores.length === 0) {
+                subirDatos();
+            } else {
+                e.preventDefault();
+                mostrarErrores(errores);
+            }
+
+        });
+
+
+        function comprobarDatos() {
+
+            if (nombreMiembro.value.trim() === '') {
+                errores.push('El nombre del miembro del colectivo es obligatorio');
+            }
+            if (descripcionMiembro.value.trim() === '') {
+                errores.push('La descripción del miembro del colectivo es obligatoria');
+            }
+            if (descripcionMiembro.value.trim().length < 30) {
+                errores.push('La descripción del miembro del colectivo debe contener al menos 30 caracteres');
+            }
+
+            redesDB = [];
+
+            redes.forEach(red => {
+                if (red.value !== '') {
+                    let datoRed = red.value;
+                    let idRed = red.getAttribute('data-red');
+                    redesDB.push({
+                        id: idRed,
+                        valor: datoRed
+                    });
+                }
+            });
+
+        }
+
+        function subirDatos() {
+
+            const formData = new FormData();
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+
+            formData.append('id', id);
+            formData.append('nombre', nombreMiembro.value.trim());
+            formData.append('descripcion', descripcionMiembro.value.trim());
+
+            if (inputImage.files[0]) {
+                formData.append('imagen', inputImage.files[0]);
+            }
+
+            if (adicional && adicional.value !== '') {
+                formData.append('tags', adicional.value.trim());
+            }
+
+            if (redesDB.length !== 0) {
+                formData.append('redes', JSON.stringify(redesDB));
+            }
+
+            Swal.fire({
+                title: 'Cargando...',
+                text: 'Por favor espera mientras se guarda el miembro.',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            fetch('/admin/miembrosColectivo/editarMiembro', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    Swal.close(); // Cierra el loader
+                    location.href = '/admin/miembrosColectivo';
+                })
+                .catch(error => {
+                    Swal.close(); // También ciérralo si hay error
+                    mostrarErrores(['Error de red, intenta nuevamente.']);
+                });
+
 
         }
 

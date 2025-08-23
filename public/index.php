@@ -63,6 +63,8 @@ $router->get('/contactame', [DashboardController::class, 'contactame']);
 
 $router->get('/crowfunding', [DashboardController::class, 'crowfunding']);
 
+$router->get('/jessenia-maria', [DashboardController::class, 'jesseniaMaria']);
+
 
 // =====================================================================================
 // Admin
@@ -70,12 +72,15 @@ $router->get('/crowfunding', [DashboardController::class, 'crowfunding']);
 $router->get('/admin', [AdminController::class, 'index']);
 
 $router->get('/admin/about', [AdminController::class, 'about']);
+$router->get('/admin/about/crear', [AdminController::class, 'aboutCrear']);
+$router->post('/admin/about/guardar', [AdminController::class, 'aboutGuardar']);
 
     // Miembros Colectivo
 $router->get('/admin/miembrosColectivo', [MiembroColectivo::class, 'index']);
 $router->get('/admin/miembrosColectivo/crear', [MiembroColectivo::class, 'crear']);
 $router->get('/admin/miembrosColectivo/editar', [MiembroColectivo::class, 'editar']);
 $router->post('/admin/miembrosColectivo/crear/subirMiembro', [MiembroColectivo::class, 'subirMiembroColectivo']);
+$router->post('/admin/miembrosColectivo/editarMiembro', [MiembroColectivo::class, 'MiembroEditar']);
 
 $router->post('/admin/miembrosColectivo/eliminar', [MiembroColectivo::class, 'eliminar']);
 
@@ -86,6 +91,11 @@ $router->get('/admin/logros/editar', [AdminController::class, 'logrosEditar']);
 $router->post('/admin/logros/crear/subirLogro', [AdminController::class, 'logrosSubir']);
 $router->post('/admin/logros/editar/subirLogro', [AdminController::class, 'logrosSubirEditar']);
 $router->post('/admin/logros/eliminar', [AdminController::class, 'logrosEliminar']);
+$router->post('/admin/logros/crear-destacado', [AdminController::class, 'logrosCrearDestacado']);
+$router->post("/admin/logros/eliminar-destacado", [AdminController::class, 'logrosEliminarDestacado']);
+
+    // Upload de imágenes para editores
+$router->post('/admin/upload-image', [AdminController::class, 'uploadImage']);
 
     // Propuestas
 $router->get('/admin/propuestas', [AdminController::class, 'propuestas']);

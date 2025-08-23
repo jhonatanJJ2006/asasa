@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Model\About;
 use Model\Evento;
 use Model\Historia;
 use Model\Logro;
@@ -25,16 +26,32 @@ class DashboardController
     public static function aboutMe(Router $router)
     {
 
+        $about = About::get(1);
+
+        $logros = Logro::getAtributos('titulo, fecha', 'logros');
+        $contar = Historia::getAtributos('titulo, updated_at', 'historias');
+        $agenda = Evento::getAtributos('nombre, fecha', 'eventos');
+        $propuestas = []; // Array vacío por ahora, se puede implementar un modelo específico después
+
+
         $router->render('dashboard/aboutMe', [
-            'titulo' => "Mi Historia"
+            'titulo' => "Mi Historia",
+            'about' => $about[0],
+            'logros' => $logros,
+            'contar' => $contar,
+            'agenda' => $agenda,
+            'propuestas' => $propuestas
         ]);
     }
 
     public static function logros(Router $router)
     {
 
+        $logrosDestacados = Logro::where('destacado', 1);
+
         $router->render('dashboard/logros', [
-            'titulo' => "Logros para Loja"
+            'titulo' => "Logros para Loja",
+            'logrosDestacados' => $logrosDestacados
         ]);
     }
     public static function getLogros()
@@ -132,5 +149,13 @@ class DashboardController
         $router->render('dashboard/crowfunding', [
             'titulo' => "Crowfunding"
         ]);
+    }
+
+    public static function jesseniaMaria(Router $router) {
+
+        $router->render("dashboard/jesseniaMaria", [
+            "titulo" => "Jessenia Maria"
+        ]);
+
     }
 }

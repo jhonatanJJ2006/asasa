@@ -8,11 +8,12 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  height: auto;
+  height: 100vh;
   position: relative;
+  overflow: hidden;
 
   @include m.tablet() {
-    height: 50vh;
+    height: 100vh;
   }
 
   @include m.desktop() {
@@ -29,6 +30,7 @@
   justify-content: center;
   box-sizing: border-box;
   overflow: hidden;
+  position: relative;
 }
 
 #info-popup {

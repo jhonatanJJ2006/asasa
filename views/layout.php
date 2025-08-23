@@ -17,6 +17,9 @@
     <!-- SweetAlert2 CSS (CDN) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
     <!-- Estilos personalizados -->
     <link rel="stylesheet" href="/build/css/app.css">
 </head>
@@ -27,6 +30,9 @@
     echo $contenido;
     include_once __DIR__ . '/templates/footer.php';
     ?>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <script src="/build/js/bundle.min.js" defer></script>
     <script src="/build/js/logros.js" type="module"></script>
