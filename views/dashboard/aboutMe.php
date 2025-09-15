@@ -157,14 +157,29 @@
         <section class="aboutme__section acerca">
 
             <div class="aboutme__imagen">
-
-                <picture>
-                    <!-- Cambia las rutas a donde guardes tus archivos -->
-                    <source srcset="/build/img/1.avif" type="image/avif">
-                    <source srcset="/build/img/1.webp" type="image/webp">
-                    <img src="/build/img/1.png" alt="Construcción de puente solidario" loading="lazy" />
-                </picture>
-
+                <!-- Swiper -->
+                <div class="swiper aboutme-swiper">
+                    <div class="swiper-wrapper">
+                        <?php if(!empty($imagenes)) { ?>
+                            <?php foreach($imagenes as $imagen) { ?>
+                                <div class="swiper-slide">
+                                    <img src="/build/img/about/<?php echo $imagen ?>.png" alt="Construcción de puente solidario" loading="lazy" />
+                                </div>
+                            <?php } ?>
+                        <?php } else { ?>
+                            <div class="swiper-slide">
+                                <img src="/build/img/1.png" alt="Construcción de puente solidario" loading="lazy" />
+                            </div>
+                        <?php } ?>
+                    </div>
+                    
+                    <!-- Navigation buttons -->
+                    <div class="swiper-button-next aboutme-swiper-next"></div>
+                    <div class="swiper-button-prev aboutme-swiper-prev"></div>
+                    
+                    <!-- Pagination -->
+                    <div class="swiper-pagination aboutme-swiper-pagination"></div>
+                </div>
             </div>
 
             <div class="acerca__contenido">
@@ -294,3 +309,5 @@
         }
     });
 </script>
+
+<script src="/build/js/aboutme-swiper.js"></script>

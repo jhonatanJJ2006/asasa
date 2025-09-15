@@ -12,6 +12,36 @@ use Intervention\Image\ImageManagerStatic as Image;
 
 class AdminController
 {
+    /**
+     * Función de prueba para verificar rutas y permisos de imágenes
+     */
+    public static function testImagenes()
+    {
+        header('Content-Type: application/json');
+        
+        $carpeta_imagenes = $_SERVER['DOCUMENT_ROOT'] . '/build/img/editor/';
+        $carpeta_alternativa = '../public/build/img/editor/';
+        
+        $resultado = [
+            'document_root' => $_SERVER['DOCUMENT_ROOT'],
+            'carpeta_principal' => $carpeta_imagenes,
+            'carpeta_principal_existe' => file_exists($carpeta_imagenes),
+            'carpeta_alternativa' => $carpeta_alternativa,
+            'carpeta_alternativa_existe' => file_exists($carpeta_alternativa),
+            'permisos_escritura' => is_writable($carpeta_imagenes),
+            'archivos_en_carpeta' => []
+        ];
+        
+        if (file_exists($carpeta_imagenes)) {
+            $archivos = scandir($carpeta_imagenes);
+            $resultado['archivos_en_carpeta'] = array_filter($archivos, function($archivo) {
+                return $archivo !== '.' && $archivo !== '..';
+            });
+        }
+        
+        echo json_encode($resultado, JSON_PRETTY_PRINT);
+        exit;
+    }
 
     public static function index(Router $router)
     {
@@ -521,8 +551,14 @@ class AdminController
                     throw new \Exception('El nombre del autor no puede exceder 100 caracteres');
                 }
 
-                // Sanitizar HTML de la sinopsis (permitir solo tags seguros)
-                $sinopsis = strip_tags($sinopsis, '<p><br><strong><b><em><i><u><a><ul><ol><li><img><picture><source>');
+                // Validar longitud de la sinopsis (considerando que puede ser HTML)
+                $sinopsisLength = strlen($sinopsis);
+                if ($sinopsisLength > 65535) { // Límite para TEXT en MySQL
+                    throw new \Exception('La sinopsis es demasiado larga. Por favor, reduce el contenido.');
+                }
+
+                // Sanitizar HTML de la sinopsis (permitir solo tags seguros incluyendo títulos)
+                $sinopsis = strip_tags($sinopsis, '<p><br><strong><b><em><i><u><a><ul><ol><li><img><picture><source><h1><h2><h3><h4><h5><h6><blockquote><code><pre>');
 
                 // Crear nueva historia
                 $historia = new Historia([
@@ -551,7 +587,8 @@ class AdminController
                 http_response_code(400);
                 echo json_encode([
                     'ok' => false,
-                    'message' => $e->getMessage()
+                    'message' => $e->getMessage(),
+                    'error_type' => 'validation_error'
                 ]);
             }
         } else {
@@ -616,10 +653,13 @@ class AdminController
             }
 
             // Asignar campos
-            $historia->titulo = $_POST['titulo'] ?? '';
-            $historia->sinopsis = $_POST['sinopsis'] ?? '';
-            $historia->autor = $_POST['autor'] ?? '';
+            $historia->titulo = trim($_POST['titulo'] ?? '');
+            $historia->sinopsis = trim($_POST['sinopsis'] ?? '');
+            $historia->autor = trim($_POST['autor'] ?? '');
             $historia->updated_at = date('Y-m-d H:i:s');
+
+            // Sanitizar HTML de la sinopsis (permitir solo tags seguros incluyendo títulos)
+            $historia->sinopsis = strip_tags($historia->sinopsis, '<p><br><strong><b><em><i><u><a><ul><ol><li><img><picture><source><h1><h2><h3><h4><h5><h6><blockquote><code><pre>');
 
             // Guardar y responder
             $resultado = $historia->guardar();
@@ -659,20 +699,50 @@ class AdminController
             $historia = Historia::find($id);
 
             if (!$historia) {
-                http_response_code(404);
-                echo json_encode([
-                    'ok' => false,
-                    'message' => 'Historia no encontrada'
-                ]);
+                header('Location: /admin/historyteling');
                 exit;
+            }
+
+            $sinopsis = $historia->sinopsis;
+
+            $carpeta_imagenes = '../public/build/img/editor/';
+
+            preg_match_all('/<img[^>]+src=["\']([^"\']+)["\'][^>]*>/i', $sinopsis, $matches);
+            if (!empty($matches[1])) {
+                $imagenesEliminadas = 0;
+                
+                foreach ($matches[1] as $imagenUrl) {
+                    // Extraer solo el nombre del archivo de la URL
+                    $nombreArchivo = basename(parse_url($imagenUrl, PHP_URL_PATH));
+                    $nombreSinExtension = pathinfo($nombreArchivo, PATHINFO_FILENAME);
+
+                    if (!empty($nombreArchivo)) {
+                        // Eliminar diferentes formatos de imagen
+                        $formatos = ['png', 'webp'];
+                        
+                        foreach ($formatos as $ext) {
+                            $rutaImagen = $carpeta_imagenes . $nombreSinExtension . '.' . $ext;
+                            if (file_exists($rutaImagen)) {
+                                if (unlink($rutaImagen)) {
+                                    $imagenesEliminadas++;
+                                    echo "Archivo eliminado: " . $rutaImagen . "\n";
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                echo "Total imágenes eliminadas: " . $imagenesEliminadas . "\n";
             }
 
             $resultado = $historia->eliminar();
 
             if ($resultado) {
+                $mensaje = 'Historia eliminada correctamente';
+                
                 echo json_encode([
                     'ok' => true,
-                    'message' => 'Historia eliminada correctamente'
+                    'message' => $mensaje
                 ]);
             } else {
                 http_response_code(500);

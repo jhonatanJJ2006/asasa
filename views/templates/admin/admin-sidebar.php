@@ -15,11 +15,6 @@
             <span class="admin__menu-texto">Logros</span>
         </a>
 
-        <a class="admin__enlace <?php echo pagina_actual('/admin/propuestas') ? 'admin__enlace--actual' : '' ?>" href="/admin/propuestas">
-            <i class="admin__icono fa-solid fa-lightbulb"></i>
-            <span class="admin__menu-texto">Propuestas</span>
-        </a>
-
         <a class="admin__enlace <?php echo pagina_actual('/admin/historyteling') ? 'admin__enlace--actual' : '' ?>" href="/admin/historyteling">
             <i class="admin__icono fa-solid fa-book-open"></i>
             <span class="admin__menu-texto">Historyteling</span>

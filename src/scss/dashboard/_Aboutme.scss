@@ -23,8 +23,10 @@
     justify-content: space-between;
 
     @include m.desktop() {
-      flex-direction: row;
       max-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 4fr;
+      gap: 2rem;
     }
 
   }
@@ -205,6 +207,84 @@
       max-width: 100%;
       border-radius: 1rem 0 0 1rem;
     }
+
+    // Estilos para el Swiper
+    .aboutme-swiper {
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+
+      .swiper-wrapper {
+        height: 100%;
+      }
+
+      .swiper-slide {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: inherit;
+        }
+      }
+
+      // Botones de navegación
+      .swiper-button-next,
+      .swiper-button-prev {
+        color: #fff;
+        background: rgba(0, 0, 0, 0.5);
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: rgba(0, 0, 0, 0.8);
+          transform: scale(1.1);
+        }
+
+        &::after {
+          font-size: 18px;
+          font-weight: bold;
+        }
+      }
+
+      .swiper-button-next {
+        right: 10px;
+      }
+
+      .swiper-button-prev {
+        left: 10px;
+      }
+
+      // Paginación
+      .swiper-pagination {
+        bottom: 10px;
+
+        .swiper-pagination-bullet {
+          background: rgba(255, 255, 255, 0.5);
+          opacity: 1;
+          transition: all 0.3s ease;
+
+          &.swiper-pagination-bullet-active {
+            background: #fff;
+            transform: scale(1.2);
+          }
+        }
+      }
+
+      // Efectos de hover
+      &:hover {
+        .swiper-button-next,
+        .swiper-button-prev {
+          opacity: 1;
+        }
+      }
+    }
   }
 
   @include m.desktop() {
@@ -248,8 +328,13 @@
   }
 
   &__descripcion {
-    font-size: 1.4rem;
-    line-height: 1.6;
+    font-size: 1rem;
+    line-height: 1.4;
+
+    @include m.desktop() {
+      font-size: 1.3rem;
+      line-height: 1.6;
+    }
   }
 
   &__grupo {
@@ -303,6 +388,10 @@
     width: auto;
     white-space: nowrap;
     transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+
+    i {
+      color: v.$blanco;
+    }
 
     &:hover {
       cursor: pointer;

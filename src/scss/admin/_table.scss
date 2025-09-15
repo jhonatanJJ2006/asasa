@@ -254,10 +254,13 @@
         font-weight: bold;
         padding: 1rem 2rem;
         border-radius: 1rem;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        transition: all .3s ease-in-out;
 
         &:hover {
             cursor: pointer;
-            transition: all .3s ease-in;
         }
 
         &--editar {
@@ -320,6 +323,26 @@
             &:hover {
                 background-color: lighten(v.$gris-oscuro, 5%);
                 border: 2px solid v.$blanco;
+                color: v.$blanco;
+            }
+        }
+
+        &--destacados {
+            color: v.$verde;
+            font-size: 1.4rem;
+
+            &:hover {
+                background-color: v.$verde;
+                color: v.$blanco;
+            }
+        }
+
+        &--destacados-quitar {
+            color: lighten(v.$rojo, 10%);
+            font-size: 1.4rem;
+
+            &:hover {
+                background-color: lighten(v.$rojo, 10%);
                 color: v.$blanco;
             }
         }

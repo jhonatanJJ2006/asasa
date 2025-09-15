@@ -1,10 +1,29 @@
 @use '../base/variables' as v;
+@use '../base/mixins' as m;
 
 .footer {
-    background: linear-gradient(to right, v.$gris-oscuro, darken(v.$primary-color, 10%));
+    background: linear-gradient(135deg, v.$gris-oscuro 0%, darken(v.$primary-color, 15%) 50%, v.$gris-oscuro 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
     color: #fff;
-    padding: 2rem 0;
+    padding: 3rem 0 2rem;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+    
+    // Efecto de partículas de fondo
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+                    radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
+        pointer-events: none;
+    }
 
     &__container {
         width: 100%;
@@ -22,13 +41,12 @@
 
     &__nav {
         display: flex;
-        gap: 1.5rem;
+        flex-direction: column;
+        gap: 2rem;
         border-top: 1px solid v.$blanco;
         border-bottom: 1px solid v.$blanco;
         width: 100%;
         padding: 1rem;
-        display: flex;
-        gap: 2rem;
         justify-content: center;
         margin-bottom: 2rem;
 
@@ -60,26 +78,203 @@
                 cursor: pointer;
             }
         }
+
+        @include m.telefono() {
+          flex-direction: row;
+          justify-content: center;
+        }
     }
 
     &__social {
         display: flex;
-        gap: 1rem;
-        margin-bottom: 1rem;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+        justify-content: center;
+        flex-wrap: wrap;
 
         a {
             display: flex;
             justify-content: center;
             align-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: v.$blanco;
+            font-size: 1.4rem;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            
+            // Efecto de ondas al hover
+            &::before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 0;
+                height: 0;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 50%;
+                transform: translate(-50%, -50%);
+                transition: all 0.5s ease;
+            }
+            
+            &:hover::before {
+                width: 100px;
+                height: 100px;
+            }
+            
+            // Iconos de Font Awesome
+            i, 
+            .fa-solid, 
+            .fas, 
+            .far, 
+            .fab, 
+            .fa-brands {
+                color: inherit !important;
+                transition: all 0.3s ease;
+                z-index: 2;
+                position: relative;
+            }
+            
             &:hover {
-                border: 1px solid v.$blanco;
-                scale: 1.1;
+                transform: translateY(-5px) scale(1.1);
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+                border-color: rgba(255, 255, 255, 0.4);
+                background: rgba(255, 255, 255, 0.2);
+            }
+            
+            // Colores específicos por red social
+            &.header__redes--whatsapp:hover {
+                background: linear-gradient(135deg, v.$verde, #1dd75b);
+                border-color: v.$verde;
+                color: white;
+            }
+            
+            &.header__redes--telegram:hover {
+                background: linear-gradient(135deg, v.$azul-telegram, #229ed9);
+                border-color: v.$azul-telegram;
+                color: white;
+            }
+            
+            &.header__redes--phone:hover {
+                background: linear-gradient(135deg, v.$azul, #0099ff);
+                border-color: v.$azul;
+                color: white;
+            }
+            
+            &.header__redes--facebook:hover {
+                background: linear-gradient(135deg, v.$azul-facebook, #1877f2);
+                border-color: v.$azul-facebook;
+                color: white;
+            }
+            
+            &.header__redes--linkedin:hover {
+                background: linear-gradient(135deg, v.$azul-linkedin, #0e76a8);
+                border-color: v.$azul-linkedin;
+                color: white;
+            }
+            
+            // Animación de entrada
+            @for $i from 1 through 5 {
+                &:nth-child(#{$i}) {
+                    animation: socialFadeIn 0.6s ease #{$i * 0.1}s both;
+                }
             }
         }
     }
 
     &__copy {
-        color: v.$blanco;
-        font-size: 1.4rem;
+        color: v.$blanco-2;
+        font-size: 1.1rem;
+        margin-top: 1rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        width: 100%;
+        text-align: center;
+        opacity: 0.8;
+        
+        @include m.telefono() {
+            font-size: 1rem;
+            padding-top: 1.5rem;
+        }
+    }
+    
+    // Responsive
+    @include m.telefono() {
+        padding: 1.5rem 0;
+        
+        &__container {
+            gap: 1.5rem;
+            padding: 0 1rem;
+        }
+        
+        &__logo h2 {
+            font-size: 1.5rem;
+        }
+        
+        &__social {
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            
+            a {
+                width: 45px;
+                height: 45px;
+                font-size: 1.2rem;
+            }
+        }
+    }
+
+}
+
+// Animaciones
+@keyframes socialFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+// Efecto de pulso para las redes sociales
+.footer__social a {
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 50%;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+    }
+    
+    &:focus {
+        outline: none;
+        
+        &::after {
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: scale(1.2);
+        }
     }
 }

@@ -8,6 +8,7 @@ use Controllers\AuthController;
 use Controllers\CaragarDatosController;
 use Controllers\DashboardController;
 use Controllers\MiembroColectivo;
+use Controllers\ImageUploadController;
 
 $router = new Router();
 
@@ -96,9 +97,8 @@ $router->post("/admin/logros/eliminar-destacado", [AdminController::class, 'logr
 
     // Upload de imágenes para editores
 $router->post('/admin/upload-image', [AdminController::class, 'uploadImage']);
-
-    // Propuestas
-$router->get('/admin/propuestas', [AdminController::class, 'propuestas']);
+$router->post('/admin/editor/upload', [ImageUploadController::class, 'upload']);
+$router->delete('/admin/editor/delete', [ImageUploadController::class, 'delete']);
 
     // Para Contar
 $router->get('/admin/historyteling', [AdminController::class, 'historyTeling']);

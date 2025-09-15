@@ -1,213 +1,263 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const editor = document.getElementById('descripcion-editor');
-    const hiddenTextarea = document.getElementById('descripcion');
-    const previewContainer = document.getElementById('descripcion-preview');
-    const previewContent = previewContainer.querySelector('.preview-content');
-    const previewToggle = document.getElementById('preview-toggle');
-    const charCount = document.querySelector('.char-count');
-    const wordCount = document.querySelector('.word-count');
+// Rich Editor con TinyMCE
+(function() {
+    'use strict';
 
-    if (!editor) return;
-
-    let isPreviewMode = false;
-
-    // Función para actualizar contadores
-    function updateStats() {
-        const text = editor.textContent || editor.innerText || '';
-        const chars = text.length;
-        const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
-        
-        charCount.textContent = `${chars} caracteres`;
-        wordCount.textContent = `${words} palabras`;
-        
-        // Actualizar color según límites
-        if (chars < 800) {
-            charCount.style.color = '#ef4444'; // Rojo - muy poco
-        } else if (chars <= 1300) {
-            charCount.style.color = '#22c55e'; // Verde - perfecto
-        } else {
-            charCount.style.color = '#f59e0b'; // Amarillo - demasiado
+    // Configuración de TinyMCE
+    const initTinyMCE = () => {
+        // Verificar si TinyMCE está disponible
+        if (typeof tinymce === 'undefined') {
+            console.error('TinyMCE no está cargado');
+            return;
         }
-    }
 
-    // Función para sincronizar con textarea oculta
-    function syncWithTextarea() {
-        hiddenTextarea.value = editor.innerHTML;
-        updateStats();
-    }
-
-    // Configurar placeholder
-    function updatePlaceholder() {
-        if (editor.textContent.trim() === '') {
-            editor.classList.add('empty');
-        } else {
-            editor.classList.remove('empty');
-        }
-    }
-
-    // Event listeners del editor
-    editor.addEventListener('input', function() {
-        syncWithTextarea();
-        updatePlaceholder();
-    });
-
-    editor.addEventListener('paste', function(e) {
-        e.preventDefault();
-        const text = e.clipboardData.getData('text/plain');
-        document.execCommand('insertText', false, text);
-    });
-
-    // Botones de formato
-    document.querySelectorAll('.editor-btn[data-command]').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            const command = this.getAttribute('data-command');
-            document.execCommand(command, false, null);
-            editor.focus();
-            syncWithTextarea();
-        });
-    });
-
-    // Insertar enlace
-    document.getElementById('insert-link').addEventListener('click', function(e) {
-        e.preventDefault();
-        showLinkModal();
-    });
-
-    // Insertar imagen
-    document.getElementById('insert-image').addEventListener('click', function(e) {
-        e.preventDefault();
-        showImageModal();
-    });
-
-    // Toggle preview
-    previewToggle.addEventListener('click', function(e) {
-        e.preventDefault();
-        togglePreview();
-    });
-
-    // Modal para enlaces
-    function showLinkModal() {
-        const url = prompt('Ingresa la URL del enlace:');
-        if (url) {
-            const text = window.getSelection().toString() || prompt('Texto del enlace:') || url;
-            const linkHtml = `<a href="${url}" target="_blank" rel="noopener noreferrer" class="editor-link">${text}</a>`;
-            document.execCommand('insertHTML', false, linkHtml);
+        // Inicializar TinyMCE para el editor de sinopsis
+        tinymce.init({
+            selector: '#sinopsis',
+            language: 'es',
+            height: 400,
+            menubar: false,
+            branding: false,
             
-            // Previsualizar enlace
-            setTimeout(() => {
-                previewLink(url);
-            }, 100);
+            // Plugins esenciales
+            plugins: [
+                'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                'insertdatetime', 'media', 'table', 'help', 'wordcount', 'emoticons'
+            ],
             
-            syncWithTextarea();
-        }
-    }
-
-    // Modal para imágenes
-    function showImageModal() {
-        const input = document.createElement('input');
-        input.type = 'file';
-        input.accept = 'image/*';
-        input.style.display = 'none';
-        
-        input.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = `<img src="${e.target.result}" alt="Imagen insertada" class="editor-image" style="max-width: 100%; height: auto; border-radius: 8px; margin: 10px 0;">`;
-                    document.execCommand('insertHTML', false, img);
-                    syncWithTextarea();
-                };
-                reader.readAsDataURL(file);
-            }
+            // Barra de herramientas personalizada con títulos
+            toolbar: 'undo redo | formatselect | h1 h2 h3 h4 h5 h6 | bold italic underline strikethrough | ' +
+                    'alignleft aligncenter alignright alignjustify | ' +
+                    'bullist numlist outdent indent | ' +
+                    'link image media | ' +
+                    'forecolor backcolor | ' +
+                    'emoticons charmap | ' +
+                    'preview code fullscreen | help',
+            
+            // Configuración de contenido mejorada
+            content_style: `
+                body { 
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+                    font-size: 14px; 
+                    line-height: 1.6;
+                    color: #333;
+                    margin: 1rem;
+                }
+                h1, h2, h3, h4, h5, h6 {
+                    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                    margin: 1.5em 0 0.8em 0;
+                    font-weight: 600;
+                    line-height: 1.3;
+                }
+                h1 {
+                    font-size: 2.2em;
+                    color: #2980b9;
+                    border-bottom: 3px solid #3498db;
+                    padding-bottom: 0.3em;
+                    margin-top: 0;
+                }
+                h2 {
+                    font-size: 1.8em;
+                    color: #2980b9;
+                    border-left: 5px solid #3498db;
+                    padding-left: 1em;
+                }
+                h3 {
+                    font-size: 1.4em;
+                    color: #2c3e50;
+                    border-bottom: 2px solid #ecf0f1;
+                    padding-bottom: 0.2em;
+                }
+                h4 {
+                    font-size: 1.2em;
+                    color: #34495e;
+                }
+                h5 {
+                    font-size: 1.1em;
+                    color: #7f8c8d;
+                }
+                h6 {
+                    font-size: 1em;
+                    color: #95a5a6;
+                    text-transform: uppercase;
+                    letter-spacing: 0.1em;
+                }
+                img {
+                    max-width: 100%;
+                    height: auto;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                }
+                a {
+                    color: #0066cc;
+                    text-decoration: none;
+                }
+                a:hover {
+                    text-decoration: underline;
+                }
+                blockquote {
+                    border-left: 4px solid #0066cc;
+                    padding-left: 1rem;
+                    margin-left: 0;
+                    font-style: italic;
+                    color: #666;
+                }
+            `,
+            
+            // Configuración de imágenes
+            images_upload_url: '/admin/editor/upload',
+            images_upload_handler: function (blobInfo, success, failure) {
+                const formData = new FormData();
+                formData.append('file', blobInfo.blob(), blobInfo.filename());
+                
+                fetch('/admin/editor/upload', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.location) {
+                        success(result.location);
+                    } else {
+                        failure('Error al subir la imagen: ' + (result.error || 'Error desconocido'));
+                    }
+                })
+                .catch(error => {
+                    failure('Error de conexión: ' + error.message);
+                });
+            },
+            
+            // Configuración de archivos
+            file_picker_types: 'image',
+            file_picker_callback: function(callback, value, meta) {
+                if (meta.filetype === 'image') {
+                    const input = document.createElement('input');
+                    input.setAttribute('type', 'file');
+                    input.setAttribute('accept', 'image/*');
+                    
+                    input.onchange = function() {
+                        const file = this.files[0];
+                        if (file) {
+                            const formData = new FormData();
+                            formData.append('file', file);
+                            
+                            fetch('/admin/editor/upload', {
+                                method: 'POST',
+                                body: formData,
+                                headers: {
+                                    'X-Requested-With': 'XMLHttpRequest'
+                                }
+                            })
+                            .then(response => response.json())
+                            .then(result => {
+                                if (result.location) {
+                                    callback(result.location, {
+                                        alt: file.name,
+                                        title: file.name
+                                    });
+                                } else {
+                                    alert('Error al subir la imagen: ' + (result.error || 'Error desconocido'));
+                                }
+                            })
+                            .catch(error => {
+                                alert('Error de conexión: ' + error.message);
+                            });
+                        }
+                    };
+                    
+                    input.click();
+                }
+            },
+            
+            // Configuración adicional
+            paste_data_images: true,
+            paste_as_text: false,
+            browser_spellcheck: true,
+            contextmenu: "link image table",
+            
+            // Validación de contenido
+            setup: function(editor) {
+                editor.on('change', function() {
+                    editor.save(); // Sincroniza con el textarea
+                });
+                
+                editor.on('init', function() {
+                    console.log('TinyMCE inicializado correctamente para #sinopsis');
+                });
+                
+                // Personalizar el diálogo de insertar imagen
+                editor.on('BeforeExecCommand', function(e) {
+                    if (e.command === 'mceImage') {
+                        // Aquí puedes personalizar el comportamiento del botón de imagen
+                    }
+                });
+            },
+            
+            // Configuración de formato
+            formats: {
+                alignleft: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', styles: {textAlign: 'left'}},
+                aligncenter: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', styles: {textAlign: 'center'}},
+                alignright: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', styles: {textAlign: 'right'}},
+                alignjustify: {selector: 'p,h1,h2,h3,h4,h5,h6,td,th,div,ul,ol,li,table,img', styles: {textAlign: 'justify'}}
+            },
+            
+            // Configuración de estilo de bloques mejorada
+            style_formats: [
+                {title: 'Párrafo normal', block: 'p'},
+                {title: 'Título principal', block: 'h1', styles: {color: '#2980b9', borderBottom: '3px solid #3498db', paddingBottom: '0.3em'}},
+                {title: 'Subtítulo importante', block: 'h2', styles: {color: '#2980b9', borderLeft: '5px solid #3498db', paddingLeft: '1em'}},
+                {title: 'Encabezado de sección', block: 'h3', styles: {color: '#2c3e50', fontSize: '1.4em'}},
+                {title: 'Subsección', block: 'h4', styles: {color: '#34495e', fontSize: '1.2em'}},
+                {title: 'Encabezado menor', block: 'h5', styles: {color: '#7f8c8d', fontSize: '1.1em'}},
+                {title: 'Título pequeño', block: 'h6', styles: {color: '#95a5a6', fontSize: '1em', textTransform: 'uppercase'}},
+                {title: 'Cita destacada', block: 'blockquote', styles: {borderLeft: '4px solid #0066cc', paddingLeft: '1rem', fontStyle: 'italic', color: '#666'}},
+                {title: 'Código', inline: 'code', styles: {backgroundColor: '#f8f9fa', padding: '0.3em 0.6em', borderRadius: '6px', color: '#e74c3c'}}
+            ]
         });
-        
-        document.body.appendChild(input);
-        input.click();
-        document.body.removeChild(input);
+    };
+
+    // Inicializar cuando el DOM esté listo
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initTinyMCE);
+    } else {
+        initTinyMCE();
     }
 
-    // Previsualización de enlaces
-    async function previewLink(url) {
-        try {
-            // Crear elemento de previsualización
-            const linkPreview = document.createElement('div');
-            linkPreview.className = 'link-preview';
-            linkPreview.innerHTML = `
-                <div class="link-preview__loading">
-                    <i class="fas fa-spinner fa-spin"></i>
-                    <span>Cargando previsualización...</span>
-                </div>
-            `;
-
-            // Insertar después del enlace
-            const selection = window.getSelection();
-            if (selection.rangeCount > 0) {
-                const range = selection.getRangeAt(0);
-                range.collapse(false);
-                range.insertNode(linkPreview);
+    // Utilidades globales para TinyMCE
+    window.TinyMCEUtils = {
+        // Obtener contenido del editor
+        getContent: function(editorId) {
+            const editor = tinymce.get(editorId);
+            return editor ? editor.getContent() : '';
+        },
+        
+        // Establecer contenido del editor
+        setContent: function(editorId, content) {
+            const editor = tinymce.get(editorId);
+            if (editor) {
+                editor.setContent(content);
             }
-
-            // Simular carga de metadatos (en producción, esto sería una llamada API)
-            setTimeout(() => {
-                const domain = new URL(url).hostname;
-                linkPreview.innerHTML = `
-                    <div class="link-preview__card">
-                        <div class="link-preview__favicon">
-                            <img src="https://www.google.com/s2/favicons?domain=${domain}" alt="Favicon" onerror="this.style.display='none'">
-                        </div>
-                        <div class="link-preview__content">
-                            <div class="link-preview__title">${domain}</div>
-                            <div class="link-preview__description">Enlace externo</div>
-                            <div class="link-preview__url">${url}</div>
-                        </div>
-                        <button class="link-preview__remove" onclick="this.parentElement.parentElement.remove()">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                `;
-            }, 1000);
-
-        } catch (error) {
-            console.error('Error al previsualizar enlace:', error);
-        }
-    }
-
-    // Toggle vista previa
-    function togglePreview() {
-        isPreviewMode = !isPreviewMode;
+        },
         
-        if (isPreviewMode) {
-            previewContent.innerHTML = editor.innerHTML;
-            editor.style.display = 'none';
-            previewContainer.style.display = 'block';
-            previewToggle.classList.add('active');
-            previewToggle.innerHTML = '<i class="fas fa-edit"></i>';
-            previewToggle.title = 'Editar';
-        } else {
-            editor.style.display = 'block';
-            previewContainer.style.display = 'none';
-            previewToggle.classList.remove('active');
-            previewToggle.innerHTML = '<i class="fas fa-eye"></i>';
-            previewToggle.title = 'Vista previa';
+        // Limpiar el editor
+        clear: function(editorId) {
+            const editor = tinymce.get(editorId);
+            if (editor) {
+                editor.setContent('');
+            }
+        },
+        
+        // Enfocar el editor
+        focus: function(editorId) {
+            const editor = tinymce.get(editorId);
+            if (editor) {
+                editor.focus();
+            }
         }
-    }
+    };
 
-    // Inicializar
-    updatePlaceholder();
-    updateStats();
-
-    // Auto-guardar cada 30 segundos
-    setInterval(() => {
-        syncWithTextarea();
-    }, 30000);
-
-    // Guardar antes de enviar formulario
-    const form = editor.closest('form');
-    if (form) {
-        form.addEventListener('submit', function() {
-            syncWithTextarea();
-        });
-    }
-});
+    console.log('Rich Editor con TinyMCE cargado correctamente');
+})();

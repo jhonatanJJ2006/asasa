@@ -16,9 +16,9 @@
                   <picture>
                     <source srcset="/build/img/logros/<?php echo $logroDestacado->imagen; ?>.webp" type="image/webp">
                     <source srcset="/build/img/logros/<?php echo $logroDestacado->imagen; ?>.png" type="image/png">
-                    <img src="/build/img/logros/<?php echo $logroDestacado->imagen; ?>.png" alt="Logro destacado <?php echo $logroDestacado->titulo ?>" class="logros__slide-img">
+                    <img src="/build/img/logros/<?php echo $logroDestacado->imagen; ?>.png" alt="Logro destacado <?php echo $logroDestacado->titulo ?>" class="logros__slide-img" loading="lazy">
                   </picture>
-                  <div style="padding-bottom: 3rem;" class="logros__slide-overlay">
+                  <div class="logros__slide-overlay">
                     <h3><?php echo $logroDestacado->titulo ?></h3>
                     <p><?php echo strlen($logroDestacado->descripcion) > 250 ? substr($logroDestacado->descripcion, 0, 250) . '...' : $logroDestacado->descripcion; ?></p>
                   </div>
@@ -27,13 +27,14 @@
 
             <?php } ?>
 
-            <!-- Navegación -->
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-
-            <!-- Paginación -->
-            <div class="swiper-pagination"></div>
           </div>
+          
+          <!-- Navegación -->
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+
+          <!-- Paginación -->
+          <div class="swiper-pagination"></div>
         </div>
 
       <?php } ?>
@@ -85,5 +86,6 @@
   });
 </script>
 
-<!-- Script del Swiper -->
+<!-- Scripts de Logros -->
+<script src="/build/js/logros.js"></script>
 <script src="/build/js/logros-swiper.js"></script>

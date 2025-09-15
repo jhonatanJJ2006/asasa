@@ -18,13 +18,61 @@
   font-size: 2rem;
   font-weight: bold;
   color: v.$gris;
+  transition: transform 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+  }
 
   &__contador {
     font-size: 3rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, v.$azul, #6270ba);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 2px 4px rgba(48, 72, 160, 0.1);
+    transition: all 0.3s ease;
+    display: inline-block;
+    min-width: 80px; // Evitar saltos durante la animación
+    
+    // Fallback para navegadores que no soportan background-clip
+    @supports not (-webkit-background-clip: text) {
+      color: v.$azul;
+      text-shadow: 0 2px 4px rgba(48, 72, 160, 0.2);
+    }
+    
+    @include m.telefono() {
+      font-size: 2.5rem;
+      min-width: 60px;
+    }
+    
+    // Efecto de pulso sutil durante la animación
+    &.animating {
+      animation: counterPulse 0.1s ease-in-out;
+    }
   }
 
   &__sufijo {
-    margin-left: 5px;
+    margin-left: 8px;
+    font-weight: 600;
+    color: v.$gris;
+    opacity: 0.8;
+    
+    @include m.telefono() {
+      font-size: 1.6rem;
+      margin-left: 5px;
+    }
+  }
+}
+
+// Animación de pulso para los contadores
+@keyframes counterPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
   }
 }
 

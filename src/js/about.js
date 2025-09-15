@@ -90,9 +90,6 @@
             }
 
             if (!inputFrase.value.trim()) errores.push('La frase es obligatoria.');
-            if (!inputDescripcion.value.trim()) errores.push('La descripción es obligatoria.');
-            if (inputDescripcion.value.trim().length < 800 || inputDescripcion.value.trim().length > 1300)
-                errores.push('La descripción debe tener entre 800 y 1300 caracteres.');
             if (!inputNumero.value.trim()) errores.push('El número es obligatorio.');
             if (!inputEmail.value.trim()) errores.push('El email es obligatorio.');
 

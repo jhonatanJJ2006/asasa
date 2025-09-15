@@ -29,12 +29,16 @@
     <?php include_once __DIR__ . '/templates/admin/admin-header.php'; ?>
 
     <div class="admin__grid">
-        <?php include_once __DIR__ . '/templates/admin/admin-sidebar.php'; ?>
+            <?php
+                include_once __DIR__ .'/templates/admin/admin-sidebar.php';
+            ?>
 
-        <main class="admin__contenido">
-            <?php echo $contenido; ?>
-        </main>
-    </div>
+            <main class="admin__contenido">
+                <?php 
+                    echo $contenido; 
+                ?> 
+            </main>
+        </div>
 
     <!-- Swiper JS -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
@@ -42,7 +46,10 @@
 
     <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/build/js/quill.js"></script>
+    
+    <!-- TinyMCE Local -->
+    <script src="/tinymce/tinymce/js/tinymce/tinymce.min.js"></script>
+    
     <script src="/build/js/bundle.min.js" defer></script>
 
 </body>

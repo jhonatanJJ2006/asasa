@@ -38,69 +38,16 @@
                     type="text"
                     placeholder="Frase Principal"
                     required
-                    value="<?php echo $evento->frase ?? '' ?>">
+                    value="<?php echo $about->frase ?? '' ?>">
             </div>
 
-            <div class="formulario-administrador__campo formulario-administrador__campo--editor">
+            <div class="formulario-administrador__campo">
                 <label class="formulario-administrador__label" for="descripcion">Descripción</label>
-                <div class="editor-toolbar">
-                    <div class="editor-toolbar__group">
-                        <button type="button" class="editor-btn" data-command="bold" title="Negrita">
-                            <i class="fas fa-bold"></i>
-                        </button>
-                        <button type="button" class="editor-btn" data-command="italic" title="Cursiva">
-                            <i class="fas fa-italic"></i>
-                        </button>
-                        <button type="button" class="editor-btn" data-command="underline" title="Subrayado">
-                            <i class="fas fa-underline"></i>
-                        </button>
-                    </div>
-                    <div class="editor-toolbar__group">
-                        <button type="button" class="editor-btn" data-command="insertUnorderedList" title="Lista">
-                            <i class="fas fa-list-ul"></i>
-                        </button>
-                        <button type="button" class="editor-btn" data-command="insertOrderedList" title="Lista numerada">
-                            <i class="fas fa-list-ol"></i>
-                        </button>
-                    </div>
-                    <div class="editor-toolbar__group">
-                        <button type="button" class="editor-btn" id="insert-link" title="Insertar enlace">
-                            <i class="fas fa-link"></i>
-                        </button>
-                        <button type="button" class="editor-btn" id="insert-image" title="Insertar imagen">
-                            <i class="fas fa-image"></i>
-                        </button>
-                    </div>
-                    <div class="editor-toolbar__group">
-                        <button type="button" class="editor-btn" id="preview-toggle" title="Vista previa">
-                            <i class="fas fa-eye"></i>
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="editor-container">
-                    <div class="editor-content" 
-                         id="descripcion-editor" 
-                         contenteditable="true" 
-                         data-placeholder="Escribe tu descripción aquí... Puedes agregar enlaces, imágenes y formato de texto.">
-                        <?php echo $evento->descripcion ?? '' ?>
-                    </div>
-                    <div class="editor-preview" id="descripcion-preview" style="display: none;">
-                        <h4>Vista Previa:</h4>
-                        <div class="preview-content"></div>
-                    </div>
-                </div>
-                
                 <textarea
                     id="descripcion"
                     name="descripcion"
-                    style="display: none;"
-                    required><?php echo $evento->descripcion ?? '' ?></textarea>
-                
-                <div class="editor-stats">
-                    <span class="char-count">0 caracteres</span>
-                    <span class="word-count">0 palabras</span>
-                </div>
+                    placeholder="Escribe tu descripción aquí... Puedes agregar enlaces, imágenes y formato de texto."
+                    required><?php echo $about->descripcion ?? '' ?></textarea>
                 <div class="formulario-administrador__instruccion">
                     Descripción de entre 800 a 1300 caracteres. Puedes usar formato de texto, enlaces e imágenes.
                 </div>
@@ -115,7 +62,7 @@
                     type="tel"
                     placeholder="Número de Teléfono"
                     required
-                    value="<?php echo $evento->numero ?? '' ?>">
+                    value="<?php echo $about->numero ?? '' ?>">
             </div>
             
             <div class="formulario-administrador__campo">
@@ -127,7 +74,7 @@
                     type="email"
                     placeholder="Email"
                     required
-                    value="<?php echo $evento->email ?? '' ?>">
+                    value="<?php echo $about->email ?? '' ?>">
             </div>
             
             <div class="formulario-administrador__campo">
@@ -150,4 +97,4 @@
     </form>
 </div>
 
-<script src="/build/js/rich-editor.js"></script>
+<script src="/build/js/about-editor.js"></script>

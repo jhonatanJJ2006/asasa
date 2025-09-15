@@ -1,0 +1,769 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+// Estilos para el campo del editor
+.formulario-administrador__campo--editor {
+    .formulario-administrador__label {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: v.$gris-oscuro;
+        margin-bottom: 1rem;
+        display: block;
+        
+        @include m.telefono() {
+            font-size: 1.2rem;
+        }
+    }
+}
+
+// Toolbar del editor original (para botones personalizados)
+.editor-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 1rem;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border: 2px solid #e2e8f0;
+    border-bottom: none;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    &__group {
+        display: flex;
+        gap: 0.25rem;
+        padding: 0.25rem;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 8px;
+        border: 1px solid rgba(148, 163, 184, 0.3);
+    }
+}
+
+.editor-btn {
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    color: #64748b;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+
+    &:hover {
+        background: v.$primary-color;
+        color: white;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(47, 122, 216, 0.3);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+
+    &.active {
+        background: v.$primary-color;
+        color: white;
+        box-shadow: 0 2px 8px rgba(47, 122, 216, 0.4);
+    }
+}
+
+// Estilos para Quill.js
+.quill-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border: 2px solid #e2e8f0;
+    border-bottom: 1px solid #e2e8f0;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.quill-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: rgba(255, 255, 255, 0.8);
+    color: #64748b;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+
+    &:hover {
+        background: v.$primary-color;
+        color: white;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(47, 122, 216, 0.3);
+        border-color: v.$primary-color;
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+}
+
+.quill-container {
+    border: 2px solid #e2e8f0;
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    
+    .ql-editor {
+        min-height: 300px;
+        font-size: 16px;
+        line-height: 1.6;
+        color: #374151;
+        padding: 1.5rem;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+        &.ql-blank::before {
+            font-style: italic;
+            color: #9ca3af;
+            left: 1.5rem;
+            right: 1.5rem;
+        }
+
+        // Estilos para imágenes insertadas
+        img {
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            max-width: 100%;
+            height: auto;
+            margin: 1rem 0;
+
+            &:hover {
+                transform: scale(1.02);
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            }
+        }
+
+        // Estilos para encabezados
+        h1, h2, h3 {
+            margin: 1.5rem 0 0.75rem 0;
+            font-weight: bold;
+            line-height: 1.3;
+            
+            &:first-child {
+                margin-top: 0;
+            }
+        }
+        
+        h1 {
+            font-size: 2rem;
+            color: v.$primary-color;
+            border-bottom: 2px solid v.$primary-color;
+            padding-bottom: 0.5rem;
+            
+            @include m.telefono() {
+                font-size: 1.75rem;
+            }
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            color: #374151;
+            border-left: 4px solid v.$primary-color;
+            padding-left: 1rem;
+            
+            @include m.telefono() {
+                font-size: 1.375rem;
+            }
+        }
+        
+        h3 {
+            font-size: 1.25rem;
+            color: #4b5563;
+            position: relative;
+            
+            &::before {
+                content: '▶';
+                color: v.$primary-color;
+                margin-right: 0.5rem;
+                font-size: 0.875rem;
+            }
+            
+            @include m.telefono() {
+                font-size: 1.125rem;
+            }
+        }
+
+        // Párrafos
+        p {
+            margin: 0.75rem 0;
+            
+            &:first-child {
+                margin-top: 0;
+            }
+            
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        // Listas
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 2rem;
+
+            li {
+                margin: 0.5rem 0;
+                line-height: 1.5;
+            }
+        }
+
+        ul li::marker {
+            color: v.$primary-color;
+        }
+
+        ol li::marker {
+            color: v.$primary-color;
+            font-weight: bold;
+        }
+
+        // Citas
+        blockquote {
+            border-left: 4px solid v.$primary-color;
+            padding-left: 1rem;
+            margin: 1rem 0;
+            font-style: italic;
+            color: #6b7280;
+            background: #f9fafb;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        // Código
+        code {
+            background: #f3f4f6;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        pre {
+            background: #1f2937;
+            color: #f9fafb;
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            
+            code {
+                background: transparent;
+                padding: 0;
+                color: inherit;
+            }
+        }
+
+        // Texto en negrita, cursiva, subrayado
+        strong, b {
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        em, i {
+            font-style: italic;
+            color: #4b5563;
+        }
+
+        u {
+            text-decoration: underline;
+            text-decoration-color: v.$primary-color;
+            text-decoration-thickness: 2px;
+        }
+    }
+
+    .ql-toolbar {
+        border: none;
+        border-bottom: 1px solid #e5e7eb;
+        background: #f9fafb;
+        padding: 0.75rem 1rem;
+
+        .ql-formats {
+            margin-right: 1rem;
+        }
+
+        button, select {
+            margin-right: 0.25rem;
+        }
+
+        button:hover, 
+        button:focus, 
+        button.ql-active {
+            color: v.$primary-color;
+        }
+
+        .ql-stroke {
+            stroke: currentColor;
+        }
+
+        .ql-fill {
+            fill: currentColor;
+        }
+
+        // Selectores personalizados
+        select {
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            padding: 0.25rem 0.5rem;
+            background: white;
+            font-size: 13px;
+
+            &:hover, &:focus {
+                border-color: v.$primary-color;
+            }
+        }
+
+        // Colores personalizados para herramientas activas
+        .ql-bold.ql-active,
+        .ql-italic.ql-active,
+        .ql-underline.ql-active {
+            background: rgba(47, 122, 216, 0.1);
+            border-radius: 3px;
+        }
+    }
+}
+
+// Estilos adicionales para Quill
+.formulario-administrador__campo--editor {
+    .ql-container {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+}
+
+// ===================================================================
+// Estilos para TinyMCE
+// ===================================================================
+
+.tox {
+    &.tox-tinymce {
+        border: 2px solid #e2e8f0 !important;
+        border-radius: 12px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+        overflow: hidden;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    }
+
+    // Toolbar principal
+    .tox-toolbar__primary {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%) !important;
+        border-bottom: 1px solid #e2e8f0 !important;
+        padding: 0.75rem 1rem !important;
+    }
+
+    // Botones de la toolbar
+    .tox-tbtn {
+        border-radius: 6px !important;
+        margin: 0 2px !important;
+        transition: all 0.2s ease !important;
+        
+        &:hover {
+            background: v.$primary-color !important;
+            color: white !important;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(47, 122, 216, 0.3) !important;
+        }
+
+        &[aria-pressed="true"], 
+        &.tox-tbtn--enabled {
+            background: v.$primary-color !important;
+            color: white !important;
+            box-shadow: 0 2px 8px rgba(47, 122, 216, 0.4) !important;
+        }
+
+        svg {
+            fill: currentColor !important;
+        }
+    }
+
+    // Área de contenido del editor
+    .tox-edit-area__iframe {
+        border: none !important;
+        background: white !important;
+    }
+
+    // Selectores (dropdowns)
+    .tox-selectfield select,
+    .tox-listboxfield .tox-listbox,
+    .tox-toolbar-textfield {
+        border: 1px solid #d1d5db !important;
+        border-radius: 6px !important;
+        background: white !important;
+        font-size: 13px !important;
+        padding: 0.25rem 0.5rem !important;
+        transition: all 0.2s ease !important;
+
+        &:hover, &:focus {
+            border-color: v.$primary-color !important;
+            box-shadow: 0 0 0 2px rgba(47, 122, 216, 0.1) !important;
+        }
+    }
+
+    // Menús desplegables
+    .tox-menu {
+        border: 1px solid #e2e8f0 !important;
+        border-radius: 8px !important;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+        background: white !important;
+        padding: 0.5rem 0 !important;
+
+        .tox-menu-nav__js {
+            background: white !important;
+        }
+
+        .tox-collection__item {
+            padding: 0.5rem 1rem !important;
+            transition: all 0.2s ease !important;
+
+            &:hover {
+                background: rgba(47, 122, 216, 0.1) !important;
+                color: v.$primary-color !important;
+            }
+
+            &--active {
+                background: v.$primary-color !important;
+                color: white !important;
+            }
+        }
+    }
+
+    // Diálogos y modales
+    .tox-dialog {
+        border-radius: 12px !important;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3) !important;
+        border: none !important;
+
+        &__header {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%) !important;
+            border-bottom: 1px solid #e2e8f0 !important;
+            padding: 1rem 1.5rem !important;
+
+            .tox-dialog__title {
+                color: #374151 !important;
+                font-weight: 600 !important;
+            }
+        }
+
+        &__body {
+            padding: 1.5rem !important;
+            background: white !important;
+        }
+
+        &__footer {
+            background: #f9fafb !important;
+            border-top: 1px solid #e2e8f0 !important;
+            padding: 1rem 1.5rem !important;
+
+            .tox-button {
+                border-radius: 6px !important;
+                padding: 0.5rem 1rem !important;
+                font-weight: 500 !important;
+                transition: all 0.2s ease !important;
+
+                &--primary {
+                    background: v.$primary-color !important;
+                    border-color: v.$primary-color !important;
+
+                    &:hover {
+                        background: darken(v.$primary-color, 10%) !important;
+                        transform: translateY(-1px);
+                        box-shadow: 0 4px 12px rgba(47, 122, 216, 0.3) !important;
+                    }
+                }
+
+                &--secondary {
+                    background: #f3f4f6 !important;
+                    border-color: #d1d5db !important;
+                    color: #374151 !important;
+
+                    &:hover {
+                        background: #e5e7eb !important;
+                        transform: translateY(-1px);
+                    }
+                }
+            }
+        }
+    }
+
+    // Inputs y campos de formulario en diálogos
+    .tox-textfield,
+    .tox-textarea {
+        border: 1px solid #d1d5db !important;
+        border-radius: 6px !important;
+        padding: 0.75rem !important;
+        font-size: 14px !important;
+        transition: all 0.2s ease !important;
+        background: white !important;
+
+        &:focus {
+            border-color: v.$primary-color !important;
+            box-shadow: 0 0 0 2px rgba(47, 122, 216, 0.1) !important;
+            outline: none !important;
+        }
+    }
+
+    // Tooltips
+    .tox-tooltip {
+        background: #1f2937 !important;
+        color: white !important;
+        border-radius: 6px !important;
+        padding: 0.5rem 0.75rem !important;
+        font-size: 12px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    // Barra de estado
+    .tox-statusbar {
+        background: #f9fafb !important;
+        border-top: 1px solid #e2e8f0 !important;
+        color: #6b7280 !important;
+        font-size: 12px !important;
+        padding: 0.5rem 1rem !important;
+    }
+
+    // Notificaciones
+    .tox-notification {
+        border-radius: 8px !important;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+        border: none !important;
+        
+        &--success {
+            background: #10b981 !important;
+            color: white !important;
+        }
+        
+        &--error {
+            background: #ef4444 !important;
+            color: white !important;
+        }
+        
+        &--warning {
+            background: #f59e0b !important;
+            color: white !important;
+        }
+        
+        &--info {
+            background: v.$primary-color !important;
+            color: white !important;
+        }
+    }
+
+    // Spinner de carga
+    .tox-throbber {
+        background: rgba(255, 255, 255, 0.9) !important;
+        
+        &__busy-spinner {
+            border-color: v.$primary-color transparent v.$primary-color transparent !important;
+        }
+    }
+}
+
+// Estilos específicos para el contenido del editor (dentro del iframe)
+.mce-content-body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+    color: #374151 !important;
+    margin: 1rem !important;
+
+    // Imágenes
+    img {
+        max-width: 100% !important;
+        height: auto !important;
+        border-radius: 8px !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+        margin: 1rem 0 !important;
+        transition: all 0.3s ease !important;
+
+        &:hover {
+            transform: scale(1.02) !important;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+        }
+    }
+
+    // Enlaces
+    a {
+        color: v.$primary-color !important;
+        text-decoration: none !important;
+        border-bottom: 1px solid transparent !important;
+        transition: all 0.2s ease !important;
+
+        &:hover {
+            border-bottom-color: v.$primary-color !important;
+        }
+    }
+
+    // Citas
+    blockquote {
+        border-left: 4px solid v.$primary-color !important;
+        padding-left: 1rem !important;
+        margin: 1rem 0 !important;
+        font-style: italic !important;
+        color: #6b7280 !important;
+        background: #f9fafb !important;
+        padding: 1rem !important;
+        border-radius: 0 8px 8px 0 !important;
+    }
+
+    // Encabezados
+    h1, h2, h3, h4, h5, h6 {
+        margin: 1.5rem 0 0.75rem 0 !important;
+        font-weight: bold !important;
+        line-height: 1.3 !important;
+        color: #1f2937 !important;
+
+        &:first-child {
+            margin-top: 0 !important;
+        }
+    }
+
+    h1 {
+        font-size: 2rem !important;
+        color: v.$primary-color !important;
+        border-bottom: 2px solid v.$primary-color !important;
+        padding-bottom: 0.5rem !important;
+    }
+
+    h2 {
+        font-size: 1.5rem !important;
+        border-left: 4px solid v.$primary-color !important;
+        padding-left: 1rem !important;
+    }
+
+    // Listas
+    ul, ol {
+        margin: 1rem 0 !important;
+        padding-left: 2rem !important;
+
+        li {
+            margin: 0.5rem 0 !important;
+            line-height: 1.5 !important;
+        }
+    }
+
+    // Código
+    code {
+        background: #f3f4f6 !important;
+        padding: 0.25rem 0.5rem !important;
+        border-radius: 4px !important;
+        font-size: 0.875rem !important;
+        font-family: 'Courier New', monospace !important;
+        color: #1f2937 !important;
+    }
+
+    pre {
+        background: #1f2937 !important;
+        color: #f9fafb !important;
+        padding: 1rem !important;
+        border-radius: 8px !important;
+        overflow-x: auto !important;
+        margin: 1rem 0 !important;
+        
+        code {
+            background: transparent !important;
+            padding: 0 !important;
+            color: inherit !important;
+        }
+    }
+}
+
+// Responsividad para móviles
+@include m.telefono() {
+    .tox {
+        &.tox-tinymce {
+            border-radius: 8px !important;
+        }
+
+        .tox-toolbar__primary {
+            padding: 0.5rem 0.75rem !important;
+            flex-wrap: wrap !important;
+        }
+
+        .tox-tbtn {
+            margin: 1px !important;
+        }
+
+        .tox-dialog {
+            margin: 1rem !important;
+            max-width: calc(100vw - 2rem) !important;
+            
+            &__body {
+                padding: 1rem !important;
+            }
+            
+            &__footer {
+                padding: 0.75rem 1rem !important;
+                
+                .tox-button {
+                    padding: 0.5rem 0.75rem !important;
+                    font-size: 14px !important;
+                }
+            }
+        }
+    }
+
+    .mce-content-body {
+        margin: 0.75rem !important;
+        font-size: 15px !important;
+        
+        h1 {
+            font-size: 1.75rem !important;
+        }
+        
+        h2 {
+            font-size: 1.375rem !important;
+        }
+        
+        img {
+            margin: 0.75rem 0 !important;
+        }
+    }
+}
+
+// Responsividad para Quill (mantener compatibilidad)
+@include m.telefono() {
+    .quill-toolbar {
+        padding: 0.5rem 0.75rem;
+        flex-wrap: wrap;
+        gap: 0.25rem;
+    }
+
+    .quill-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+    }
+
+    .quill-container {
+        .ql-editor {
+            padding: 1rem;
+            font-size: 15px;
+            min-height: 250px;
+        }
+
+        .ql-toolbar {
+            padding: 0.5rem 0.75rem;
+            
+            .ql-formats {
+                margin-right: 0.5rem;
+            }
+
+            button, select {
+                margin-right: 0.125rem;
+            }
+        }
+    }
+}

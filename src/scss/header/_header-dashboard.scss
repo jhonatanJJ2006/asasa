@@ -2,7 +2,7 @@
 
 .header-dashboard {
     position: absolute;
-    top: 25%;
+    top: 12%;
     left: 0;
     width: 15rem;
     padding: 1rem 2rem;
@@ -56,6 +56,7 @@
         padding: 1rem 4rem;
         animation: slideDown 0.4s ease forwards;
         top: 0;
+        z-index: 91;
 
         @media (max-width: 1024px) {
             position: fixed;
@@ -213,6 +214,31 @@
         &--red {
             color: v.$gris;
             font-size: 2rem;
+            transition: color 0.3s ease;
+            
+            // Forzar color en iconos de Font Awesome
+            i, 
+            .fa-solid, 
+            .fas, 
+            .far, 
+            .fab, 
+            .fa-brands {
+                color: inherit !important;
+                transition: color 0.3s ease;
+            }
+            
+            &:hover {
+                color: v.$azul;
+                
+                i, 
+                .fa-solid, 
+                .fas, 
+                .far, 
+                .fab, 
+                .fa-brands {
+                    color: inherit !important;
+                }
+            }
         }
     }
 }

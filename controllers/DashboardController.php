@@ -34,9 +34,23 @@ class DashboardController
         $propuestas = []; // Array vacío por ahora, se puede implementar un modelo específico después
 
 
+        // Convertir el string de imágenes en un array
+        $imagenesArray = [];
+        if (!empty($about[0]->imagenes)) {
+            // Intentar decodificar como JSON
+            $imagenesDecoded = json_decode($about[0]->imagenes, true);
+            if (json_last_error() === JSON_ERROR_NONE && is_array($imagenesDecoded)) {
+                $imagenesArray = $imagenesDecoded;
+            } else {
+                // Si no es JSON válido, tratar como string separado por comas
+                $imagenesArray = array_filter(array_map('trim', explode(',', $about[0]->imagenes)));
+            }
+        }
+
         $router->render('dashboard/aboutMe', [
             'titulo' => "Mi Historia",
             'about' => $about[0],
+            'imagenes' => $imagenesArray,
             'logros' => $logros,
             'contar' => $contar,
             'agenda' => $agenda,
