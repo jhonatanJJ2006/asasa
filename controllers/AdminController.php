@@ -53,10 +53,31 @@ class AdminController
     public static function about(Router $router)
     {
 
+        $about = About::all();
+
         $router->render('admin/about/index', [
-            'titulo' => "Mi Historia"
+            'titulo' => "Mi Historia",
+            'about' => $about
         ]);
     }
+
+    public static function aboutEditar(Router $router)
+    {
+        $id = $_GET['id'];
+        if(!$id) {
+            header('Location: /admin/about');
+        }
+        $about = About::find($id);
+        if(!$about) {
+            header('Location: /admin/about');
+        }
+
+        $router->render('admin/about/editar', [
+            'titulo' => "Mi Historia",
+            'about' => $about
+        ]);
+    }
+
     public static function aboutCrear(Router $router)
     {
 
@@ -156,6 +177,53 @@ class AdminController
             }
         }
     }
+
+    public static function aboutEliminar()
+    {
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            header('Content-Type: application/json');
+
+            $id = filter_var($_POST['id'] ?? null, FILTER_VALIDATE_INT);
+
+            if (!$id) {
+                http_response_code(400);
+                echo json_encode([
+                    'ok' => false,
+                    'message' => 'ID inválido o no proporcionado'
+                ]);
+                exit;
+            }
+
+            $about = About::find($id);
+
+            if (!$about) {
+                http_response_code(404);
+                echo json_encode([
+                    'ok' => false,
+                    'message' => 'evento no encontrada'
+                ]);
+                exit;
+            }
+
+            $resultado = $about->eliminar();
+
+            if ($resultado) {
+                echo json_encode([
+                    'ok' => true,
+                    'message' => 'evento eliminado correctamente'
+                ]);
+            } else {
+                http_response_code(500);
+                echo json_encode([
+                    'ok' => false,
+                    'message' => 'No se pudo eliminar el evento'
+                ]);
+            }
+        }
+
+    }
+
     public static function logrosCrearDestacado()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {

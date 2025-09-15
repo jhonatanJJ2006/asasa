@@ -3479,6 +3479,15 @@ h3 {
   border-left: 4px solid #2C6E49;
   padding-left: 1rem;
 }
+.historia__texto img {
+  object-fit: cover;
+  width: 80%;
+  height: 40rem;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .historia__autor {
   font-size: 1.2rem;
   color: #A0A0A0;

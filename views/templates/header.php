@@ -7,7 +7,6 @@
       <li class="header__nav--item <?php echo pagina_actual("/logros") ? "header__nav--item-activo" : ""; ?>"><a href="/logros">Logros</a></li>
       <li class="header__nav--item <?php echo pagina_actual("/historyteling") ? "header__nav--item-activo" : ""; ?>"><a href="/historyteling">Para Contar</a></li>
       <li class="header__nav--item <?php echo pagina_actual("/agenda") ? "header__nav--item-activo" : ""; ?>"><a href="/agenda">Agenda</a></li>
-      <li class="header__nav--item <?php echo pagina_actual("/jessenia-maria") ? "header__nav--item-activo" : ""; ?>"><a href="/jessenia-maria">Jessenia Maria</a></li>
     </ul>
   </nav>
 
@@ -40,7 +39,6 @@
     <li><a href="/logros">Logros</a></li>
     <li><a href="/historyteling">Para Contar</a></li>
     <li><a href="/agenda">Agenda</a></li>
-    <li><a href="/jessenia-maria">Jessenia Maria</a></li>
     <li><a href="/admin">Admin</a></li>
   </ul>
 

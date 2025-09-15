@@ -73,8 +73,11 @@ $router->get('/jessenia-maria', [DashboardController::class, 'jesseniaMaria']);
 $router->get('/admin', [AdminController::class, 'index']);
 
 $router->get('/admin/about', [AdminController::class, 'about']);
+$router->get('/admin/about/editar', [AdminController::class, 'aboutEditar']);
 $router->get('/admin/about/crear', [AdminController::class, 'aboutCrear']);
 $router->post('/admin/about/guardar', [AdminController::class, 'aboutGuardar']);
+$router->post('/admin/about/eliminar', [AdminController::class, 'aboutEliminar']);
+
 
     // Miembros Colectivo
 $router->get('/admin/miembrosColectivo', [MiembroColectivo::class, 'index']);

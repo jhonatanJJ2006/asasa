@@ -68,6 +68,16 @@
             border-left: 4px solid v.$primary-color;
             padding-left: 1rem;
         }
+
+        img {
+            object-fit: cover;
+            width: 80%;
+            height: 40rem;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     }
 
     &__autor {
