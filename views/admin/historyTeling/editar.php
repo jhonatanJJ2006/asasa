@@ -7,7 +7,8 @@
         </a>
     </div>
 
-    <form class="formulario-administrador" method="POST" id="form-crear-historia">
+    <form class="formulario-administrador" method="POST" id="form-editar-historia">
+        <input type="hidden" name="id" value="<?php echo $historia->id ?>">
         <fieldset class="formulario-administrador__fieldset">
             <legend class="formulario-administrador__legend">Datos de la historia</legend>
 
@@ -17,19 +18,14 @@
                 <input class="formulario-administrador__input" id="titulo" name="titulo" type="text" required value="<?php echo $historia->titulo ?>">
             </div>
 
-            <!-- Sinopsis con Quill -->
+            <!-- Sinopsis con TinyMCE -->
             <div class="formulario-administrador__campo">
-                <label for="editor-sinopsis" class="formulario-administrador__label">Sinopsis</label>
-
-                <!-- Campo oculto para enviar el contenido -->
-                <input type="hidden" name="sinopsis" id="sinopsis" value="<?php echo htmlspecialchars($historia->sinopsis ?? '', ENT_QUOTES); ?>">
-
-                <!-- Editor visual de Quill -->
-                <div id="editor-sinopsis" class="formulario-administrador__input formulario-administrador__input--editor">
-                    <?php echo $historia->sinopsis ?? ''; ?>
+                <label for="sinopsis" class="formulario-administrador__label">Sinopsis</label>
+                <textarea id="sinopsis" name="sinopsis" placeholder="Escribe la sinopsis de tu historia aquí... Puedes agregar enlaces, imágenes y formato de texto." required><?php echo htmlspecialchars_decode($historia->sinopsis ?? '', ENT_QUOTES) ?></textarea>
+                <div class="formulario-administrador__instruccion">
+                    Sinopsis de entre 100 a 1000 caracteres. Puedes usar formato de texto, enlaces e imágenes.
                 </div>
             </div>
-
 
             <!-- Autor -->
             <div class="formulario-administrador__campo">
@@ -39,8 +35,16 @@
         </fieldset>
 
         <!-- Botón de Editar -->
-        <div class="formulario-administrador__boton formulario-administrador__boton--editar-historia">
-            Editar Historia
-        </div>
+        <button type="submit" class="formulario-administrador__boton formulario-administrador__boton--editar-historia" id="btn-editar-historia">
+            <i class="fa-solid fa-save"></i>
+            Actualizar Historia
+        </button>
     </form>
 </div>
+
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- Scripts -->
+<script src="/build/js/historia-editor.js"></script>
+<script src="/build/js/historia-form.js"></script>

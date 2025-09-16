@@ -76,6 +76,8 @@ $router->get('/admin/about', [AdminController::class, 'about']);
 $router->get('/admin/about/editar', [AdminController::class, 'aboutEditar']);
 $router->get('/admin/about/crear', [AdminController::class, 'aboutCrear']);
 $router->post('/admin/about/guardar', [AdminController::class, 'aboutGuardar']);
+$router->post('/admin/about/actualizar', [AdminController::class, 'aboutActualizar']);
+$router->post('/admin/about/eliminar-imagen', [AdminController::class, 'aboutEliminarImagen']);
 $router->post('/admin/about/eliminar', [AdminController::class, 'aboutEliminar']);
 
 

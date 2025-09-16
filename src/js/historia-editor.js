@@ -2,14 +2,28 @@
 (function() {
     'use strict';
 
+    // Función para esperar a que TinyMCE esté disponible
+    function waitForTinyMCE(callback, maxAttempts = 10) {
+        let attempts = 0;
+        
+        function checkTinyMCE() {
+            attempts++;
+            
+            if (typeof tinymce !== 'undefined') {
+                callback();
+            } else if (attempts < maxAttempts) {
+                console.log('TinyMCE no está cargado, reintentando en 1 segundo...');
+                setTimeout(checkTinyMCE, 1000);
+            } else {
+                console.error('TinyMCE no se pudo cargar después de ' + maxAttempts + ' intentos');
+            }
+        }
+        
+        checkTinyMCE();
+    }
+
     // Función principal para inicializar el editor
     function initHistoriaEditor() {
-        // Verificar si TinyMCE está disponible
-        if (typeof tinymce === 'undefined') {
-            console.error('TinyMCE no está cargado');
-            return;
-        }
-
         // Verificar si el elemento del editor existe (sinopsis o descripcion)
         var editorElement = document.getElementById('sinopsis') || document.getElementById('descripcion');
         if (!editorElement) {
@@ -273,9 +287,11 @@
 
     // Inicializar cuando el DOM esté listo
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initHistoriaEditor);
+        document.addEventListener('DOMContentLoaded', function() {
+            waitForTinyMCE(initHistoriaEditor);
+        });
     } else {
-        initHistoriaEditor();
+        waitForTinyMCE(initHistoriaEditor);
     }
 
     // Utilidades globales para el editor de historias

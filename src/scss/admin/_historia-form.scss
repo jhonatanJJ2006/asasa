@@ -1,0 +1,131 @@
+@use 'base/variables' as v;
+
+
+// Estilos para el formulario de historias
+.formulario-administrador__boton--editar-historia {
+    background: linear-gradient(135deg, v.$azul 0%, v.$azul 100%);
+    color: v.$blanco;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: center;
+    width: 100%;
+    max-width: 300px;
+    margin: 2rem auto 0;
+    border: 1px solid v.$azul;
+    
+    &:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        background: transparent;
+    }
+    
+    &:active:not(:disabled) {
+        transform: translateY(0);
+    }
+    
+    &:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+        transform: none;
+    }
+    
+    i {
+        font-size: 1rem;
+    }
+}
+
+// Estilos para errores de validación
+.formulario-administrador__input.error,
+textarea.error {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+.field-error {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+    font-weight: 500;
+}
+
+// Estilos para el textarea de sinopsis
+#sinopsis {
+    min-height: 300px;
+    resize: vertical;
+    font-family: inherit;
+    line-height: 1.6;
+    
+    &:focus {
+        outline: none;
+        border-color: var(--azul);
+        box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
+    }
+}
+
+// Estilos para SweetAlert personalizado
+.swal2-popup {
+    border-radius: 12px;
+    font-family: inherit;
+}
+
+.swal2-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--gris-oscuro);
+}
+
+.swal2-content {
+    font-size: 1rem;
+    color: var(--gris);
+}
+
+.swal2-confirm {
+    background-color: var(--azul) !important;
+    border-radius: 8px !important;
+    padding: 0.75rem 1.5rem !important;
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+    
+    &:hover {
+        background-color: var(--azul-oscuro) !important;
+    }
+}
+
+.swal2-cancel {
+    background-color: var(--gris) !important;
+    border-radius: 8px !important;
+    padding: 0.75rem 1.5rem !important;
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+    
+    &:hover {
+        background-color: var(--gris-oscuro) !important;
+    }
+}
+
+// Loading spinner personalizado
+.swal2-loader {
+    border-color: var(--azul) transparent var(--azul) transparent !important;
+}
+
+// Responsive
+@media (max-width: 768px) {
+    .formulario-administrador__boton--editar-historia {
+        padding: 0.875rem 1.5rem;
+        font-size: 1rem;
+        max-width: 100%;
+    }
+    
+    #sinopsis {
+        min-height: 250px;
+    }
+}

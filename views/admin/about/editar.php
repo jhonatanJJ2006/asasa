@@ -7,12 +7,44 @@
         </a>
     </div>
 
-    <form class="formulario-administrador" enctype="multipart/form-data" method="POST">
+    <form class="formulario-administrador" enctype="multipart/form-data" method="POST" id="formAboutEditar">
+        <input type="hidden" name="id" value="<?php echo $about->id ?>">
         <fieldset class="formulario-administrador__fieldset">
             <legend class="formulario-administrador__legend">Información para Sección Mi Historia</legend>
 
             <div class="formulario-administrador__campo">
                 <label class="formulario-administrador__label" for="imagenes">Imágenes (puedes subir varias)</label>
+                
+                <!-- Imágenes existentes -->
+                <?php if (!empty($about->imagenes)): ?>
+                    <?php 
+                    $imagenesExistentes = [];
+                    if (!empty($about->imagenes)) {
+                        $imagenesDecoded = json_decode($about->imagenes, true);
+                        if (json_last_error() === JSON_ERROR_NONE && is_array($imagenesDecoded)) {
+                            $imagenesExistentes = $imagenesDecoded;
+                        } else {
+                            $imagenesExistentes = array_filter(array_map('trim', explode(',', $about->imagenes)));
+                        }
+                    }
+                    ?>
+                    <?php if (!empty($imagenesExistentes)): ?>
+                        <div class="imagenes-existentes">
+                            <h4>Imágenes actuales:</h4>
+                            <div class="imagenes-grid" id="imagenes-existentes">
+                                <?php foreach ($imagenesExistentes as $imagen): ?>
+                                    <div class="imagen-item" data-imagen="<?php echo $imagen ?>">
+                                        <img src="/build/img/about/<?php echo $imagen ?>.png" alt="Imagen existente" loading="lazy">
+                                        <button type="button" class="btn-eliminar-imagen" data-imagen="<?php echo $imagen ?>">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                <?php endif; ?>
+
                 <div class="formulario-administrador__dropzone" id="dropzone-img">
                     <i class="fa-solid fa-upload"></i>
                     <p>Arrastra y suelta una o varias imágenes aquí o haz clic para seleccionar</p>
@@ -26,7 +58,7 @@
                         hidden>
                     <div id="imagenes-preview"></div>
                 </div>
-                <div class="formulario-administrador__instruccion">Formatos permitidos: JPG, PNG, WEBP, AVIF.</div>
+                <div class="formulario-administrador__instruccion">Formatos permitidos: JPG, PNG, WEBP, AVIF. Máximo 5MB por imagen.</div>
             </div>
 
             <div class="formulario-administrador__campo">
@@ -97,3 +129,4 @@
 </div>
 
 <script src="/build/js/about-editor.js"></script>
+<script src="/build/js/about-form.js"></script>

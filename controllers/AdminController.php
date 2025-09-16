@@ -85,6 +85,267 @@ class AdminController
             'titulo' => "Crear"
         ]);
     }
+
+    public static function aboutActualizar()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            header('Content-Type: application/json');
+
+            $id = $_POST['id'] ?? null;
+            $frase = $_POST['frase'] ?? null;
+            $descripcion = $_POST['descripcion'] ?? null;
+            $numero = $_POST['numero'] ?? null;
+            $email = $_POST['email'] ?? null;
+
+            $errores = [];
+
+            // Validaciones
+            if (!$id) {
+                $errores[] = "ID inválido";
+            }
+            if (!$frase) {
+                $errores[] = "La frase es obligatoria";
+            }
+            if (!$numero) {
+                $errores[] = "El número es obligatorio";
+            }
+            if (!$email) {
+                $errores[] = "El email es obligatorio";
+            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $errores[] = "El email no es válido";
+            }
+
+            if (!empty($errores)) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Errores de validación',
+                    'errores' => $errores
+                ]);
+                exit;
+            }
+
+            // Obtener el registro existente
+            $about = About::find($id);
+            if (!$about) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Registro no encontrado'
+                ]);
+                exit;
+            }
+
+            // Procesar imágenes
+            $imagenesNombres = [];
+            if (isset($_FILES['imagenes']) && !empty($_FILES['imagenes']['name'][0])) {
+                $carpeta_imagenes = '../public/build/img/about/';
+                
+                // Crear carpeta si no existe
+                if (!file_exists($carpeta_imagenes)) {
+                    mkdir($carpeta_imagenes, 0755, true);
+                }
+
+                $archivos = $_FILES['imagenes'];
+                $totalArchivos = count($archivos['name']);
+
+                for ($i = 0; $i < $totalArchivos; $i++) {
+                    if ($archivos['error'][$i] === UPLOAD_ERR_OK) {
+                        $tipoArchivo = $archivos['type'][$i];
+                        $tamañoArchivo = $archivos['size'][$i];
+
+                        // Validar tipo de archivo
+                        $tiposPermitidos = ['image/jpeg', 'image/png', 'image/webp', 'image/avif'];
+                        if (!in_array($tipoArchivo, $tiposPermitidos)) {
+                            $errores[] = "El archivo " . $archivos['name'][$i] . " no es una imagen válida";
+                            continue;
+                        }
+
+                        // Validar tamaño (máximo 5MB)
+                        if ($tamañoArchivo > 5 * 1024 * 1024) {
+                            $errores[] = "El archivo " . $archivos['name'][$i] . " es demasiado grande (máximo 5MB)";
+                            continue;
+                        }
+
+                        // Generar nombre único
+                        $extension = pathinfo($archivos['name'][$i], PATHINFO_EXTENSION);
+                        $nombreUnico = 'about_' . uniqid() . '_' . time();
+
+                        // Procesar con Intervention Image
+                        try {
+                            $imagen = Image::make($archivos['tmp_name'][$i]);
+                            
+                            // Redimensionar si es necesario (máximo 1920x1080)
+                            $imagen->resize(1920, 1080, function ($constraint) {
+                                $constraint->aspectRatio();
+                                $constraint->upsize();
+                            });
+
+                            // Guardar en diferentes formatos
+                            $imagen->save($carpeta_imagenes . $nombreUnico . '.png', 90);
+                            $imagen->save($carpeta_imagenes . $nombreUnico . '.webp', 90);
+
+                            $imagenesNombres[] = $nombreUnico;
+                        } catch (Exception $e) {
+                            $errores[] = "Error al procesar la imagen " . $archivos['name'][$i] . ": " . $e->getMessage();
+                        }
+                    }
+                }
+            }
+
+            // Procesar CV
+            $cvNombre = null;
+            if (isset($_FILES['cv']) && $_FILES['cv']['error'] === UPLOAD_ERR_OK) {
+                $cvInfo = $_FILES['cv'];
+                if ($cvInfo['type'] === 'application/pdf') {
+                    $carpeta_cv = '../public/build/cv/';
+                    
+                    // Crear carpeta si no existe
+                    if (!file_exists($carpeta_cv)) {
+                        mkdir($carpeta_cv, 0755, true);
+                    }
+
+                    $extension = pathinfo($cvInfo['name'], PATHINFO_EXTENSION);
+                    $cvNombre = 'cv_' . uniqid() . '_' . time() . '.' . $extension;
+                    
+                    if (!move_uploaded_file($cvInfo['tmp_name'], $carpeta_cv . $cvNombre)) {
+                        $errores[] = "Error al subir el archivo CV";
+                    }
+                } else {
+                    $errores[] = "El CV debe ser un archivo PDF";
+                }
+            }
+
+            if (!empty($errores)) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Errores en el procesamiento',
+                    'errores' => $errores
+                ]);
+                exit;
+            }
+
+            // Actualizar campos
+            $about->frase = $frase;
+            $about->descripcion = $descripcion;
+            $about->numero = $numero;
+            $about->email = $email;
+
+            // Actualizar imágenes si se subieron nuevas
+            if (!empty($imagenesNombres)) {
+                // Obtener imágenes existentes
+                $imagenesExistentes = [];
+                if (!empty($about->imagenes)) {
+                    $imagenesDecoded = json_decode($about->imagenes, true);
+                    if (json_last_error() === JSON_ERROR_NONE && is_array($imagenesDecoded)) {
+                        $imagenesExistentes = $imagenesDecoded;
+                    } else {
+                        $imagenesExistentes = array_filter(array_map('trim', explode(',', $about->imagenes)));
+                    }
+                }
+                
+                // Combinar imágenes existentes con las nuevas
+                $todasLasImagenes = array_merge($imagenesExistentes, $imagenesNombres);
+                $about->imagenes = json_encode($todasLasImagenes);
+            }
+
+            // Actualizar CV si se subió uno nuevo
+            if ($cvNombre) {
+                // Eliminar CV anterior si existe
+                if ($about->cv && file_exists('../public/build/cv/' . $about->cv)) {
+                    unlink('../public/build/cv/' . $about->cv);
+                }
+                $about->cv = $cvNombre;
+            }
+
+            // Guardar en la base de datos
+            $resultado = $about->guardar();
+
+            if ($resultado) {
+                echo json_encode([
+                    'success' => true,
+                    'message' => 'Mi Historia actualizada correctamente'
+                ]);
+            } else {
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Error al actualizar Mi Historia'
+                ]);
+            }
+        }
+    }
+
+    public static function aboutEliminarImagen()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            header('Content-Type: application/json');
+
+            $input = json_decode(file_get_contents('php://input'), true);
+            $imagen = $input['imagen'] ?? null;
+            $id = $input['id'] ?? null;
+
+            if (!$imagen || !$id) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Datos inválidos'
+                ]);
+                exit;
+            }
+
+            $about = About::find($id);
+            if (!$about) {
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Registro no encontrado'
+                ]);
+                exit;
+            }
+
+            // Obtener imágenes existentes
+            $imagenesExistentes = [];
+            if (!empty($about->imagenes)) {
+                $imagenesDecoded = json_decode($about->imagenes, true);
+                if (json_last_error() === JSON_ERROR_NONE && is_array($imagenesDecoded)) {
+                    $imagenesExistentes = $imagenesDecoded;
+                } else {
+                    $imagenesExistentes = array_filter(array_map('trim', explode(',', $about->imagenes)));
+                }
+            }
+
+            // Buscar y eliminar la imagen del array
+            $key = array_search($imagen, $imagenesExistentes);
+            if ($key !== false) {
+                unset($imagenesExistentes[$key]);
+                $imagenesExistentes = array_values($imagenesExistentes); // Reindexar array
+                
+                // Actualizar en la base de datos
+                $about->imagenes = !empty($imagenesExistentes) ? json_encode($imagenesExistentes) : null;
+                $about->guardar();
+
+                // Eliminar archivos físicos
+                $carpeta_imagenes = '../public/build/img/about/';
+                $archivos_eliminar = [
+                    $carpeta_imagenes . $imagen . '.png',
+                    $carpeta_imagenes . $imagen . '.webp'
+                ];
+
+                foreach ($archivos_eliminar as $archivo) {
+                    if (file_exists($archivo)) {
+                        unlink($archivo);
+                    }
+                }
+
+                echo json_encode([
+                    'success' => true,
+                    'message' => 'Imagen eliminada correctamente'
+                ]);
+            } else {
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'Imagen no encontrada'
+                ]);
+            }
+        }
+    }
+
     public static function aboutGuardar()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
